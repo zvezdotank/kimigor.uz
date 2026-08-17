@@ -55,8 +55,10 @@ DATA = {
         "trackTitle": "Должности и статусы",
         "track": [
             {"label": "CEO Wunder Digital Uzbekistan", "from": 2019, "key": True},
+            {"label": "Сертифицированное агентство Яндекса", "from": 2020},
             {"label": "Член правления МАУ", "from": 2024},
             {"label": "Председатель digital-комитета МАУ", "from": 2024, "key": True},
+            {"label": "Yandex Direct Gold Partner", "from": 2024, "key": True},
             {"label": "Google Premier Partner · Meta Certified", "from": 2025},
         ],
         "workTitle": "В работе",
@@ -321,8 +323,10 @@ DATA = {
         "trackTitle": "Roles and statuses",
         "track": [
             {"label": "CEO of Wunder Digital Uzbekistan", "from": 2019, "key": True},
+            {"label": "Yandex certified agency", "from": 2020},
             {"label": "Board member, MAU", "from": 2024},
             {"label": "Chairman of the digital committee, MAU", "from": 2024, "key": True},
+            {"label": "Yandex Direct Gold Partner", "from": 2024, "key": True},
             {"label": "Google Premier Partner · Meta Certified", "from": 2025},
         ],
         "workTitle": "At work",
@@ -582,8 +586,10 @@ DATA = {
         "trackTitle": "Lavozimlar va statuslar",
         "track": [
             {"label": "Wunder Digital Uzbekistan bosh direktori", "from": 2019, "key": True},
+            {"label": "Yandex sertifikatlangan agentligi", "from": 2020},
             {"label": "MAU boshqaruvi a’zosi", "from": 2024},
             {"label": "MAU digital qo‘mitasi raisi", "from": 2024, "key": True},
+            {"label": "Yandex Direct Gold Partner", "from": 2024, "key": True},
             {"label": "Google Premier Partner · Meta Certified", "from": 2025},
         ],
         "workTitle": "Ish jarayonida",
