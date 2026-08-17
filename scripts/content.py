@@ -56,10 +56,12 @@ DATA = {
         "track": [
             {"label": "CEO Wunder Digital Uzbekistan", "from": 2019, "key": True},
             {"label": "Сертифицированное агентство Яндекса", "from": 2020},
+            {"label": "Google Premier Partner", "from": 2023},
             {"label": "Член правления МАУ", "from": 2024},
             {"label": "Председатель digital-комитета МАУ", "from": 2024, "key": True},
             {"label": "Yandex Direct Gold Partner", "from": 2024, "key": True},
-            {"label": "Google Premier Partner · Meta Certified", "from": 2025},
+            {"label": "Meta Managed Partner", "from": 2025},
+            {"label": "Meta Science Partner", "from": 2026, "key": True},
         ],
         "workTitle": "В работе",
         "work": [
@@ -125,8 +127,8 @@ DATA = {
              "desc": "Включён в список ведущих маркетологов страны по итогам 2025 года.",
              "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
             {"year": "2025", "title": "Google Premier Partner",
-             "desc": "Агентство под его руководством подтвердило статус Google Premier Partner 2025 — "
-                     "топ-3% партнёров Google.",
+             "desc": "Статус получен в 2023 году и подтверждён в 2025-м — это топ-3% "
+                     "партнёров Google.",
              "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
             {"year": "2025", "title": "Meta Media Certified Company",
              "desc": "Агентство под руководством Игоря Кима продлило статус сертифицированного "
@@ -324,10 +326,12 @@ DATA = {
         "track": [
             {"label": "CEO of Wunder Digital Uzbekistan", "from": 2019, "key": True},
             {"label": "Yandex certified agency", "from": 2020},
+            {"label": "Google Premier Partner", "from": 2023},
             {"label": "Board member, MAU", "from": 2024},
             {"label": "Chairman of the digital committee, MAU", "from": 2024, "key": True},
             {"label": "Yandex Direct Gold Partner", "from": 2024, "key": True},
-            {"label": "Google Premier Partner · Meta Certified", "from": 2025},
+            {"label": "Meta Managed Partner", "from": 2025},
+            {"label": "Meta Science Partner", "from": 2026, "key": True},
         ],
         "workTitle": "At work",
         "work": [
@@ -391,8 +395,7 @@ DATA = {
              "desc": "Listed among the country’s leading marketers for 2025.",
              "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
             {"year": "2025", "title": "Google Premier Partner",
-             "desc": "The agency he leads confirmed Google Premier Partner status for 2025 — the top "
-                     "3% of Google partners.",
+             "desc": "First earned in 2023 and confirmed for 2025 — the top 3% of Google partners.",
              "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
             {"year": "2025", "title": "Meta Media Certified Company",
              "desc": "The agency he leads renewed its Meta certified-agency status, with 20 certified "
@@ -587,10 +590,12 @@ DATA = {
         "track": [
             {"label": "Wunder Digital Uzbekistan bosh direktori", "from": 2019, "key": True},
             {"label": "Yandex sertifikatlangan agentligi", "from": 2020},
+            {"label": "Google Premier Partner", "from": 2023},
             {"label": "MAU boshqaruvi a’zosi", "from": 2024},
             {"label": "MAU digital qo‘mitasi raisi", "from": 2024, "key": True},
             {"label": "Yandex Direct Gold Partner", "from": 2024, "key": True},
-            {"label": "Google Premier Partner · Meta Certified", "from": 2025},
+            {"label": "Meta Managed Partner", "from": 2025},
+            {"label": "Meta Science Partner", "from": 2026, "key": True},
         ],
         "workTitle": "Ish jarayonida",
         "work": [
@@ -654,8 +659,8 @@ DATA = {
              "desc": "2025-yil yakunlari bo‘yicha mamlakatning yetakchi marketologlari ro‘yxatida.",
              "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
             {"year": "2025", "title": "Google Premier Partner",
-             "desc": "U boshqaradigan agentlik 2025-yil uchun Google Premier Partner statusini "
-                     "tasdiqladi — Google hamkorlarining top-3%i.",
+             "desc": "Status 2023-yilda olingan va 2025-yilda tasdiqlangan — Google "
+                     "hamkorlarining top-3%i.",
              "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
             {"year": "2025", "title": "Meta Media Certified Company",
              "desc": "U boshqaradigan agentlik Meta sertifikatlangan agentlik statusini uzaytirdi: "
