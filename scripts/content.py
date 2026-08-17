@@ -145,7 +145,7 @@ DATA = {
             {"k": "Образование", "v": "Ташкентский университет информационных технологий, "
                                       "телекоммуникации, бакалавр"},
             {"k": "Языки", "v": "русский — родной, английский — C1"},
-            {"k": "Увлечения", "v": "фотография и видео"},
+            {"k": "Увлечения", "v": "digital, веб-продакшн, ИИ, фотография и видео"},
         ],
         "aboutTitle": "О себе",
         "rolesTitle": "Роли и должности",
@@ -473,7 +473,7 @@ DATA = {
             {"k": "Education", "v": "Tashkent University of Information Technologies, "
                                     "telecommunications, BSc"},
             {"k": "Languages", "v": "Russian — native, English — C1"},
-            {"k": "Interests", "v": "photography and video"},
+            {"k": "Interests", "v": "digital, web production, AI, photography and video"},
         ],
         "aboutTitle": "About",
         "rolesTitle": "Roles",
@@ -795,7 +795,7 @@ DATA = {
             {"k": "Ta’lim", "v": "Toshkent axborot texnologiyalari universiteti, "
                                  "telekommunikatsiya, bakalavr"},
             {"k": "Tillar", "v": "rus tili — ona tili, ingliz tili — C1"},
-            {"k": "Qiziqishlar", "v": "fotografiya va video"},
+            {"k": "Qiziqishlar", "v": "digital, veb-prodakshn, AI, fotografiya va video"},
         ],
         "aboutTitle": "Men haqimda",
         "rolesTitle": "Lavozimlar",
