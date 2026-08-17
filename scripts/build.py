@@ -16,10 +16,10 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS,
-                     PHOTOS_WORK, PHOTOS_TEAM)
+                     PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 4
+CSS_VERSION = 7
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -40,9 +40,13 @@ def out_path(lang):
     return "index.html" if lang == "ru" else f"{lang}/index.html"
 
 
+DEPTH = 0  # 0 — страница в своей языковой папке, 1 — вложенная (media/)
+
+
 def asset(lang, path):
     """Путь к файлу в корне сайта относительно текущей страницы."""
-    return path if lang == "ru" else f"../{path}"
+    up = (0 if lang == "ru" else 1) + DEPTH
+    return ("../" * up) + path
 
 
 def src_link(item, label):
@@ -61,16 +65,17 @@ def glyph(name, href):
 
 # ── блоки страницы ───────────────────────────────────────────────────────────
 
-def head(lang, t):
-    canonical = SITE + URLS[lang]
-    alts = "\n".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{u}">'
+def head(lang, t, page=""):
+    suffix = "media/" if page == "media" else ""
+    canonical = SITE + URLS[lang] + suffix
+    alts = "\n".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{u}{suffix}">'
                      for c, _, u in LANGS)
     return f"""<!DOCTYPE html>
 <html lang="{t['htmlLang']}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(t['title'])}</title>
+<title>{e(t['mediaPageTitle'] + ' — ' + t['name']) if page == 'media' else e(t['title'])}</title>
 <meta name="description" content="{e(t['description'])}">
 <meta name="theme-color" content="#101114">
 <meta name="color-scheme" content="dark">
@@ -137,24 +142,61 @@ def intro(lang, t):
 """
 
 
-def track(t):
-    """Шкала должностей: реальные интервалы, а не декоративные полосы."""
-    n = len(TRACK_YEARS)
-    years = "".join(f"<span>{y}</span>" for y in TRACK_YEARS)
+def timeline(segments, years_range, title, note=""):
+    """Лента карьеры: отрезки позиционируются в долях года, поэтому
+    периоды не наслаиваются друг на друга даже при смене работы в середине года."""
+    first, last = years_range[0], years_range[-1] + 1
+    span = last - first
+    n = len(years_range)
+    years = "".join(f'<span>{y if i % 2 == 0 else ""}</span>'
+                    for i, y in enumerate(years_range))
     lanes = []
-    for seg in t["track"]:
-        start = TRACK_YEARS.index(seg["from"]) + 1
-        end = TRACK_YEARS.index(seg["to"]) + 2 if seg.get("to") else -1
+    for seg in segments:
+        left = (seg["from"] - first) / span * 100
+        width = (seg["to"] - seg["from"]) / span * 100
         cls = "seg key" if seg.get("key") else "seg"
-        lanes.append(f'        <div class="lane" style="grid-template-columns: repeat({n}, 1fr)">'
-                     f'<div class="{cls}" style="grid-column: {start} / {end}">'
-                     f'{e(seg["label"])}</div></div>')
+        lanes.append(f'        <div class="lane abs">'
+                     f'<div class="{cls}" style="left: {left:.2f}%; width: {width:.2f}%">'
+                     f'<span>{e(seg["org"])}</span></div></div>')
     return f"""
   <section class="track-scroll">
     <div class="track track-inner" style="--col: calc(100% / {n})">
       <div class="track-h">
-        <h2 class="cap">{e(t['trackTitle'])}</h2>
-        <div class="note mono">{TRACK_YEARS[0]} — {TRACK_YEARS[-1]}</div>
+        <h2 class="cap">{e(title)}</h2>
+        <div class="note mono">{e(note) if note else f"{years_range[0]} — {years_range[-1]}"}</div>
+      </div>
+      <div class="years" style="grid-template-columns: repeat({n}, 1fr)">{years}</div>
+      <div class="lanes">
+{chr(10).join(lanes)}
+      </div>
+    </div>
+  </section>
+"""
+
+
+def scale(segments, years_range, title, labels=None, every=1):
+    """Шкала: реальные интервалы, а не декоративные полосы.
+
+    every — шаг подписей по годам (для длинной шкалы карьеры подписываем не каждый год).
+    """
+    n = len(years_range)
+    years = "".join(
+        f'<span>{y if i % every == 0 else ""}</span>' for i, y in enumerate(years_range))
+    lanes = []
+    for i, seg in enumerate(segments):
+        start = years_range.index(seg["from"]) + 1
+        end = years_range.index(seg["to"]) + 2 if seg.get("to") else -1
+        cls = "seg key" if seg.get("key") else "seg"
+        label = labels[i] if labels else seg["label"]
+        lanes.append(f'        <div class="lane" style="grid-template-columns: repeat({n}, 1fr)">'
+                     f'<div class="{cls}" style="grid-column: {start} / {end}">'
+                     f'{e(label)}</div></div>')
+    return f"""
+  <section class="track-scroll">
+    <div class="track track-inner" style="--col: calc(100% / {n})">
+      <div class="track-h">
+        <h2 class="cap">{e(title)}</h2>
+        <div class="note mono">{years_range[0]} — {years_range[-1]}</div>
       </div>
       <div class="years" style="grid-template-columns: repeat({n}, 1fr)">{years}</div>
       <div class="lanes">
@@ -204,6 +246,32 @@ def photos(lang, t, files, title_key, caption_key):
         <figcaption class="mono">{e(c)}</figcaption>
       </figure>""" for f, c in zip(files, captions))
     return section(t[title_key], f'    <div class="shots">\n{cells}\n    </div>')
+
+
+def career(t):
+    if not t["jobs"]:
+        return ""
+    rows_html = []
+    for job, place in zip(t["jobs"], CAREER):
+        rows_html.append(f"""    <div class="row job">
+      <div>
+        <div class="t">{e(place["org"])}</div>
+        <div class="s">{e(job["role"])}</div>
+        <p class="note">{e(job["note"])}</p>
+      </div>
+      <div class="m">{e(job["when"])}</div>
+    </div>""")
+    return section(t["careerTitle"], "\n".join(rows_html), t["careerNote"])
+
+
+def person(t):
+    if not t["person"]:
+        return ""
+    body = "\n".join(f"""    <div class="skill">
+      <div class="g">{e(f["k"])}</div>
+      <div class="v">{e(f["v"])}</div>
+    </div>""" for f in t["person"])
+    return section(t["personTitle"], body)
 
 
 def about(t):
@@ -320,9 +388,12 @@ def build_page(lang):
         head(lang, t),
         header(lang, t),
         intro(lang, t),
-        track(t),
+        scale(t["track"], TRACK_YEARS, t["trackTitle"]),
         photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
         about(t),
+        person(t),
+        timeline(CAREER, CAREER_YEARS, t["careerTitle"], t["careerNote"]),
+        career(t),
         section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")),
         awards(t),
         section(t["talksTitle"], rows(t["talks"], t, "event", "sub", "meta"),
@@ -330,10 +401,8 @@ def build_page(lang):
         section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
                 n(t["jury"], t["unitJury"])),
         skills(t),
-        section(t["mediaTitle"], rows(t["media"], t, "title", None, "outlet"),
-                n(t["media"], t["unitMedia"])),
-        section(t["pagesTitle"], rows(t["pages"], t, "title", None, "outlet"),
-                n(t["pages"], t["unitPages"])),
+        section(t["mediaTitle"], rows(t["media"][:6], t, "title", None, "outlet")
+                + more_link(lang, t), n(t["media"] + t["pages"], t["unitMedia"])),
         quotes(t),
         photos(lang, t, PHOTOS_TEAM, "teamTitle", "team"),
         contact(t),
@@ -341,23 +410,62 @@ def build_page(lang):
     ])
 
 
+def more_link(lang, t):
+    """Ссылка на полный список — он живёт отдельной страницей."""
+    return (f'\n    <a class="more" href="{media_url(lang)}">'
+            f'{e(t["mediaAll"])} →</a>')
+
+
+def media_url(lang):
+    return URLS[lang] + "media/"
+
+
+def build_media_page(lang):
+    """Отдельная страница: все публикации и официальные страницы."""
+    t = DATA[lang]
+    body = (head(lang, t, page="media")
+            + header(lang, t)
+            + f'\n  <main id="main">\n  <section class="sec first">\n'
+              f'    <div class="sec-h"><h2>{e(t["mediaTitle"])}</h2>'
+              f'<div class="count mono">{len(t["media"])} {e(t["unitMedia"])}</div></div>\n'
+            + rows(t["media"], t, "title", None, "outlet")
+            + "\n  </section>\n"
+            + section(t["pagesTitle"], rows(t["pages"], t, "title", None, "outlet"),
+                      f'{len(t["pages"])} {t["unitPages"]}')
+            + f'\n  <p class="back"><a href="{URLS[lang]}">← {e(t["backHome"])}</a></p>\n'
+              f'  </main>\n'
+            + footer(lang, t))
+    return body
+
+
 def build_sitemap():
+    items = [(u, "1.0" if u == "/" else "0.8") for _, _, u in LANGS]
+    items += [(u + "media/", "0.5") for _, _, u in LANGS]
     urls = "\n".join(
         f"  <url>\n    <loc>{SITE}{u}</loc>\n    <changefreq>monthly</changefreq>\n"
-        f"    <priority>{'1.0' if u == '/' else '0.8'}</priority>\n  </url>"
-        for _, _, u in LANGS)
+        f"    <priority>{pr}</priority>\n  </url>" for u, pr in items)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             + urls + "\n</urlset>\n")
 
 
 def main():
+    global DEPTH
     for lang, _, _ in LANGS:
+        DEPTH = 0
         path = os.path.join(ROOT, out_path(lang))
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "w", encoding="utf-8") as f:
             f.write(build_page(lang))
         print(f"  {out_path(lang)}")
+
+        DEPTH = 1
+        mpath = os.path.join(ROOT, media_url(lang).strip("/"), "index.html")
+        os.makedirs(os.path.dirname(mpath), exist_ok=True)
+        with open(mpath, "w", encoding="utf-8") as f:
+            f.write(build_media_page(lang))
+        print(f"  {media_url(lang).strip('/')}/index.html")
+    DEPTH = 0
 
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(build_sitemap())

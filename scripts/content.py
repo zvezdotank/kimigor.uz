@@ -15,6 +15,23 @@ FACEBOOK = ""  # профиль пока не добавлен — блок в �
 
 TRACK_YEARS = list(range(2019, 2027))
 
+# Карьера: годы общие, названия компаний не переводятся, роли и заметки — в каждом языке.
+CAREER_YEARS = list(range(2007, 2027))
+# Отрезки в долях года (2007.5 = июль 2007). Перекрытия по резюме обрезаны:
+# на ленте видно основное место работы в каждый момент времени.
+CAREER = [
+    {"org": "Wunder Digital Uzbekistan", "from": 2018.7, "to": 2026.7, "key": True},
+    {"org": "Whirl", "from": 2017.4, "to": 2018.7},
+    {"org": "Лукойл · ЛЛК-Интернешнл", "from": 2011.4, "to": 2017.4, "key": True},
+    {"org": "China Yuan Sheng", "from": 2010.75, "to": 2011.4},
+    {"org": "Super iMax · EVO", "from": 2010.2, "to": 2010.75},
+    {"org": "xxx-Astana", "from": 2009.85, "to": 2010.2},
+    {"org": "Ural LM", "from": 2009.2, "to": 2009.7},
+    {"org": "Abris Distribution", "from": 2008.6, "to": 2009.2},
+    {"org": "StarMedia Ogilvy Uzbekistan", "from": 2007.5, "to": 2008.5, "key": True},
+]
+
+
 # Фотографии. Файлы общие, подписи переводятся в каждом языке ниже.
 PHOTOS_WORK = ["rukopozhatie-konferenciya.jpeg",
                "yandex-conference-banner.jpeg",
@@ -75,6 +92,46 @@ DATA = {
             "Офис в Ташкенте",
             "Выездная встреча команды",
         ],
+        "careerTitle": "Опыт работы",
+        "careerNote": "19 лет, из них 13 в digital",
+        "jobs": [
+            {"role": "CEO", "when": "сентябрь 2018 — настоящее время",
+             "note": "Открыл офис Wunder Digital в Узбекистане с нуля: регистрация, команда, "
+                     "коммерческая стратегия, каналы продаж. В 2020 году агентство признано "
+                     "№1 по контекстной рекламе и №1 в SEO в Узбекистане."},
+            {"role": "Директор по продажам и маркетингу", "when": "июнь 2017 — сентябрь 2018",
+             "note": "Монетизация публичных Wi-Fi-сетей. Провёл проект от идеи до монетизации, "
+                     "защитил технико-экономическое обоснование перед национальным оператором, "
+                     "подключил 40 партнёров по Ташкенту."},
+            {"role": "Менеджер корпоративных продаж", "when": "июнь 2011 — июль 2018",
+             "note": "Здесь начался путь в digital: сделал сайт и настроил интернет-рекламу. "
+                     "Организовал сеть сбыта с нуля, лучшие результаты по продажам за четыре года."},
+            {"role": "Менеджер по проектам", "when": "октябрь 2010 — август 2014",
+             "note": "Поставки промышленного оборудования от китайских заводов: пивоваренные "
+                     "линии, прессовое оборудование, стройматериалы."},
+            {"role": "Менеджер корпоративного отдела", "when": "март — сентябрь 2010",
+             "note": "Интернет-провайдер на технологии WiMAX, корпоративный сегмент."},
+            {"role": "Руководитель отдела продаж", "when": "ноябрь 2009 — март 2010",
+             "note": "Новое направление компании в Астане: компьютерное оборудование и "
+                     "системы видеонаблюдения, набор команды."},
+            {"role": "Менеджер по продажам", "when": "март — сентябрь 2009",
+             "note": "Компьютерное и периферийное оборудование, Xerox и Kyocera, Екатеринбург."},
+            {"role": "Менеджер по продажам", "when": "август 2008 — апрель 2009",
+             "note": "Дистрибуция ИТ и телекоммуникаций в СНГ."},
+            {"role": "Менеджер по развитию бизнеса", "when": "июль 2007 — июнь 2008",
+             "note": "Первая работа и знакомство с рекламным рынком — на него он вернётся "
+                     "десять лет спустя. Форум IBM Innovation Day, запуск бренда Vogue Arome, "
+                     "программа вакцинации по заказу UNICEF."},
+        ],
+        "personTitle": "Коротко",
+        "person": [
+            {"k": "Родился", "v": "24 сентября 1983 года"},
+            {"k": "Живёт", "v": "Ташкент, Узбекистан"},
+            {"k": "Образование", "v": "Ташкентский университет информационных технологий, "
+                                      "телекоммуникации, бакалавр"},
+            {"k": "Языки", "v": "русский — родной, английский — C1"},
+            {"k": "Увлечения", "v": "фотография и видео"},
+        ],
         "aboutTitle": "О себе",
         "rolesTitle": "Роли и должности",
         "awardsTitle": "Достижения и награды",
@@ -83,6 +140,9 @@ DATA = {
         "skillsTitle": "Инструменты и платформы",
         "mediaTitle": "Публикации в медиа",
         "pagesTitle": "Официальные страницы и анонсы",
+        "mediaAll": "Все упоминания в медиа",
+        "mediaPageTitle": "Публикации, комментарии и официальные страницы",
+        "backHome": "На главную",
         "quotesTitle": "Отзывы",
         "contactKicker": "Контакты",
         "contactTitle": "Выступление, экспертиза, интервью",
@@ -345,6 +405,46 @@ DATA = {
             "The Tashkent office",
             "Team offsite",
         ],
+        "careerTitle": "Experience",
+        "careerNote": "19 years, 13 of them in digital",
+        "jobs": [
+            {"role": "CEO", "when": "September 2018 — present",
+             "note": "Opened the Wunder Digital office in Uzbekistan from scratch: registration, "
+                     "team, commercial strategy, sales channels. In 2020 the agency was named "
+                     "the country’s No. 1 in paid search and No. 1 in SEO."},
+            {"role": "Sales and marketing director", "when": "June 2017 — September 2018",
+             "note": "Monetisation of public Wi-Fi networks. Ran the project from idea to revenue, "
+                     "defended the feasibility study before the national operator and signed "
+                     "40 partners across Tashkent."},
+            {"role": "Corporate sales manager", "when": "June 2011 — July 2018",
+             "note": "Where the digital path began: built the website and set up online advertising. "
+                     "Created the distribution network from scratch; best sales results in four years."},
+            {"role": "Project manager", "when": "October 2010 — August 2014",
+             "note": "Industrial equipment from Chinese plants: brewing lines, press equipment, "
+                     "construction materials."},
+            {"role": "Corporate sales manager", "when": "March — September 2010",
+             "note": "WiMAX internet provider, corporate segment."},
+            {"role": "Head of sales", "when": "November 2009 — March 2010",
+             "note": "A new business line in Astana: computer equipment and video surveillance "
+                     "systems, hiring the team."},
+            {"role": "Sales manager", "when": "March — September 2009",
+             "note": "Computer and peripheral equipment, Xerox and Kyocera, Yekaterinburg."},
+            {"role": "Sales manager", "when": "August 2008 — April 2009",
+             "note": "IT and telecom distribution across the CIS."},
+            {"role": "Business development manager", "when": "July 2007 — June 2008",
+             "note": "First job and first contact with the advertising market — he would return "
+                     "to it ten years later. IBM Innovation Day forum, the Vogue Arome brand "
+                     "launch, a UNICEF vaccination campaign."},
+        ],
+        "personTitle": "In brief",
+        "person": [
+            {"k": "Born", "v": "24 September 1983"},
+            {"k": "Lives in", "v": "Tashkent, Uzbekistan"},
+            {"k": "Education", "v": "Tashkent University of Information Technologies, "
+                                    "telecommunications, BSc"},
+            {"k": "Languages", "v": "Russian — native, English — C1"},
+            {"k": "Interests", "v": "photography and video"},
+        ],
         "aboutTitle": "About",
         "rolesTitle": "Roles",
         "awardsTitle": "Recognition",
@@ -353,6 +453,9 @@ DATA = {
         "skillsTitle": "Tools and platforms",
         "mediaTitle": "In the media",
         "pagesTitle": "Official pages and announcements",
+        "mediaAll": "All media mentions",
+        "mediaPageTitle": "Articles, commentary and official pages",
+        "backHome": "Back to the main page",
         "quotesTitle": "References",
         "contactKicker": "Contact",
         "contactTitle": "Speaking, expertise, interviews",
@@ -609,6 +712,46 @@ DATA = {
             "Toshkentdagi ofis",
             "Jamoaning sayohat uchrashuvi",
         ],
+        "careerTitle": "Ish tajribasi",
+        "careerNote": "19 yil, shundan 13 yili digital sohada",
+        "jobs": [
+            {"role": "CEO", "when": "2018-yil sentabr — hozirgi vaqtda",
+             "note": "Wunder Digital’ning O‘zbekistondagi ofisini noldan ochdi: ro‘yxatdan o‘tkazish, "
+                     "jamoa, tijorat strategiyasi, savdo kanallari. 2020-yilda agentlik "
+                     "kontekst reklama va SEO bo‘yicha mamlakatda №1 deb tan olindi."},
+            {"role": "Savdo va marketing direktori", "when": "2017-yil iyun — 2018-yil sentabr",
+             "note": "Ommaviy Wi-Fi tarmoqlarini monetizatsiya qilish. Loyihani g‘oyadan "
+                     "daromadgacha olib bordi, milliy operator oldida texnik-iqtisodiy asosni "
+                     "himoya qildi, Toshkent bo‘ylab 40 ta hamkor jalb qildi."},
+            {"role": "Korporativ savdo menejeri", "when": "2011-yil iyun — 2018-yil iyul",
+             "note": "Digital yo‘li shu yerdan boshlangan: sayt yasadi va internet reklamani "
+                     "sozladi. Savdo tarmog‘ini noldan qurdi, to‘rt yildagi eng yaxshi natijalar."},
+            {"role": "Loyihalar menejeri", "when": "2010-yil oktabr — 2014-yil avgust",
+             "note": "Xitoy zavodlaridan sanoat uskunalari: pivo liniyalari, press uskunalari, "
+                     "qurilish materiallari."},
+            {"role": "Korporativ bo‘lim menejeri", "when": "2010-yil mart — sentabr",
+             "note": "WiMAX texnologiyasidagi internet-provayder, korporativ segment."},
+            {"role": "Savdo bo‘limi boshlig‘i", "when": "2009-yil noyabr — 2010-yil mart",
+             "note": "Ostonadagi yangi yo‘nalish: kompyuter uskunalari va videokuzatuv "
+                     "tizimlari, jamoa yig‘ish."},
+            {"role": "Savdo menejeri", "when": "2009-yil mart — sentabr",
+             "note": "Kompyuter va periferiya uskunalari, Xerox va Kyocera, Yekaterinburg."},
+            {"role": "Savdo menejeri", "when": "2008-yil avgust — 2009-yil aprel",
+             "note": "MDH bo‘ylab AT va telekommunikatsiya distributsiyasi."},
+            {"role": "Biznesni rivojlantirish menejeri", "when": "2007-yil iyul — 2008-yil iyun",
+             "note": "Birinchi ish va reklama bozori bilan tanishuv — u bu bozorga o‘n yil "
+                     "o‘tib qaytadi. IBM Innovation Day forumi, Vogue Arome brendi ishga "
+                     "tushirilishi, UNICEF buyurtmasidagi emlash dasturi."},
+        ],
+        "personTitle": "Qisqacha",
+        "person": [
+            {"k": "Tug‘ilgan", "v": "1983-yil 24-sentabr"},
+            {"k": "Yashaydi", "v": "Toshkent, O‘zbekiston"},
+            {"k": "Ta’lim", "v": "Toshkent axborot texnologiyalari universiteti, "
+                                 "telekommunikatsiya, bakalavr"},
+            {"k": "Tillar", "v": "rus tili — ona tili, ingliz tili — C1"},
+            {"k": "Qiziqishlar", "v": "fotografiya va video"},
+        ],
         "aboutTitle": "Men haqimda",
         "rolesTitle": "Lavozimlar",
         "awardsTitle": "Yutuqlar",
@@ -617,6 +760,9 @@ DATA = {
         "skillsTitle": "Vositalar va platformalar",
         "mediaTitle": "Mediada",
         "pagesTitle": "Rasmiy sahifalar va e’lonlar",
+        "mediaAll": "Mediadagi barcha eslatmalar",
+        "mediaPageTitle": "Maqolalar, izohlar va rasmiy sahifalar",
+        "backHome": "Bosh sahifaga",
         "quotesTitle": "Fikrlar",
         "contactKicker": "Aloqa",
         "contactTitle": "Ma’ruza, ekspertiza, intervyu",
