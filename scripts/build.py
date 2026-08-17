@@ -15,10 +15,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
-                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS)
+                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS,
+                     PHOTOS_WORK, PHOTOS_TEAM)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 3
+CSS_VERSION = 4
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -193,6 +194,18 @@ def rows(items, t, main_key, sub_key, meta_key):
     return "\n".join(out)
 
 
+def photos(lang, t, files, title_key, caption_key):
+    """Кадры с подписями. Подпись — часть факта, а не украшение."""
+    captions = t[caption_key]
+    if not files or not captions:
+        return ""
+    cells = "\n".join(f"""      <figure class="shot">
+        <img src="{asset(lang, 'img/' + f)}" alt="{e(c)}" loading="lazy" decoding="async">
+        <figcaption class="mono">{e(c)}</figcaption>
+      </figure>""" for f, c in zip(files, captions))
+    return section(t[title_key], f'    <div class="shots">\n{cells}\n    </div>')
+
+
 def about(t):
     body = "\n".join(f'      <p>{e(p)}</p>' for p in t["about"])
     return section(t["aboutTitle"], f'    <div class="prose">\n{body}\n    </div>')
@@ -308,6 +321,7 @@ def build_page(lang):
         header(lang, t),
         intro(lang, t),
         track(t),
+        photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
         about(t),
         section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")),
         awards(t),
@@ -321,6 +335,7 @@ def build_page(lang):
         section(t["pagesTitle"], rows(t["pages"], t, "title", None, "outlet"),
                 n(t["pages"], t["unitPages"])),
         quotes(t),
+        photos(lang, t, PHOTOS_TEAM, "teamTitle", "team"),
         contact(t),
         footer(lang, t),
     ])

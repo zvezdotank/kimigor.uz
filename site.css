@@ -146,6 +146,20 @@ img { display: block; max-width: 100%; }
 .award p { margin: 0; font-size: 14px; color: var(--dim); line-height: 1.5; }
 .award .src { margin-top: auto; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
 
+/* фотографии */
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+.shots figure { margin: 0; }
+.shots img {
+  width: 100%; aspect-ratio: 3 / 2; object-fit: cover;
+  border: 1px solid var(--line);
+  filter: saturate(0.7) contrast(1.02) brightness(0.92);
+}
+.shots figcaption { margin-top: 9px; font-size: 12px; color: var(--faint); line-height: 1.4; }
+@media (prefers-reduced-motion: no-preference) {
+  .shots img { transition: filter 200ms ease; }
+}
+.shots figure:hover img { filter: none; }
+
 /* инструменты */
 .skill {
   display: grid; grid-template-columns: 240px 1fr; gap: 24px;
@@ -189,6 +203,7 @@ img { display: block; max-width: 100%; }
   .intro img { width: 150px; height: 180px; }
   .intro h1 { font-size: 34px; }
   .awards { grid-template-columns: 1fr; }
+  .shots { grid-template-columns: repeat(2, 1fr); }
   .row { grid-template-columns: 1fr 200px 100px; }
 }
 
@@ -206,6 +221,7 @@ img { display: block; max-width: 100%; }
   .track-inner { min-width: 640px; }
 
   .row, .skill { grid-template-columns: 1fr; gap: 6px; }
+  .shots { grid-template-columns: 1fr; }
   .row .src { text-align: left; }
   .contact { grid-template-columns: 1fr; gap: 26px; padding: 26px 20px; }
   .lines { gap: 24px; flex-direction: column; }

@@ -15,6 +15,12 @@ FACEBOOK = ""  # профиль пока не добавлен — блок в �
 
 TRACK_YEARS = list(range(2019, 2027))
 
+# Фотографии. Файлы общие, подписи переводятся в каждом языке ниже.
+PHOTOS_WORK = ["rukopozhatie-konferenciya.jpeg",
+               "yandex-conference-banner.jpeg",
+               "yandex-conference-scena.jpeg"]
+PHOTOS_TEAM = ["komanda-registan.jpeg", "komanda-ofis-1.jpeg", "komanda-vyezd.jpeg"]
+
 LANGS = [
     ("ru", "RU", "/"),
     ("en", "EN", "/en/"),
@@ -52,6 +58,18 @@ DATA = {
             {"label": "Член правления МАУ", "from": 2024},
             {"label": "Председатель digital-комитета МАУ", "from": 2024, "key": True},
             {"label": "Google Premier Partner · Meta Certified", "from": 2025},
+        ],
+        "workTitle": "В работе",
+        "work": [
+            "Кулуары отраслевой конференции, Ташкент",
+            "Yandex Ads Conference Uzbekistan",
+            "Yandex Ads Conference Uzbekistan, участники на сцене",
+        ],
+        "teamTitle": "Команда",
+        "team": [
+            "Команда Wunder Digital, Самарканд",
+            "Офис в Ташкенте",
+            "Выездная встреча команды",
         ],
         "aboutTitle": "О себе",
         "rolesTitle": "Роли и должности",
@@ -307,6 +325,18 @@ DATA = {
             {"label": "Chairman of the digital committee, MAU", "from": 2024, "key": True},
             {"label": "Google Premier Partner · Meta Certified", "from": 2025},
         ],
+        "workTitle": "At work",
+        "work": [
+            "Industry conference, Tashkent",
+            "Yandex Ads Conference Uzbekistan",
+            "Yandex Ads Conference Uzbekistan, participants on stage",
+        ],
+        "teamTitle": "Team",
+        "team": [
+            "The Wunder Digital team, Samarkand",
+            "The Tashkent office",
+            "Team offsite",
+        ],
         "aboutTitle": "About",
         "rolesTitle": "Roles",
         "awardsTitle": "Recognition",
@@ -555,6 +585,18 @@ DATA = {
             {"label": "MAU boshqaruvi a’zosi", "from": 2024},
             {"label": "MAU digital qo‘mitasi raisi", "from": 2024, "key": True},
             {"label": "Google Premier Partner · Meta Certified", "from": 2025},
+        ],
+        "workTitle": "Ish jarayonida",
+        "work": [
+            "Soha konferensiyasi, Toshkent",
+            "Yandex Ads Conference Uzbekistan",
+            "Yandex Ads Conference Uzbekistan, sahnadagi ishtirokchilar",
+        ],
+        "teamTitle": "Jamoa",
+        "team": [
+            "Wunder Digital jamoasi, Samarqand",
+            "Toshkentdagi ofis",
+            "Jamoaning sayohat uchrashuvi",
         ],
         "aboutTitle": "Men haqimda",
         "rolesTitle": "Lavozimlar",
