@@ -19,7 +19,7 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 7
+CSS_VERSION = 9
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -142,32 +142,68 @@ def intro(lang, t):
 """
 
 
-def timeline(segments, years_range, title, note=""):
-    """Лента карьеры: отрезки позиционируются в долях года, поэтому
-    периоды не наслаиваются друг на друга даже при смене работы в середине года."""
-    first, last = years_range[0], years_range[-1] + 1
+def timeline(t):
+    """Одна хронология: лента мест работы, вехи под ней и разделение
+    на два периода — до digital и после. Вехи раскладываются по этажам,
+    чтобы подписи не наезжали друг на друга."""
+    first, last = CAREER_YEARS[0], CAREER_YEARS[-1] + 1
     span = last - first
-    n = len(years_range)
+    n = len(CAREER_YEARS)
+    pos = lambda year: (year - first) / span * 100  # noqa: E731
+
     years = "".join(f'<span>{y if i % 2 == 0 else ""}</span>'
-                    for i, y in enumerate(years_range))
+                    for i, y in enumerate(CAREER_YEARS))
+
     lanes = []
-    for seg in segments:
-        left = (seg["from"] - first) / span * 100
-        width = (seg["to"] - seg["from"]) / span * 100
+    for seg in CAREER:
         cls = "seg key" if seg.get("key") else "seg"
-        lanes.append(f'        <div class="lane abs">'
-                     f'<div class="{cls}" style="left: {left:.2f}%; width: {width:.2f}%">'
+        lanes.append(f'        <div class="lane abs"><div class="{cls}" '
+                     f'style="left: {pos(seg["from"]):.2f}%; '
+                     f'width: {(seg["to"] - seg["from"]) / span * 100:.2f}%">'
                      f'<span>{e(seg["org"])}</span></div></div>')
+
+    # эры: до 2011 — продажи, дальше digital
+    eras = (f'      <div class="eras">'
+            f'<div class="era" style="left: 0; width: {pos(2011.4):.2f}%">'
+            f'<span>{e(t["eraSales"])}</span></div>'
+            f'<div class="era on" style="left: {pos(2011.4):.2f}%; '
+            f'width: {100 - pos(2011.4):.2f}%"><span>{e(t["eraDigital"])}</span></div></div>')
+
+    # вехи: раскладка по этажам, чтобы подписи не сталкивались.
+    # Контейнер ~1120 px на 20 лет, значит 1% ≈ 11 px; символ подписи ≈ 7 px.
+    PX = 1120 / 100.0
+    floors = []      # правая занятая граница каждого этажа, в %
+    marks = []
+    for ms in sorted(t["milestones"], key=lambda m: m["year"]):
+        left = pos(ms["year"] + 0.5)
+        width = (len(ms["text"]) * 7 + 52) / PX
+        flip = left + width > 99          # у правого края подпись уходит влево
+        lo = left - width if flip else left
+        hi = left if flip else left + width
+        row = next((i for i, right in enumerate(floors) if lo > right + 0.8), len(floors))
+        if row == len(floors):
+            floors.append(-99.0)
+        floors[row] = hi
+        anchor = (f'right: {100 - left:.2f}%' if flip else f'left: {left:.2f}%')
+        cls = "mark rev" if flip else "mark"
+        marks.append(f'        <div class="{cls}" style="{anchor}; --floor: {row}">'
+                     f'<b class="mono">{ms["year"]}</b>'
+                     f'<span>{e(ms["text"])}</span></div>')
+
     return f"""
   <section class="track-scroll">
     <div class="track track-inner" style="--col: calc(100% / {n})">
       <div class="track-h">
-        <h2 class="cap">{e(title)}</h2>
-        <div class="note mono">{e(note) if note else f"{years_range[0]} — {years_range[-1]}"}</div>
+        <h2 class="cap">{e(t['timelineTitle'])}</h2>
+        <div class="note mono">{e(t['careerNote'])}</div>
       </div>
       <div class="years" style="grid-template-columns: repeat({n}, 1fr)">{years}</div>
+{eras}
       <div class="lanes">
 {chr(10).join(lanes)}
+      </div>
+      <div class="marks" style="--floors: {len(floors)}">
+{chr(10).join(marks)}
       </div>
     </div>
   </section>
@@ -388,11 +424,10 @@ def build_page(lang):
         head(lang, t),
         header(lang, t),
         intro(lang, t),
-        scale(t["track"], TRACK_YEARS, t["trackTitle"]),
+        timeline(t),
         photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
         about(t),
         person(t),
-        timeline(CAREER, CAREER_YEARS, t["careerTitle"], t["careerNote"]),
         career(t),
         section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")),
         awards(t),

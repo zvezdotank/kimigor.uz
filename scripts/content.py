@@ -92,6 +92,20 @@ DATA = {
             "Офис в Ташкенте",
             "Выездная встреча команды",
         ],
+        "timelineTitle": "Хронология",
+        "eraSales": "продажи и дистрибуция",
+        "eraDigital": "digital",
+        "milestones": [
+            {"year": 2011, "text": "Первый сайт и первая интернет-реклама"},
+            {"year": 2018, "text": "Открыл офис Wunder Digital в Ташкенте"},
+            {"year": 2020, "text": "Сертифицированное агентство Яндекса"},
+            {"year": 2023, "text": "Google Premier Partner"},
+            {"year": 2024, "text": "Член правления МАУ"},
+            {"year": 2024, "text": "Председатель digital-комитета МАУ"},
+            {"year": 2024, "text": "Yandex Direct Gold Partner"},
+            {"year": 2025, "text": "Meta Managed Partner"},
+            {"year": 2026, "text": "Meta Science Partner"},
+        ],
         "careerTitle": "Опыт работы",
         "careerNote": "19 лет, из них 13 в digital",
         "jobs": [
@@ -104,8 +118,9 @@ DATA = {
                      "защитил технико-экономическое обоснование перед национальным оператором, "
                      "подключил 40 партнёров по Ташкенту."},
             {"role": "Менеджер корпоративных продаж", "when": "июнь 2011 — июль 2018",
-             "note": "Здесь начался путь в digital: сделал сайт и настроил интернет-рекламу. "
-                     "Организовал сеть сбыта с нуля, лучшие результаты по продажам за четыре года."},
+             "note": "Здесь начался путь в digital: изучил веб-разработку, рекламу Google и аналитику — "
+                     "сделал сайт компании и сам настроил интернет-рекламу. Организовал сеть сбыта "
+                     "с нуля, лучшие результаты по продажам за четыре года."},
             {"role": "Менеджер по проектам", "when": "октябрь 2010 — август 2014",
              "note": "Поставки промышленного оборудования от китайских заводов: пивоваренные "
                      "линии, прессовое оборудование, стройматериалы."},
@@ -405,6 +420,20 @@ DATA = {
             "The Tashkent office",
             "Team offsite",
         ],
+        "timelineTitle": "Timeline",
+        "eraSales": "sales and distribution",
+        "eraDigital": "digital",
+        "milestones": [
+            {"year": 2011, "text": "First website and first online advertising"},
+            {"year": 2018, "text": "Opened the Wunder Digital office in Tashkent"},
+            {"year": 2020, "text": "Yandex certified agency"},
+            {"year": 2023, "text": "Google Premier Partner"},
+            {"year": 2024, "text": "Board member, MAU"},
+            {"year": 2024, "text": "Chairman of the digital committee, MAU"},
+            {"year": 2024, "text": "Yandex Direct Gold Partner"},
+            {"year": 2025, "text": "Meta Managed Partner"},
+            {"year": 2026, "text": "Meta Science Partner"},
+        ],
         "careerTitle": "Experience",
         "careerNote": "19 years, 13 of them in digital",
         "jobs": [
@@ -417,8 +446,9 @@ DATA = {
                      "defended the feasibility study before the national operator and signed "
                      "40 partners across Tashkent."},
             {"role": "Corporate sales manager", "when": "June 2011 — July 2018",
-             "note": "Where the digital path began: built the website and set up online advertising. "
-                     "Created the distribution network from scratch; best sales results in four years."},
+             "note": "Where the digital path began: learned web development, Google Ads and analytics — "
+                     "built the company website and ran the advertising himself. Created the "
+                     "distribution network from scratch; best sales results in four years."},
             {"role": "Project manager", "when": "October 2010 — August 2014",
              "note": "Industrial equipment from Chinese plants: brewing lines, press equipment, "
                      "construction materials."},
@@ -712,6 +742,20 @@ DATA = {
             "Toshkentdagi ofis",
             "Jamoaning sayohat uchrashuvi",
         ],
+        "timelineTitle": "Xronologiya",
+        "eraSales": "savdo va distributsiya",
+        "eraDigital": "digital",
+        "milestones": [
+            {"year": 2011, "text": "Birinchi sayt va birinchi internet reklama"},
+            {"year": 2018, "text": "Toshkentda Wunder Digital ofisini ochdi"},
+            {"year": 2020, "text": "Yandex sertifikatlangan agentligi"},
+            {"year": 2023, "text": "Google Premier Partner"},
+            {"year": 2024, "text": "MAU boshqaruvi a’zosi"},
+            {"year": 2024, "text": "MAU digital qo‘mitasi raisi"},
+            {"year": 2024, "text": "Yandex Direct Gold Partner"},
+            {"year": 2025, "text": "Meta Managed Partner"},
+            {"year": 2026, "text": "Meta Science Partner"},
+        ],
         "careerTitle": "Ish tajribasi",
         "careerNote": "19 yil, shundan 13 yili digital sohada",
         "jobs": [
@@ -724,8 +768,9 @@ DATA = {
                      "daromadgacha olib bordi, milliy operator oldida texnik-iqtisodiy asosni "
                      "himoya qildi, Toshkent bo‘ylab 40 ta hamkor jalb qildi."},
             {"role": "Korporativ savdo menejeri", "when": "2011-yil iyun — 2018-yil iyul",
-             "note": "Digital yo‘li shu yerdan boshlangan: sayt yasadi va internet reklamani "
-                     "sozladi. Savdo tarmog‘ini noldan qurdi, to‘rt yildagi eng yaxshi natijalar."},
+             "note": "Digital yo‘li shu yerdan boshlangan: veb-dasturlash, Google reklamasi va analitikani "
+                     "o‘rgandi — kompaniya saytini yasadi va reklamani o‘zi sozladi. Savdo tarmog‘ini "
+                     "noldan qurdi, to‘rt yildagi eng yaxshi natijalar."},
             {"role": "Loyihalar menejeri", "when": "2010-yil oktabr — 2014-yil avgust",
              "note": "Xitoy zavodlaridan sanoat uskunalari: pivo liniyalari, press uskunalari, "
                      "qurilish materiallari."},
