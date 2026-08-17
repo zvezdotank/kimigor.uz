@@ -15,11 +15,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
-                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS,
+                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS, EMAIL_WORK, AGENCY_URL,
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 9
+CSS_VERSION = 13
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -65,8 +65,8 @@ def glyph(name, href):
 
 # ── блоки страницы ───────────────────────────────────────────────────────────
 
-def head(lang, t, page=""):
-    suffix = "media/" if page == "media" else ""
+def head(lang, t, page="", page_title=""):
+    suffix = f"{page}/" if page else ""
     canonical = SITE + URLS[lang] + suffix
     alts = "\n".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{u}{suffix}">'
                      for c, _, u in LANGS)
@@ -75,7 +75,7 @@ def head(lang, t, page=""):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(t['mediaPageTitle'] + ' — ' + t['name']) if page == 'media' else e(t['title'])}</title>
+<title>{e(page_title + ' — ' + t['name']) if page_title else e(t['title'])}</title>
 <meta name="description" content="{e(t['description'])}">
 <meta name="theme-color" content="#101114">
 <meta name="color-scheme" content="dark">
@@ -107,10 +107,23 @@ def head(lang, t, page=""):
 def header(lang, t):
     current = ' aria-current="page"'
     langs = "\n".join(
-        f'      <a href="{u}" hreflang="{c}"{current if c == lang else ""}>{lb}</a>'
+        f'        <a href="{u}" hreflang="{c}"{current if c == lang else ""}>{lb}</a>'
         for c, lb, u in LANGS)
+    base = URLS[lang]
+    nav = "".join(
+        f'<a href="{base}{slug}/">{e(t[key])}</a>'
+        for slug, key in (("career", "navCareer"), ("speaking", "navSpeaking"),
+                          ("jury", "navJury"), ("media", "navMedia")))
     return f"""  <header class="top">
-    <a class="brand" href="{URLS[lang]}">{e(t['name'])} &nbsp;<span>{e(t['jobTitle'])}</span></a>
+    <a class="brand" href="{base}">{e(t['name'])}<span>{e(t['jobTitle'])}</span></a>
+    <nav class="menu" aria-label="{e(t['navCareer'])}">{nav}</nav>
+    <div class="avail" data-avail
+         data-on="{e(t['statusOn'])}" data-off="{e(t['statusOff'])}"
+         data-left="{e(t['statusLeft'])}" data-back="{e(t['statusBack'])}"
+         data-units="{e(t['units'])}"
+         title="{e(t['workHours'])}">
+      <i></i><span class="mono"></span>
+    </div>
     <a class="tel mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a>
     <nav class="langs mono" aria-label="{e(t['langLabel'])}">
 {langs}
@@ -185,7 +198,7 @@ def timeline(t):
             floors.append(-99.0)
         floors[row] = hi
         anchor = (f'right: {100 - left:.2f}%' if flip else f'left: {left:.2f}%')
-        cls = "mark rev" if flip else "mark"
+        cls = ("mark rev" if flip else "mark") + (" co" if ms.get("co") else "")
         marks.append(f'        <div class="{cls}" style="{anchor}; --floor: {row}">'
                      f'<b class="mono">{ms["year"]}</b>'
                      f'<span>{e(ms["text"])}</span></div>')
@@ -243,12 +256,13 @@ def scale(segments, years_range, title, labels=None, every=1):
 """
 
 
-def section(title, body, count=None):
+def section(title, body, count=None, first=False):
     if not body:
         return ""
     meta = f'      <div class="count mono">{e(count)}</div>\n' if count else ""
+    cls = "sec first" if first else "sec"
     return f"""
-  <section class="sec">
+  <section class="{cls}">
     <div class="sec-h">
       <h2>{e(title)}</h2>
 {meta}    </div>
@@ -284,7 +298,19 @@ def photos(lang, t, files, title_key, caption_key):
     return section(t[title_key], f'    <div class="shots">\n{cells}\n    </div>')
 
 
-def career(t):
+def career_rows(t, limit=None):
+    """Строки мест работы: компания, должность и период."""
+    out = []
+    for job, place in list(zip(t["jobs"], CAREER))[:limit]:
+        out.append(f"""    <div class="row">
+      <div><div class="t">{e(place["org"])}</div>
+        <div class="s">{e(job["role"])}</div></div>
+      <div class="m">{e(job["when"])}</div>
+    </div>""")
+    return "\n".join(out)
+
+
+def career(t, first=False):
     if not t["jobs"]:
         return ""
     rows_html = []
@@ -297,7 +323,7 @@ def career(t):
       </div>
       <div class="m">{e(job["when"])}</div>
     </div>""")
-    return section(t["careerTitle"], "\n".join(rows_html), t["careerNote"])
+    return section(t["careerTitle"], "\n".join(rows_html), t["careerNote"], first=first)
 
 
 def person(t):
@@ -327,6 +353,19 @@ def awards(t):
     return section(t["awardsTitle"], f'    <div class="awards">\n{cards}\n    </div>')
 
 
+def agency(t):
+    """Достижения агентства — отдельно от личных."""
+    if not t.get("agency"):
+        return ""
+    body = "\n".join(f"""    <div class="row">
+      <div><div class="t">{e(a["title"])}</div>""" +
+        (f'<div class="s">{e(a["sub"])}</div>' if a.get("sub") else "") + f"""</div>
+      <div class="m">{e(a["meta"])}</div>
+      {src_link(a, t["proof"])}
+    </div>""" for a in t["agency"])
+    return section(t["agencyTitle"], body, t["agencyNote"])
+
+
 def skills(t):
     if not t["skills"]:
         return ""
@@ -348,30 +387,33 @@ def quotes(t):
     return section(t["quotesTitle"], body)
 
 
-def contact(t):
+def contact(lang, t):
+    """Подвал: кто, как связаться и иконки соцсетей."""
     glyphs = [glyph("Instagram", INSTAGRAM), glyph("LinkedIn", LINKEDIN)]
     if FACEBOOK:
         glyphs.append(glyph("Facebook", FACEBOOK))
     return f"""
-  <section class="contact">
-    <div>
-      <h2 class="cap">{e(t['contactKicker'])}</h2>
-      <div class="lines">
-        <a href="tel:{PHONE}">
-          <b>{e(t['phoneLabel'])}</b>
-          <span class="v mono">{e(PHONE_TEXT)}</span>
-        </a>
-        <a href="mailto:{EMAIL}">
-          <b>{e(t['emailLabel'])}</b>
-          <span class="v">{EMAIL}</span>
-        </a>
-      </div>
-    </div>
-    <div class="glyphs">
-      {"".join(glyphs)}
-    </div>
-  </section>
   </main>
+
+  <footer class="foot">
+    <div class="foot-main">
+      <div class="foot-who">
+        <b>{e(t['name'])}</b>
+        <span>{e(t['jobTitle'])}</span>
+      </div>
+      <div class="foot-links">
+        <span><b>{e(t['phoneLabel'])}</b><a class="mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a></span>
+        <span><b>{e(t['emailLabel'])}</b><a href="mailto:{EMAIL}">{EMAIL}</a></span>
+        <span><b>{e(t['emailWorkLabel'])}</b><a href="mailto:{EMAIL_WORK}">{EMAIL_WORK}</a></span>
+        <span><b>{e(t['agencyLabel'])}</b><a href="{AGENCY_URL}" target="_blank" rel="noopener">wunder-digital.uz</a></span>
+      </div>
+      <div class="glyphs">{"".join(glyphs)}</div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 {e(t['name'])}, {e(t['place'])}</span>
+      <span class="mono">{e(t['workHours'])}</span>
+    </div>
+  </footer>
 """
 
 
@@ -388,7 +430,7 @@ def json_ld(lang, t):
         "image": f"{SITE}/img/speaker-taf26.webp",
         "jobTitle": t["jobTitle"],
         "telephone": PHONE,
-        "email": EMAIL,
+        "email": [EMAIL, EMAIL_WORK],
         "worksFor": {"@type": "Organization", "name": "Wunder Digital Uzbekistan",
                      "url": "https://wunder-digital.uz/"},
         "memberOf": {"@type": "Organization", "name": "Marketing Association of Uzbekistan",
@@ -404,12 +446,9 @@ def json_ld(lang, t):
 
 def footer(lang, t):
     return f"""
-  <div class="copy">
-    <span>© 2026 {e(t['name'])}</span>
-    <span>{e(t['place'])}</span>
-  </div>
 </div>
 {json_ld(lang, t)}
+<script src="{asset(lang, "avail.js")}?v={CSS_VERSION}" defer></script>
 </body>
 </html>
 """
@@ -428,54 +467,72 @@ def build_page(lang):
         photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
         about(t),
         person(t),
-        career(t),
-        section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")),
+        section(t["careerTitle"], career_rows(t, limit=3)
+                + more_link(lang, "career", t["allCareer"]), t["careerNote"]),
         awards(t),
-        section(t["talksTitle"], rows(t["talks"], t, "event", "sub", "meta"),
-                n(t["talks"], t["unitEvents"])),
-        section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
-                n(t["jury"], t["unitJury"])),
         skills(t),
-        section(t["mediaTitle"], rows(t["media"][:6], t, "title", None, "outlet")
-                + more_link(lang, t), n(t["media"] + t["pages"], t["unitMedia"])),
+        agency(t),
+        section(t["talksTitle"], rows(t["talks"][:4], t, "event", "sub", "meta")
+                + more_link(lang, "speaking", t["allSpeaking"]),
+                n(t["talks"], t["unitEvents"])),
+        section(t["juryTitle"], rows(t["jury"][:3], t, "event", "sub", "meta")
+                + more_link(lang, "jury", t["allJury"]),
+                n(t["jury"], t["unitJury"])),
+        section(t["mediaTitle"], rows(t["media"][:5], t, "title", None, "outlet")
+                + more_link(lang, "media", t["mediaAll"]),
+                n(t["media"] + t["pages"], t["unitMedia"])),
         quotes(t),
         photos(lang, t, PHOTOS_TEAM, "teamTitle", "team"),
-        contact(t),
+        contact(lang, t),
         footer(lang, t),
     ])
 
 
-def more_link(lang, t):
+def more_link(lang, slug, label):
     """Ссылка на полный список — он живёт отдельной страницей."""
-    return (f'\n    <a class="more" href="{media_url(lang)}">'
-            f'{e(t["mediaAll"])} →</a>')
+    return f'\n    <a class="more" href="{URLS[lang]}{slug}/">{e(label)} →</a>'
 
 
-def media_url(lang):
-    return URLS[lang] + "media/"
+SUBPAGES = ("career", "speaking", "jury", "media")
 
 
-def build_media_page(lang):
-    """Отдельная страница: все публикации и официальные страницы."""
+def sub_url(lang, slug):
+    return f"{URLS[lang]}{slug}/"
+
+
+def build_sub_page(lang, slug):
+    """Отдельная страница раздела: списки целиком, без сокращений."""
     t = DATA[lang]
-    body = (head(lang, t, page="media")
+    if slug == "career":
+        title = t["careerPageTitle"]
+        body = (career(t, first=True)
+                + section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")))
+    elif slug == "speaking":
+        title = t["speakingPageTitle"]
+        body = section(t["talksTitle"], rows(t["talks"], t, "event", "sub", "meta"),
+                       f'{len(t["talks"])} {t["unitEvents"]}', first=True)
+    elif slug == "jury":
+        title = t["juryPageTitle"]
+        body = section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
+                       f'{len(t["jury"])} {t["unitJury"]}', first=True)
+    else:
+        title = t["mediaPageTitle"]
+        body = (section(t["mediaTitle"], rows(t["media"], t, "title", None, "outlet"),
+                        f'{len(t["media"])} {t["unitMedia"]}', first=True)
+                + section(t["pagesTitle"], rows(t["pages"], t, "title", None, "outlet"),
+                          f'{len(t["pages"])} {t["unitPages"]}'))
+    return (head(lang, t, page=slug, page_title=title)
             + header(lang, t)
-            + f'\n  <main id="main">\n  <section class="sec first">\n'
-              f'    <div class="sec-h"><h2>{e(t["mediaTitle"])}</h2>'
-              f'<div class="count mono">{len(t["media"])} {e(t["unitMedia"])}</div></div>\n'
-            + rows(t["media"], t, "title", None, "outlet")
-            + "\n  </section>\n"
-            + section(t["pagesTitle"], rows(t["pages"], t, "title", None, "outlet"),
-                      f'{len(t["pages"])} {t["unitPages"]}')
+            + '\n  <main id="main">\n'
+            + body
             + f'\n  <p class="back"><a href="{URLS[lang]}">← {e(t["backHome"])}</a></p>\n'
-              f'  </main>\n'
+            + contact(lang, t)
             + footer(lang, t))
-    return body
 
 
 def build_sitemap():
     items = [(u, "1.0" if u == "/" else "0.8") for _, _, u in LANGS]
-    items += [(u + "media/", "0.5") for _, _, u in LANGS]
+    items += [(u + slug + "/", "0.6") for _, _, u in LANGS for slug in SUBPAGES]
     urls = "\n".join(
         f"  <url>\n    <loc>{SITE}{u}</loc>\n    <changefreq>monthly</changefreq>\n"
         f"    <priority>{pr}</priority>\n  </url>" for u, pr in items)
@@ -495,11 +552,12 @@ def main():
         print(f"  {out_path(lang)}")
 
         DEPTH = 1
-        mpath = os.path.join(ROOT, media_url(lang).strip("/"), "index.html")
-        os.makedirs(os.path.dirname(mpath), exist_ok=True)
-        with open(mpath, "w", encoding="utf-8") as f:
-            f.write(build_media_page(lang))
-        print(f"  {media_url(lang).strip('/')}/index.html")
+        for slug in SUBPAGES:
+            spath = os.path.join(ROOT, sub_url(lang, slug).strip("/"), "index.html")
+            os.makedirs(os.path.dirname(spath), exist_ok=True)
+            with open(spath, "w", encoding="utf-8") as f:
+                f.write(build_sub_page(lang, slug))
+            print(f"  {sub_url(lang, slug).strip('/')}/index.html")
     DEPTH = 0
 
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
