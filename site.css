@@ -230,6 +230,21 @@ img { display: block; max-width: 100%; }
 .award p { margin: 0; font-size: 14px; color: var(--dim); line-height: 1.5; }
 .award .src { margin-top: auto; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
 
+/* статусы агентства по платформам */
+.plat {
+  display: grid; grid-template-columns: 240px 1fr; gap: 24px;
+  align-items: start; padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.plat-name {
+  font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint);
+  padding-top: 3px;
+}
+.plat-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.plat-list li { display: flex; align-items: baseline; gap: 12px; }
+.plat-list span { font-size: 16px; font-weight: 500; }
+.plat-list b { font-size: 12px; font-weight: 400; color: var(--faint); }
+.plat-list .src { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+
 /* фотографии */
 .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
 .shots figure { margin: 0; }
@@ -324,7 +339,7 @@ a.more:hover { text-decoration: none; border-bottom-color: var(--sig); }
   .track-scroll { overflow-x: auto; }
   .track-inner { min-width: 640px; }
 
-  .row, .row.job, .skill { grid-template-columns: 1fr; gap: 6px; }
+  .row, .row.job, .skill, .plat { grid-template-columns: 1fr; gap: 6px; }
   .shots { grid-template-columns: 1fr; }
   .row .src { text-align: left; }
   .foot-main { gap: 16px; padding: 16px 0 14px; }

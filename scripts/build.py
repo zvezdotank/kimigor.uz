@@ -16,10 +16,10 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS, EMAIL_WORK, AGENCY_URL,
-                     PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS)
+                     PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 13
+CSS_VERSION = 14
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -354,16 +354,21 @@ def awards(t):
 
 
 def agency(t):
-    """Достижения агентства — отдельно от личных."""
-    if not t.get("agency"):
-        return ""
-    body = "\n".join(f"""    <div class="row">
-      <div><div class="t">{e(a["title"])}</div>""" +
-        (f'<div class="s">{e(a["sub"])}</div>' if a.get("sub") else "") + f"""</div>
-      <div class="m">{e(a["meta"])}</div>
-      {src_link(a, t["proof"])}
-    </div>""" for a in t["agency"])
-    return section(t["agencyTitle"], body, t["agencyNote"])
+    """Статусы агентства, сгруппированные по платформам."""
+    groups = []
+    for g in AGENCY:
+        items = "\n".join(
+            f"""        <li><span>{e(it["t"])}</span>"""
+            + (f'<b class="mono">{e(it["y"])}</b>' if it.get("y") else "")
+            + (src_link(it, t["proof"]) if it.get("href") else "")
+            + "</li>" for it in g["items"])
+        groups.append(f"""    <div class="plat">
+      <div class="plat-name">{e(g["platform"])}</div>
+      <ul class="plat-list">
+{items}
+      </ul>
+    </div>""")
+    return section(t["agencyTitle"], "\n".join(groups), t["agencyNote"])
 
 
 def skills(t):

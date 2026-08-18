@@ -38,6 +38,28 @@ CAREER = [
 PHOTOS_WORK = ["rukopozhatie-konferenciya.jpeg",
                "yandex-conference-banner.jpeg",
                "yandex-conference-scena.jpeg"]
+
+# Статусы агентства по платформам. Названия партнёрских программ не переводятся.
+AGENCY = [
+    {"platform": "Google", "items": [
+        {"t": "Google Premier Partner", "y": "2023",
+         "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
+    ]},
+    {"platform": "Yandex", "items": [
+        {"t": "Yandex Certified Agency", "y": "2020", "href": ""},
+        {"t": "Yandex Gold Partner", "y": "2024", "href": ""},
+    ]},
+    {"platform": "Meta", "items": [
+        {"t": "Meta Certified Agency", "y": "",
+         "href": "https://wunder-digital.uz/wunder-digital-prodlil-status-sertifitsirovannogo-agentstva-meta/"},
+        {"t": "Meta Managed Agency", "y": "", "href": ""},
+        {"t": "Meta Business Partner", "y": "", "href": ""},
+    ]},
+    {"platform": "Telegram", "items": [
+        {"t": "Authorized Reseller", "y": "", "href": ""},
+    ]},
+]
+
 PHOTOS_TEAM = ["komanda-registan.jpeg", "komanda-ofis-1.jpeg", "komanda-vyezd.jpeg"]
 
 LANGS = [
@@ -106,8 +128,6 @@ DATA = {
             {"year": 2024, "text": "Член правления МАУ"},
             {"year": 2024, "text": "Председатель digital-комитета МАУ"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
-            {"year": 2025, "text": "Meta Managed Partner", "co": True},
-            {"year": 2026, "text": "Meta Science Partner", "co": True},
         ],
         "careerTitle": "Опыт работы",
         "careerNote": "19 лет, из них 13 в digital",
@@ -228,15 +248,6 @@ DATA = {
         ],
         "agencyTitle": "Достижения агентства",
         "agencyNote": "Wunder Digital Uzbekistan под его руководством",
-        "agency": [
-            {"title": "Google Premier Partner", "sub": "топ-3% партнёров Google", "meta": "с 2023",
-             "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
-            {"title": "Yandex Direct Gold Partner", "sub": "", "meta": "с 2024", "href": ""},
-            {"title": "Сертифицированное агентство Яндекса", "sub": "", "meta": "с 2020", "href": ""},
-            {"title": "Meta Managed Partner · Meta Science Partner", "sub": "", "meta": "2025 и 2026",
-             "href": "https://wunder-digital.uz/wunder-digital-prodlil-status-sertifitsirovannogo-agentstva-meta/"},
-            {"title": "№1 по контекстной рекламе и №1 в SEO в Узбекистане", "sub": "", "meta": "2020", "href": ""},
-        ],
         "talks": [
             {"event": "Tashkent Advertising Festival TAF!26", "sub": "Спикер конференции",
              "meta": "Ташкент, Hyatt Regency, 2026", "href": "https://taf26.marketing.uz/speakers/24.htm"},
@@ -459,8 +470,6 @@ DATA = {
             {"year": 2024, "text": "Board member, MAU"},
             {"year": 2024, "text": "Chairman of the digital committee, MAU"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
-            {"year": 2025, "text": "Meta Managed Partner", "co": True},
-            {"year": 2026, "text": "Meta Science Partner", "co": True},
         ],
         "careerTitle": "Experience",
         "careerNote": "19 years, 13 of them in digital",
@@ -579,15 +588,6 @@ DATA = {
         ],
         "agencyTitle": "Agency achievements",
         "agencyNote": "Wunder Digital Uzbekistan under his leadership",
-        "agency": [
-            {"title": "Google Premier Partner", "sub": "top 3% of Google partners", "meta": "since 2023",
-             "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
-            {"title": "Yandex Direct Gold Partner", "sub": "", "meta": "since 2024", "href": ""},
-            {"title": "Yandex certified agency", "sub": "", "meta": "since 2020", "href": ""},
-            {"title": "Meta Managed Partner · Meta Science Partner", "sub": "", "meta": "2025 and 2026",
-             "href": "https://wunder-digital.uz/wunder-digital-prodlil-status-sertifitsirovannogo-agentstva-meta/"},
-            {"title": "No. 1 in paid search and No. 1 in SEO in Uzbekistan", "sub": "", "meta": "2020", "href": ""},
-        ],
         "talks": [
             {"event": "Tashkent Advertising Festival TAF!26", "sub": "Conference speaker",
              "meta": "Tashkent, Hyatt Regency, 2026", "href": "https://taf26.marketing.uz/speakers/24.htm"},
@@ -807,8 +807,6 @@ DATA = {
             {"year": 2024, "text": "MAU boshqaruvi a’zosi"},
             {"year": 2024, "text": "MAU digital qo‘mitasi raisi"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
-            {"year": 2025, "text": "Meta Managed Partner", "co": True},
-            {"year": 2026, "text": "Meta Science Partner", "co": True},
         ],
         "careerTitle": "Ish tajribasi",
         "careerNote": "19 yil, shundan 13 yili digital sohada",
@@ -927,15 +925,6 @@ DATA = {
         ],
         "agencyTitle": "Agentlik yutuqlari",
         "agencyNote": "u boshqaradigan Wunder Digital Uzbekistan",
-        "agency": [
-            {"title": "Google Premier Partner", "sub": "Google hamkorlarining top-3%i", "meta": "2023-yildan",
-             "href": "https://marketing.uz/news/partners/wunder-digital-podtverdil-status-google-premier-partner-2025.htm"},
-            {"title": "Yandex Direct Gold Partner", "sub": "", "meta": "2024-yildan", "href": ""},
-            {"title": "Yandex sertifikatlangan agentligi", "sub": "", "meta": "2020-yildan", "href": ""},
-            {"title": "Meta Managed Partner · Meta Science Partner", "sub": "", "meta": "2025 va 2026",
-             "href": "https://wunder-digital.uz/wunder-digital-prodlil-status-sertifitsirovannogo-agentstva-meta/"},
-            {"title": "O‘zbekistonda kontekst reklama va SEO bo‘yicha №1", "sub": "", "meta": "2020", "href": ""},
-        ],
         "talks": [
             {"event": "Tashkent Advertising Festival TAF!26", "sub": "Konferensiya ma’ruzachisi",
              "meta": "Toshkent, Hyatt Regency, 2026", "href": "https://taf26.marketing.uz/speakers/24.htm"},
