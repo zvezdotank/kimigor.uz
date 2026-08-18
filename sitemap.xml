@@ -41,6 +41,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://kimigor.uz/contacts/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kimigor.uz/en/career/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -66,6 +71,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://kimigor.uz/en/contacts/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kimigor.uz/uz/career/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -87,6 +97,11 @@
   </url>
   <url>
     <loc>https://kimigor.uz/uz/media/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://kimigor.uz/uz/contacts/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -19,7 +19,7 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 17
+CSS_VERSION = 18
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -114,7 +114,7 @@ def header(lang, t):
         f'<a href="{base}{slug}/">{e(t[key])}</a>'
         for slug, key in (("career", "navCareer"), ("training", "navTraining"),
                           ("speaking", "navSpeaking"), ("jury", "navJury"),
-                          ("media", "navMedia")))
+                          ("media", "navMedia"), ("contacts", "navContacts")))
     return f"""  <header class="top">
     <a class="brand" href="{base}">{e(t['name'])}<span>{e(t['jobTitle'])}</span></a>
     <nav class="menu" aria-label="{e(t['navCareer'])}">{nav}</nav>
@@ -429,6 +429,41 @@ def quotes(t):
     return section(t["quotesTitle"], body)
 
 
+def contacts_page(t):
+    """Страница контактов: связь, соцсети и часы работы."""
+    socials = [("Instagram", INSTAGRAM, "@zvezdotank_"),
+               ("LinkedIn", LINKEDIN, "/in/zvezdotank")]
+    if FACEBOOK:
+        socials.append(("Facebook", FACEBOOK, "Facebook"))
+    social_rows = "\n".join(f"""    <div class="row">
+      <div><div class="t">{name}</div></div>
+      <div class="m">{e(label)}</div>
+      <a class="src" href="{href}" target="_blank" rel="noopener me">{e(t["proof"])}</a>
+    </div>""" for name, href, label in socials)
+    return (f'\n  <p class="lede page-lede">{e(t["contactsLede"])}</p>\n'
+            + section(t["contactKicker"], f"""    <div class="skill">
+      <div class="g">{e(t["phoneLabel"])}</div>
+      <div class="v"><a class="mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a></div>
+    </div>
+    <div class="skill">
+      <div class="g">{e(t["emailLabel"])}</div>
+      <div class="v"><a href="mailto:{EMAIL}">{EMAIL}</a></div>
+    </div>
+    <div class="skill">
+      <div class="g">{e(t["emailWorkLabel"])}</div>
+      <div class="v"><a href="mailto:{EMAIL_WORK}">{EMAIL_WORK}</a></div>
+    </div>
+    <div class="skill">
+      <div class="g">{e(t["agencyLabel"])}</div>
+      <div class="v"><a href="{AGENCY_URL}" target="_blank" rel="noopener">wunder-digital.uz</a></div>
+    </div>
+    <div class="skill">
+      <div class="g">{e(t["hoursTitle"])}</div>
+      <div class="v">{e(t["workHours"])}</div>
+    </div>""", first=True)
+            + section(t["socialTitle"], social_rows))
+
+
 def contact(lang, t):
     """Подвал: кто, как связаться и иконки соцсетей."""
     glyphs = [glyph("Instagram", INSTAGRAM), glyph("LinkedIn", LINKEDIN)]
@@ -534,7 +569,7 @@ def more_link(lang, slug, label):
     return f'\n    <a class="more" href="{URLS[lang]}{slug}/">{e(label)} →</a>'
 
 
-SUBPAGES = ("career", "training", "speaking", "jury", "media")
+SUBPAGES = ("career", "training", "speaking", "jury", "media", "contacts")
 
 
 def sub_url(lang, slug):
@@ -546,8 +581,7 @@ def build_sub_page(lang, slug):
     t = DATA[lang]
     if slug == "career":
         title = t["careerPageTitle"]
-        body = (career(t, first=True)
-                + section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")))
+        body = career(t, first=True) + awards(t)
     elif slug == "training":
         title = t["trainingPageTitle"]
         body = training(t, first=True)
@@ -559,6 +593,9 @@ def build_sub_page(lang, slug):
         title = t["juryPageTitle"]
         body = section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
                        f'{len(t["jury"])} {t["unitJury"]}', first=True)
+    elif slug == "contacts":
+        title = t["contactsPageTitle"]
+        body = contacts_page(t)
     else:
         title = t["mediaPageTitle"]
         body = (section(t["mediaTitle"], rows(t["media"], t, "title", None, "outlet"),

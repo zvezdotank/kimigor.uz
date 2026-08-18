@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Контент личной страницы Ким Игоря на трёх языках.
+"""
+Контент личной страницы Ким Игоря на трёх языках.
 
 Правки текста делаются здесь, потом `python3 scripts/build.py`.
 Пустой href в списке = пункт не выводится на страницу.
@@ -160,6 +161,7 @@ DATA = {
             {"year": 2020, "text": "Сертифицированное агентство Яндекса", "co": True},
             {"year": 2023, "text": "Google Premier Partner", "co": True},
             {"year": 2025, "text": "Топ-35 маркетологов Узбекистана"},
+            {"year": 2022, "text": "Эксперт Маркетинговой ассоциации Узбекистана"},
             {"year": 2024, "text": "Член правления МАУ"},
             {"year": 2024, "text": "Председатель digital-комитета МАУ"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
@@ -178,7 +180,7 @@ DATA = {
              "note": "Монетизация публичных Wi-Fi-сетей. Провёл проект от идеи до монетизации, "
                      "защитил технико-экономическое обоснование перед национальным оператором, "
                      "подключил 40 партнёров по Ташкенту."},
-            {"role": "Менеджер корпоративных продаж", "when": "июнь 2011 — июль 2018",
+            {"role": "Менеджер корпоративных продаж", "when": "июнь 2011 — июнь 2017",
              "note": "Здесь начался путь в digital: изучил веб-разработку, рекламу Google и аналитику — "
                      "сделал сайт компании и сам настроил интернет-рекламу. Организовал сеть сбыта "
                      "с нуля, лучшие результаты по продажам за четыре года."},
@@ -221,6 +223,11 @@ DATA = {
         "trainingPageTitle": "Обучение, курсы и сертификаты",
         "allTraining": "Все курсы и сертификаты", "navSpeaking": "Выступления",
         "navJury": "Судейство", "navMedia": "Медиа",
+        "navContacts": "Контакты",
+        "contactsPageTitle": "Контакты",
+        "contactsLede": "Пишите по любому поводу: выступление на конференции, экспертный комментарий для медиа, работа в жюри или сотрудничество с агентством.",
+        "socialTitle": "Соцсети",
+        "hoursTitle": "Когда на связи",
         "careerPageTitle": "Опыт работы и должности",
         "speakingPageTitle": "Выступления на форумах и конференциях",
         "juryPageTitle": "Работа в жюри профессиональных конкурсов",
@@ -270,22 +277,22 @@ DATA = {
              "period": "по настоящее время",
              "href": "https://marketing.uz/about/board/kim-igor.htm"},
             {"title": "Эксперт ассоциации", "org": "Маркетинговая ассоциация Узбекистана",
-             "period": "по настоящее время",
+             "period": "с 2022 года",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
         ],
         "awards": [
-            {"year": "2025", "title": "Топ-35 маркетологов Узбекистана",
-             "desc": "Включён в список ведущих маркетологов страны по итогам года.",
-             "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
-            {"year": "с 2024", "title": "Председатель digital-комитета",
+            {"year": "с 2022", "title": "Эксперт ассоциации",
              "desc": "Маркетинговая ассоциация Узбекистана.",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
             {"year": "с 2024", "title": "Член правления",
              "desc": "Маркетинговая ассоциация Узбекистана.",
              "href": "https://marketing.uz/about/board/"},
-            {"year": "—", "title": "Эксперт ассоциации",
+            {"year": "с 2024", "title": "Председатель digital-комитета",
              "desc": "Маркетинговая ассоциация Узбекистана.",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
+            {"year": "2025", "title": "Топ-35 маркетологов Узбекистана",
+             "desc": "Включён в список ведущих маркетологов страны по итогам года.",
+             "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
         ],
         "agencyTitle": "Достижения агентства",
         "agencyNote": "Wunder Digital Uzbekistan под его руководством",
@@ -338,7 +345,7 @@ DATA = {
         ],
         "skills": [
             {"group": "Реклама и закупка",
-             "items": "Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads"},
+             "items": "Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads · Native Network · BYYD · локальное размещение"},
             {"group": "Аналитика", "items": "Google Analytics · Yandex Metrica · AppMetrica"},
             {"group": "Мобильная атрибуция", "items": "Adjust · AppsFlyer"},
             {"group": "Веб-продакшн", "items": "WordPress · Tilda"},
@@ -507,6 +514,7 @@ DATA = {
             {"year": 2020, "text": "Yandex certified agency", "co": True},
             {"year": 2023, "text": "Google Premier Partner", "co": True},
             {"year": 2025, "text": "Top 35 marketers in Uzbekistan"},
+            {"year": 2022, "text": "Expert of the Marketing Association of Uzbekistan"},
             {"year": 2024, "text": "Board member, MAU"},
             {"year": 2024, "text": "Chairman of the digital committee, MAU"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
@@ -525,7 +533,7 @@ DATA = {
              "note": "Monetisation of public Wi-Fi networks. Ran the project from idea to revenue, "
                      "defended the feasibility study before the national operator and signed "
                      "40 partners across Tashkent."},
-            {"role": "Corporate sales manager", "when": "June 2011 — July 2018",
+            {"role": "Corporate sales manager", "when": "June 2011 — June 2017",
              "note": "Where the digital path began: learned web development, Google Ads and analytics — "
                      "built the company website and ran the advertising himself. Created the "
                      "distribution network from scratch; best sales results in four years."},
@@ -568,6 +576,11 @@ DATA = {
         "trainingPageTitle": "Training, courses and certificates",
         "allTraining": "All courses and certificates", "navSpeaking": "Speaking",
         "navJury": "Jury", "navMedia": "Media",
+        "navContacts": "Contacts",
+        "contactsPageTitle": "Contacts",
+        "contactsLede": "Get in touch about anything: speaking at a conference, an expert comment for the media, jury work or working with the agency.",
+        "socialTitle": "Social",
+        "hoursTitle": "Availability",
         "careerPageTitle": "Experience and roles",
         "speakingPageTitle": "Talks at forums and conferences",
         "juryPageTitle": "Jury work at professional awards",
@@ -615,22 +628,22 @@ DATA = {
             {"title": "Board member", "org": "Marketing Association of Uzbekistan", "period": "present",
              "href": "https://marketing.uz/about/board/kim-igor.htm"},
             {"title": "Association expert", "org": "Marketing Association of Uzbekistan",
-             "period": "present",
+             "period": "since 2022",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
         ],
         "awards": [
-            {"year": "2025", "title": "Top 35 marketers in Uzbekistan",
-             "desc": "Listed among the country’s leading marketers for the year.",
-             "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
-            {"year": "since 2024", "title": "Chairman of the digital committee",
+            {"year": "since 2022", "title": "Association expert",
              "desc": "Marketing Association of Uzbekistan.",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
             {"year": "since 2024", "title": "Board member",
              "desc": "Marketing Association of Uzbekistan.",
              "href": "https://marketing.uz/about/board/"},
-            {"year": "—", "title": "Association expert",
+            {"year": "since 2024", "title": "Chairman of the digital committee",
              "desc": "Marketing Association of Uzbekistan.",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
+            {"year": "2025", "title": "Top 35 marketers in Uzbekistan",
+             "desc": "Listed among the country’s leading marketers for the year.",
+             "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
         ],
         "agencyTitle": "Agency achievements",
         "agencyNote": "Wunder Digital Uzbekistan under his leadership",
@@ -683,7 +696,7 @@ DATA = {
         ],
         "skills": [
             {"group": "Advertising and buying",
-             "items": "Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads"},
+             "items": "Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads · Native Network · BYYD · local placements"},
             {"group": "Analytics", "items": "Google Analytics · Yandex Metrica · AppMetrica"},
             {"group": "Mobile attribution", "items": "Adjust · AppsFlyer"},
             {"group": "Web production", "items": "WordPress · Tilda"},
@@ -849,6 +862,7 @@ DATA = {
             {"year": 2020, "text": "Yandex sertifikatlangan agentligi", "co": True},
             {"year": 2023, "text": "Google Premier Partner", "co": True},
             {"year": 2025, "text": "O‘zbekiston top-35 marketologi"},
+            {"year": 2022, "text": "O‘zbekiston Marketing assotsiatsiyasi eksperti"},
             {"year": 2024, "text": "MAU boshqaruvi a’zosi"},
             {"year": 2024, "text": "MAU digital qo‘mitasi raisi"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
@@ -867,7 +881,7 @@ DATA = {
              "note": "Ommaviy Wi-Fi tarmoqlarini monetizatsiya qilish. Loyihani g‘oyadan "
                      "daromadgacha olib bordi, milliy operator oldida texnik-iqtisodiy asosni "
                      "himoya qildi, Toshkent bo‘ylab 40 ta hamkor jalb qildi."},
-            {"role": "Korporativ savdo menejeri", "when": "2011-yil iyun — 2018-yil iyul",
+            {"role": "Korporativ savdo menejeri", "when": "2011-yil iyun — 2017-yil iyun",
              "note": "Digital yo‘li shu yerdan boshlangan: veb-dasturlash, Google reklamasi va analitikani "
                      "o‘rgandi — kompaniya saytini yasadi va reklamani o‘zi sozladi. Savdo tarmog‘ini "
                      "noldan qurdi, to‘rt yildagi eng yaxshi natijalar."},
@@ -910,6 +924,11 @@ DATA = {
         "trainingPageTitle": "O‘qish, kurslar va sertifikatlar",
         "allTraining": "Barcha kurs va sertifikatlar", "navSpeaking": "Ma’ruzalar",
         "navJury": "Hakamlik", "navMedia": "Media",
+        "navContacts": "Kontaktlar",
+        "contactsPageTitle": "Kontaktlar",
+        "contactsLede": "Istalgan masala bo‘yicha yozing: konferensiyada ma’ruza, media uchun ekspert izohi, hakamlik yoki agentlik bilan hamkorlik.",
+        "socialTitle": "Ijtimoiy tarmoqlar",
+        "hoursTitle": "Qachon aloqadaman",
         "careerPageTitle": "Ish tajribasi va lavozimlar",
         "speakingPageTitle": "Forum va konferensiyalardagi ma’ruzalar",
         "juryPageTitle": "Professional tanlovlarda hakamlik",
@@ -957,22 +976,22 @@ DATA = {
             {"title": "Boshqaruv a’zosi", "org": "O‘zbekiston Marketing assotsiatsiyasi",
              "period": "hozirgi vaqtda", "href": "https://marketing.uz/about/board/kim-igor.htm"},
             {"title": "Assotsiatsiya eksperti", "org": "O‘zbekiston Marketing assotsiatsiyasi",
-             "period": "hozirgi vaqtda",
+             "period": "2022-yildan",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
         ],
         "awards": [
-            {"year": "2025", "title": "O‘zbekiston top-35 marketologi",
-             "desc": "Yil yakunlari bo‘yicha mamlakatning yetakchi marketologlari ro‘yxatida.",
-             "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
-            {"year": "2024-yildan", "title": "Digital qo‘mita raisi",
+            {"year": "2022-yildan", "title": "Assotsiatsiya eksperti",
              "desc": "O‘zbekiston Marketing assotsiatsiyasi.",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
             {"year": "2024-yildan", "title": "Boshqaruv a’zosi",
              "desc": "O‘zbekiston Marketing assotsiatsiyasi.",
              "href": "https://marketing.uz/about/board/"},
-            {"year": "—", "title": "Assotsiatsiya eksperti",
+            {"year": "2024-yildan", "title": "Digital qo‘mita raisi",
              "desc": "O‘zbekiston Marketing assotsiatsiyasi.",
              "href": "https://marketing.uz/experts/marketing-association/kim-igor.htm"},
+            {"year": "2025", "title": "O‘zbekiston top-35 marketologi",
+             "desc": "Yil yakunlari bo‘yicha mamlakatning yetakchi marketologlari ro‘yxatida.",
+             "href": "https://marketing.uz/news/association/top35-marketologov-uzbekistana-po-itogam-2025-goda.htm"},
         ],
         "agencyTitle": "Agentlik yutuqlari",
         "agencyNote": "u boshqaradigan Wunder Digital Uzbekistan",
@@ -1025,7 +1044,7 @@ DATA = {
         ],
         "skills": [
             {"group": "Reklama va sotib olish",
-             "items": "Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads"},
+             "items": "Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads · Native Network · BYYD · mahalliy joylashtirish"},
             {"group": "Analitika", "items": "Google Analytics · Yandex Metrica · AppMetrica"},
             {"group": "Mobil atributsiya", "items": "Adjust · AppsFlyer"},
             {"group": "Veb-prodakshn", "items": "WordPress · Tilda"},
