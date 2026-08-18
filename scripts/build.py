@@ -410,7 +410,7 @@ def contact(lang, t):
       <div class="glyphs">{"".join(glyphs)}</div>
     </div>
     <div class="foot-note">
-      <span>© 2026 {e(t['name'])}, {e(t['place'])}</span>
+      <span>© 2011—2026 {e(t['name'])}, {e(t['place'])}</span>
       <span class="mono">{e(t['workHours'])}</span>
     </div>
   </footer>
