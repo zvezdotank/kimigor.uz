@@ -19,7 +19,7 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 21
+CSS_VERSION = 22
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -124,6 +124,7 @@ def header(lang, t):
          data-units="{e(t['units'])}" title="{e(t['workHours'])}">
       <i></i><span></span>
     </div>
+    <a class="tel mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a>
     <nav class="langs mono" aria-label="{e(t['langLabel'])}">
 {langs}
     </nav>

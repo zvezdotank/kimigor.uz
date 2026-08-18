@@ -21,7 +21,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 72px; }
 
 body {
   margin: 0;
@@ -53,14 +53,24 @@ img { display: block; max-width: 100%; }
 
 /* — шапка — */
 
+/* шапка всегда сверху: имя и телефон под рукой на любой высоте прокрутки */
 .top {
-  display: flex; align-items: center; gap: 20px;
-  padding: 13px 0; border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 18px;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+  background: var(--bg);
 }
-.brand { font-weight: 600; font-size: 16px; color: var(--fg); letter-spacing: -0.01em; }
+.top::before {
+  content: ""; position: absolute; inset: 0 -50vw; z-index: -1;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 600; font-size: 16px; color: var(--fg); letter-spacing: -0.01em; white-space: nowrap; }
+.top .tel { font-size: 14px; color: var(--fg); white-space: nowrap; }
+.top .tel:hover { color: var(--sig); text-decoration: none; }
 .brand:hover { text-decoration: none; }
 
 .menu { display: flex; gap: 2px; margin: 0 auto; }
+.menu a { white-space: nowrap; }
 .menu a {
   font-size: 14px; color: var(--dim); padding: 6px 11px; border: 1px solid transparent;
 }
@@ -343,8 +353,10 @@ a.more:hover { text-decoration: none; border-bottom-color: var(--sig); }
 @media (max-width: 720px) {
   .wrap { padding: 0 16px 56px; }
   .top { flex-wrap: wrap; gap: 10px 14px; }
-  .menu { order: 5; width: 100%; margin: 0; overflow-x: auto; }
+  .top { padding: 10px 0; }
+  .menu { order: 5; width: 100%; margin: 0; overflow-x: auto; padding-bottom: 2px; }
   .avail { order: 4; }
+  .top .tel { order: 3; }
   .intro { grid-template-columns: 1fr; }
   .intro img { width: 140px; height: 168px; }
   .intro h1 { font-size: 28px; }
