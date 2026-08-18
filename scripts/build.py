@@ -19,7 +19,7 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 20
+CSS_VERSION = 21
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -210,7 +210,9 @@ def timeline(t):
     peak = max(len(v) for v in per_year.values())
     bars = "\n".join(
         f'        <div class="bar" style="--h: {len(per_year.get(y, [])) / peak:.2f}" '
-        f'title="{y}: {len(per_year.get(y, []))} {e(t["trainingHint"])}"></div>'
+        f'title="{y}: {len(per_year.get(y, []))} {e(t["trainingHint"])}">'
+        + (f'<b>{len(per_year[y])}</b>' if len(per_year.get(y, [])) >= 2 else "")
+        + '</div>'
         for y in CAREER_YEARS)
 
     return f"""
@@ -224,6 +226,10 @@ def timeline(t):
 {eras}
       <div class="lanes">
 {chr(10).join(lanes)}
+      </div>
+      <div class="learn-h">
+        <span class="cap">{e(t['trainingTitle'])}</span>
+        <span class="n mono">{len(TRAINING)} {e(t['trainingNote'])}</span>
       </div>
       <div class="learn" style="grid-template-columns: repeat({n}, 1fr)"
            aria-label="{e(t['trainingTitle'])}">
