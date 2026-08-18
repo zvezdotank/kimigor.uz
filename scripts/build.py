@@ -19,7 +19,7 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 18
+CSS_VERSION = 20
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -116,16 +116,14 @@ def header(lang, t):
                           ("speaking", "navSpeaking"), ("jury", "navJury"),
                           ("media", "navMedia"), ("contacts", "navContacts")))
     return f"""  <header class="top">
-    <a class="brand" href="{base}">{e(t['name'])}<span>{e(t['jobTitle'])}</span></a>
+    <a class="brand" href="{base}">{e(t['name'])}</a>
     <nav class="menu" aria-label="{e(t['navCareer'])}">{nav}</nav>
     <div class="avail" data-avail
          data-on="{e(t['statusOn'])}" data-off="{e(t['statusOff'])}"
          data-left="{e(t['statusLeft'])}" data-back="{e(t['statusBack'])}"
-         data-units="{e(t['units'])}"
-         title="{e(t['workHours'])}">
-      <i></i><span class="mono"></span>
+         data-units="{e(t['units'])}" title="{e(t['workHours'])}">
+      <i></i><span></span>
     </div>
-    <a class="tel mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a>
     <nav class="langs mono" aria-label="{e(t['langLabel'])}">
 {langs}
     </nav>
@@ -459,7 +457,12 @@ def contacts_page(t):
     </div>
     <div class="skill">
       <div class="g">{e(t["hoursTitle"])}</div>
-      <div class="v">{e(t["workHours"])}</div>
+      <div class="v">{e(t["workHours"])}
+        <div class="avail big" data-avail data-full
+             data-on="{e(t["statusOn"])}" data-off="{e(t["statusOff"])}"
+             data-left="{e(t["statusLeft"])}" data-back="{e(t["statusBack"])}"
+             data-units="{e(t["units"])}"><i></i><span></span></div>
+      </div>
     </div>""", first=True)
             + section(t["socialTitle"], social_rows))
 
@@ -487,7 +490,7 @@ def contact(lang, t):
       <div class="glyphs">{"".join(glyphs)}</div>
     </div>
     <div class="foot-note">
-      <span>© 2011—2026 {e(t['name'])}, {e(t['place'])}</span>
+      <span>© 2007—2026 {e(t['name'])}, {e(t['place'])}</span>
       <span class="mono">{e(t['workHours'])}</span>
     </div>
   </footer>

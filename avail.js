@@ -1,9 +1,8 @@
 /* Индикатор рабочего времени: пн–пт 9:00–18:00 по Ташкенту.
    Считаем в часовом поясе Игоря, а не посетителя. */
 (() => {
-  const el = document.querySelector("[data-avail]");
-  if (!el) return;
-  const out = el.querySelector("span");
+  const nodes = [...document.querySelectorAll("[data-avail]")];
+  if (!nodes.length) return;
   const TZ = "Asia/Tashkent", START = 9, END = 18;
   const fmt = new Intl.DateTimeFormat("en-GB", {
     timeZone: TZ, weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false
@@ -25,7 +24,7 @@
     return days * 1440 - (h * 60 + m) + START * 60;
   }
 
-  function human(mins) {
+  function human(el, mins) {
     const u = el.dataset.units ? el.dataset.units.split("|") : ["д", "ч", "мин"];
     const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
     if (d > 0) return `${d} ${u[0]} ${h} ${u[1]}`;
@@ -40,9 +39,14 @@
     const day = DAYS[parts.weekday], h = +parts.hour, m = +parts.minute;
     const open = day >= 1 && day <= 5 && h >= START && h < END;
     const mins = open ? (END - h) * 60 - m : minutesUntilOpen(day, h, m);
-    el.dataset.state = open ? "on" : "off";
-    const label = open ? `${el.dataset.on} · ${el.dataset.left}` : `${el.dataset.off} · ${el.dataset.back}`;
-    out.textContent = `${label} ${human(mins)}`;
+    nodes.forEach(el => {
+      el.dataset.state = open ? "on" : "off";
+      const short = open ? el.dataset.on : el.dataset.off;
+      const tail = open ? `${el.dataset.left} ${human(el, mins)}` : `${el.dataset.back} ${human(el, mins)}`;
+      // в шапке коротко, на странице контактов — с обратным отсчётом
+      el.querySelector("span").textContent = el.hasAttribute("data-full") ? `${short} · ${tail}` : short;
+      if (!el.hasAttribute("data-full")) el.title = `${short} · ${tail}`;
+    });
   }
 
   tick();
