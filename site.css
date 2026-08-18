@@ -168,6 +168,18 @@ img { display: block; max-width: 100%; }
 .era.on { background: linear-gradient(to right, rgba(111,155,255,0.10), rgba(111,155,255,0.02)); }
 .era.on span { color: var(--sig); }
 
+/* обучение: столбик на каждый год, высота — сколько курсов */
+.learn {
+  display: grid; align-items: end; height: 30px;
+  padding: 0 0 2px; border-top: 1px solid var(--line);
+}
+.learn .bar { height: 100%; display: flex; align-items: flex-end; padding: 0 3px; }
+.learn .bar::after {
+  content: ""; display: block; width: 100%;
+  height: calc(var(--h) * 26px); background: var(--sig-dim); min-height: 0;
+}
+.learn .bar:hover::after { background: var(--sig); }
+
 /* вехи под лентой: ромб на оси, выноска вниз, подпись на своём этаже */
 .marks {
   position: relative; height: calc(var(--floors) * 26px + 26px);
@@ -193,6 +205,10 @@ img { display: block; max-width: 100%; }
 .mark.co span { color: var(--dim); }
 .mark.co::after { background: var(--faint); }
 .mark span { font-size: 13px; color: var(--soft); }
+
+.page-title {
+  margin: 26px 0 0; font-size: 30px; font-weight: 600; letter-spacing: -0.015em;
+}
 
 /* — разделы — */
 
@@ -240,9 +256,9 @@ img { display: block; max-width: 100%; }
   padding-top: 3px;
 }
 .plat-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
-.plat-list li { display: flex; align-items: baseline; gap: 12px; }
+.plat-list li { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .plat-list span { font-size: 16px; font-weight: 500; }
-.plat-list b { font-size: 12px; font-weight: 400; color: var(--faint); }
+.plat-list b { font-size: 13px; font-weight: 400; color: var(--faint); }
 .plat-list .src { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
 
 /* фотографии */
@@ -251,20 +267,15 @@ img { display: block; max-width: 100%; }
 .shots img {
   width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
   border: 1px solid var(--line);
-  filter: saturate(0.7) contrast(1.02) brightness(0.92);
 }
 .shots figcaption { margin-top: 6px; font-size: 11px; color: var(--faint); line-height: 1.35; }
-@media (prefers-reduced-motion: no-preference) {
-  .shots img { transition: filter 200ms ease; }
-}
-.shots figure:hover img { filter: none; }
 
 a.more {
   display: inline-block; margin-top: 14px; font-size: 14px;
   border-bottom: 1px solid var(--sig-dim); padding-bottom: 2px;
 }
 a.more:hover { text-decoration: none; border-bottom-color: var(--sig); }
-.sec.first { padding-top: 24px; }
+.sec.first { padding-top: 18px; }
 .back { margin: 26px 0 0; font-size: 14px; }
 
 /* инструменты */

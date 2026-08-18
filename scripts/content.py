@@ -13,6 +13,12 @@ LINKEDIN = "https://www.linkedin.com/in/zvezdotank/"
 EMAIL = "zvezdotank@gmail.com"          # личная
 EMAIL_WORK = "i.kim@wunder-digital.uz"  # корпоративная
 AGENCY_URL = "https://wunder-digital.uz/"
+
+# Для разметки Person: как Игоря ищут и в чём он разбирается.
+ALT_NAMES = ["Igor Kim", "Ким Игорь Эдуардович", "Kim Igor", "Igor Kim Eduardovich"]
+KNOWS = ["интернет-реклама", "контекстная реклама", "digital-маркетинг",
+         "медийная реклама", "веб-аналитика", "performance-маркетинг",
+         "online advertising", "digital marketing", "web analytics"]
 FACEBOOK = ""  # профиль пока не добавлен — блок в контактах не выводится
 
 TRACK_YEARS = list(range(2019, 2027))
@@ -60,6 +66,36 @@ AGENCY = [
     ]},
 ]
 
+# Обучение и сертификаты из резюме. Названия курсов не переводятся.
+TRAINING = [
+    {"y": 2007, "t": "Курс Михаила Дымшица", "o": "во время работы в StarMedia Ogilvy"},
+    {"y": 2007, "t": "Маркетинговые решения", "o": "Кругозор, Алматы"},
+    {"y": 2013, "t": "Технология выстраивания бизнес-контактов. Нетворкинг", "o": "MBS"},
+    {"y": 2014, "t": "Ключевые клиенты всегда требуют максимум внимания", "o": "ЛЛК-Интернешнл"},
+    {"y": 2014, "t": "Работа с VIP-клиентами. Сложности, тупики, решения", "o": "ЛЛК-Интернешнл"},
+    {"y": 2015, "t": "Управление. Время. Клиенты и прибыль", "o": "ЛЛК-Интернешнл"},
+    {"y": 2015, "t": "Ключевые клиенты от А до Я", "o": "ЛЛК-Интернешнл"},
+    {"y": 2015, "t": "Продажи и маркетинг на рынке Узбекистана", "o": "ЛЛК-Интернешнл"},
+    {"y": 2016, "t": "Планомерное преодоление барьеров. Управление временем", "o": "ЛЛК-Интернешнл"},
+    {"y": 2016, "t": "5 стратегий увеличения продаж", "o": "Алишер Исаев, GreenLine Trading"},
+    {"y": 2016, "t": "Business Triumph. Сопротивление продажам", "o": ""},
+    {"y": 2016, "t": "Секреты успеха в жизни и бизнесе", "o": "Мурад Назаров"},
+    {"y": 2016, "t": "Запуск новых продуктов на новых рынках", "o": "Школа современного бизнеса, Алматы"},
+    {"y": 2017, "t": "Переговоры без поражений. Эффективные стратегии и тактики",
+     "o": "Андрей Головачев, Москва"},
+    {"y": 2018, "t": "Agile — гибкая методология разработки ПО", "o": "Whirl Ukraine"},
+    {"y": 2018, "t": "Scrum — методология управления проектами", "o": "Whirl Ukraine"},
+    {"y": 2018, "t": "Google Ads — основы", "o": "сертификат Google"},
+    {"y": 2020, "t": "Google Ads — поисковые кампании", "o": "сертификат Google"},
+    {"y": 2020, "t": "Яндекс.Метрика", "o": "сертификат Яндекса"},
+    {"y": 2021, "t": "Яндекс аналитика", "o": "Яндекс"},
+    {"y": 2022, "t": "Google аналитика", "o": "Google"},
+    {"y": 2022, "t": "Поисковая реклама", "o": "Google"},
+    {"y": 2023, "t": "Google Ads", "o": "Google"},
+    {"y": 2023, "t": "DV360", "o": "Admixer Uzbekistan"},
+    {"y": 2023, "t": "Фокус на подчинённом", "o": "IHCA, управленческие навыки"},
+]
+
 PHOTOS_TEAM = ["komanda-registan.jpeg", "komanda-ofis-1.jpeg", "komanda-vyezd.jpeg"]
 
 LANGS = [
@@ -72,18 +108,16 @@ DATA = {
     "ru": {
         "htmlLang": "ru",
         "ogLocale": "ru_RU",
-        "title": "Ким Игорь — CEO Wunder Digital Uzbekistan, digital-маркетинг",
-        "description": "Ким Игорь — CEO Wunder Digital Uzbekistan, председатель digital-комитета "
-                       "Маркетинговой ассоциации Узбекистана. 13+ лет в digital: performance, "
-                       "аналитика, эффективность рекламных инвестиций.",
-        "kicker": "Digital-эксперт, Ташкент",
+        "title": "Ким Игорь — digital-эксперт и интернет-реклама в Ташкенте | CEO Wunder Digital",
+        "description": "Ким Игорь, Ташкент — CEO Wunder Digital Uzbekistan и председатель digital-комитета Маркетинговой ассоциации. 19 лет в продажах и маркетинге, 13 из них в интернет-рекламе и аналитике.",
+        "kicker": "Digital-эксперт и интернет-реклама, Ташкент",
         "name": "Ким Игорь",
         "jobTitle": "CEO Wunder Digital Uzbekistan",
         "lede": "13 лет в digital-маркетинге, с 2019 года возглавляю Wunder Digital "
                 "Uzbekistan. Занимаюсь digital- и AI-трансформацией маркетинга, работаю "
                 "с Samsung, Beeline, Pepsi. Ниже — хронология, у каждой записи есть "
                 "ссылка на источник.",
-        "photoAlt": "Ким Игорь, CEO Wunder Digital Uzbekistan",
+        "photoAlt": "Ким Игорь, Ташкент — CEO Wunder Digital Uzbekistan, эксперт по интернет-рекламе",
         "photoSlot": "Фото: marketing.uz",
         "skipLink": "К содержанию",
         "langLabel": "Язык страницы",
@@ -125,10 +159,14 @@ DATA = {
             {"year": 2018, "text": "Открыл офис Wunder Digital в Ташкенте"},
             {"year": 2020, "text": "Сертифицированное агентство Яндекса", "co": True},
             {"year": 2023, "text": "Google Premier Partner", "co": True},
+            {"year": 2025, "text": "Топ-35 маркетологов Узбекистана"},
             {"year": 2024, "text": "Член правления МАУ"},
             {"year": 2024, "text": "Председатель digital-комитета МАУ"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
         ],
+        "trainingTitle": "Обучение и сертификаты",
+        "trainingNote": "курсов",
+        "trainingHint": "обучений за год",
         "careerTitle": "Опыт работы",
         "careerNote": "19 лет, из них 13 в digital",
         "jobs": [
@@ -178,7 +216,10 @@ DATA = {
         "skillsTitle": "Инструменты и платформы",
         "mediaTitle": "Публикации в медиа",
         "pagesTitle": "Официальные страницы и анонсы",
-        "navCareer": "Опыт", "navSpeaking": "Выступления",
+        "navCareer": "Опыт",
+        "navTraining": "Обучение",
+        "trainingPageTitle": "Обучение, курсы и сертификаты",
+        "allTraining": "Все курсы и сертификаты", "navSpeaking": "Выступления",
         "navJury": "Судейство", "navMedia": "Медиа",
         "careerPageTitle": "Опыт работы и должности",
         "speakingPageTitle": "Выступления на форумах и конференциях",
@@ -414,18 +455,16 @@ DATA = {
     "en": {
         "htmlLang": "en",
         "ogLocale": "en_US",
-        "title": "Igor Kim — CEO of Wunder Digital Uzbekistan, digital marketing",
-        "description": "Igor Kim — CEO of Wunder Digital Uzbekistan, chairman of the digital "
-                       "committee at the Marketing Association of Uzbekistan. 13+ years in digital: "
-                       "performance, analytics, advertising investment efficiency.",
-        "kicker": "Digital expert, Tashkent",
+        "title": "Igor Kim — digital marketing and online advertising in Tashkent | Wunder Digital CEO",
+        "description": "Igor Kim, Tashkent — CEO of Wunder Digital Uzbekistan and chairman of the digital committee at the Marketing Association. 19 years in sales and marketing, 13 of them in online advertising and analytics.",
+        "kicker": "Digital expert and online advertising, Tashkent",
         "name": "Igor Kim",
         "jobTitle": "CEO of Wunder Digital Uzbekistan",
         "lede": "13 years in digital marketing, leading Wunder Digital Uzbekistan since "
                 "2019. Focused on digital and AI transformation of marketing, working "
                 "with Samsung, Beeline, Pepsi. Below is a timeline; every entry has "
                 "a link to its source.",
-        "photoAlt": "Igor Kim, CEO of Wunder Digital Uzbekistan",
+        "photoAlt": "Igor Kim, Tashkent — CEO of Wunder Digital Uzbekistan, online advertising expert",
         "photoSlot": "Photo: marketing.uz",
         "skipLink": "Skip to content",
         "langLabel": "Page language",
@@ -467,10 +506,14 @@ DATA = {
             {"year": 2018, "text": "Opened the Wunder Digital office in Tashkent"},
             {"year": 2020, "text": "Yandex certified agency", "co": True},
             {"year": 2023, "text": "Google Premier Partner", "co": True},
+            {"year": 2025, "text": "Top 35 marketers in Uzbekistan"},
             {"year": 2024, "text": "Board member, MAU"},
             {"year": 2024, "text": "Chairman of the digital committee, MAU"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
         ],
+        "trainingTitle": "Training and certificates",
+        "trainingNote": "courses",
+        "trainingHint": "courses this year",
         "careerTitle": "Experience",
         "careerNote": "19 years, 13 of them in digital",
         "jobs": [
@@ -520,7 +563,10 @@ DATA = {
         "skillsTitle": "Tools and platforms",
         "mediaTitle": "In the media",
         "pagesTitle": "Official pages and announcements",
-        "navCareer": "Experience", "navSpeaking": "Speaking",
+        "navCareer": "Experience",
+        "navTraining": "Training",
+        "trainingPageTitle": "Training, courses and certificates",
+        "allTraining": "All courses and certificates", "navSpeaking": "Speaking",
         "navJury": "Jury", "navMedia": "Media",
         "careerPageTitle": "Experience and roles",
         "speakingPageTitle": "Talks at forums and conferences",
@@ -751,18 +797,16 @@ DATA = {
     "uz": {
         "htmlLang": "uz",
         "ogLocale": "uz_UZ",
-        "title": "Igor Kim — Wunder Digital Uzbekistan bosh direktori, digital marketing",
-        "description": "Igor Kim — Wunder Digital Uzbekistan bosh direktori, O‘zbekiston Marketing "
-                       "assotsiatsiyasi digital qo‘mitasi raisi. Digital sohada 13+ yil: performance, "
-                       "analitika, reklama investitsiyalari samaradorligi.",
-        "kicker": "Digital-ekspert, Toshkent",
+        "title": "Igor Kim — Toshkentda digital marketing va internet reklama | Wunder Digital CEO",
+        "description": "Igor Kim, Toshkent — Wunder Digital Uzbekistan bosh direktori va Marketing assotsiatsiyasi digital qo‘mitasi raisi. Savdo va marketingda 19 yil, shundan 13 yili internet reklama va analitikada.",
+        "kicker": "Digital-ekspert va internet reklama, Toshkent",
         "name": "Igor Kim",
         "jobTitle": "Wunder Digital Uzbekistan bosh direktori",
         "lede": "Digital marketingda 13 yil, 2019-yildan Wunder Digital Uzbekistan’ni "
                 "boshqaraman. Marketingning digital va AI transformatsiyasi bilan "
                 "shug‘ullanaman, Samsung, Beeline, Pepsi bilan ishlayman. Quyida — "
                 "xronologiya, har bir yozuvda manbaga havola bor.",
-        "photoAlt": "Igor Kim, Wunder Digital Uzbekistan bosh direktori",
+        "photoAlt": "Igor Kim, Toshkent — Wunder Digital Uzbekistan bosh direktori, internet reklama eksperti",
         "photoSlot": "Surat: marketing.uz",
         "skipLink": "Kontentga o‘tish",
         "langLabel": "Sahifa tili",
@@ -804,10 +848,14 @@ DATA = {
             {"year": 2018, "text": "Toshkentda Wunder Digital ofisini ochdi"},
             {"year": 2020, "text": "Yandex sertifikatlangan agentligi", "co": True},
             {"year": 2023, "text": "Google Premier Partner", "co": True},
+            {"year": 2025, "text": "O‘zbekiston top-35 marketologi"},
             {"year": 2024, "text": "MAU boshqaruvi a’zosi"},
             {"year": 2024, "text": "MAU digital qo‘mitasi raisi"},
             {"year": 2024, "text": "Yandex Direct Gold Partner", "co": True},
         ],
+        "trainingTitle": "O‘qish va sertifikatlar",
+        "trainingNote": "kurs",
+        "trainingHint": "shu yildagi kurslar",
         "careerTitle": "Ish tajribasi",
         "careerNote": "19 yil, shundan 13 yili digital sohada",
         "jobs": [
@@ -857,7 +905,10 @@ DATA = {
         "skillsTitle": "Vositalar va platformalar",
         "mediaTitle": "Mediada",
         "pagesTitle": "Rasmiy sahifalar va e’lonlar",
-        "navCareer": "Tajriba", "navSpeaking": "Ma’ruzalar",
+        "navCareer": "Tajriba",
+        "navTraining": "O‘qish",
+        "trainingPageTitle": "O‘qish, kurslar va sertifikatlar",
+        "allTraining": "Barcha kurs va sertifikatlar", "navSpeaking": "Ma’ruzalar",
         "navJury": "Hakamlik", "navMedia": "Media",
         "careerPageTitle": "Ish tajribasi va lavozimlar",
         "speakingPageTitle": "Forum va konferensiyalardagi ma’ruzalar",

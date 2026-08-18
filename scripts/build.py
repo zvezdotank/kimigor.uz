@@ -15,11 +15,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
-                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS, EMAIL_WORK, AGENCY_URL,
-                     PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY)
+                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS, EMAIL_WORK, AGENCY_URL, ALT_NAMES, KNOWS,
+                     PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 14
+CSS_VERSION = 17
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -112,8 +112,9 @@ def header(lang, t):
     base = URLS[lang]
     nav = "".join(
         f'<a href="{base}{slug}/">{e(t[key])}</a>'
-        for slug, key in (("career", "navCareer"), ("speaking", "navSpeaking"),
-                          ("jury", "navJury"), ("media", "navMedia")))
+        for slug, key in (("career", "navCareer"), ("training", "navTraining"),
+                          ("speaking", "navSpeaking"), ("jury", "navJury"),
+                          ("media", "navMedia")))
     return f"""  <header class="top">
     <a class="brand" href="{base}">{e(t['name'])}<span>{e(t['jobTitle'])}</span></a>
     <nav class="menu" aria-label="{e(t['navCareer'])}">{nav}</nav>
@@ -187,7 +188,8 @@ def timeline(t):
     PX = 1120 / 100.0
     floors = []      # правая занятая граница каждого этажа, в %
     marks = []
-    for ms in sorted(t["milestones"], key=lambda m: m["year"]):
+    personal = [m for m in t["milestones"] if not m.get("co")]
+    for ms in sorted(personal, key=lambda m: m["year"]):
         left = pos(ms["year"] + 0.5)
         width = (len(ms["text"]) * 7 + 52) / PX
         flip = left + width > 99          # у правого края подпись уходит влево
@@ -198,10 +200,20 @@ def timeline(t):
             floors.append(-99.0)
         floors[row] = hi
         anchor = (f'right: {100 - left:.2f}%' if flip else f'left: {left:.2f}%')
-        cls = ("mark rev" if flip else "mark") + (" co" if ms.get("co") else "")
+        cls = "mark rev" if flip else "mark"
         marks.append(f'        <div class="{cls}" style="{anchor}; --floor: {row}">'
                      f'<b class="mono">{ms["year"]}</b>'
                      f'<span>{e(ms["text"])}</span></div>')
+
+    # обучение: по столбику на год, высота — сколько курсов пройдено
+    per_year = {}
+    for tr in TRAINING:
+        per_year.setdefault(tr["y"], []).append(tr)
+    peak = max(len(v) for v in per_year.values())
+    bars = "\n".join(
+        f'        <div class="bar" style="--h: {len(per_year.get(y, [])) / peak:.2f}" '
+        f'title="{y}: {len(per_year.get(y, []))} {e(t["trainingHint"])}"></div>'
+        for y in CAREER_YEARS)
 
     return f"""
   <section class="track-scroll">
@@ -214,6 +226,10 @@ def timeline(t):
 {eras}
       <div class="lanes">
 {chr(10).join(lanes)}
+      </div>
+      <div class="learn" style="grid-template-columns: repeat({n}, 1fr)"
+           aria-label="{e(t['trainingTitle'])}">
+{bars}
       </div>
       <div class="marks" style="--floors: {len(floors)}">
 {chr(10).join(marks)}
@@ -296,6 +312,27 @@ def photos(lang, t, files, title_key, caption_key):
         <figcaption class="mono">{e(c)}</figcaption>
       </figure>""" for f, c in zip(files, captions))
     return section(t[title_key], f'    <div class="shots">\n{cells}\n    </div>')
+
+
+def training(t, first=False):
+    """Обучение и сертификаты, сгруппированные по годам."""
+    per_year = {}
+    for tr in TRAINING:
+        per_year.setdefault(tr["y"], []).append(tr)
+    blocks = []
+    for year in sorted(per_year, reverse=True):
+        items = "\n".join(
+            f'        <li><span>{e(it["t"])}</span>'
+            + (f'<b>{e(it["o"])}</b>' if it["o"] else "") + "</li>"
+            for it in per_year[year])
+        blocks.append(f"""    <div class="plat">
+      <div class="plat-name mono">{year}</div>
+      <ul class="plat-list">
+{items}
+      </ul>
+    </div>""")
+    return section(t["trainingTitle"], "\n".join(blocks),
+                   f'{len(TRAINING)} {t["trainingNote"]}', first=first)
 
 
 def career_rows(t, limit=None):
@@ -431,17 +468,21 @@ def json_ld(lang, t):
         "@context": "https://schema.org",
         "@type": "Person",
         "name": t["name"],
+        "alternateName": ALT_NAMES,
         "url": SITE + URLS[lang],
         "image": f"{SITE}/img/speaker-taf26.webp",
         "jobTitle": t["jobTitle"],
         "telephone": PHONE,
         "email": [EMAIL, EMAIL_WORK],
         "worksFor": {"@type": "Organization", "name": "Wunder Digital Uzbekistan",
-                     "url": "https://wunder-digital.uz/"},
+                     "url": AGENCY_URL},
         "memberOf": {"@type": "Organization", "name": "Marketing Association of Uzbekistan",
                      "url": "https://marketing.uz/"},
         "address": {"@type": "PostalAddress", "addressLocality": "Tashkent", "addressCountry": "UZ"},
-        "knowsAbout": [s["items"] for s in t["skills"]],
+        "knowsAbout": KNOWS + [s["items"] for s in t["skills"]],
+        "workLocation": {"@type": "Place", "name": "Tashkent, Uzbekistan"},
+        "nationality": {"@type": "Country", "name": "Uzbekistan"},
+        "birthDate": "1983-09-24",
         "sameAs": same_as,
     }
     return ('<script type="application/ld+json">'
@@ -467,26 +508,21 @@ def build_page(lang):
     return "".join([
         head(lang, t),
         header(lang, t),
+        # 1. кто это: фото, имя, должность, три главные позиции
         intro(lang, t),
-        timeline(t),
-        photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
-        about(t),
+        # 2. паспортные факты — сразу, чтобы знакомство было быстрым
         person(t),
-        section(t["careerTitle"], career_rows(t, limit=3)
-                + more_link(lang, "career", t["allCareer"]), t["careerNote"]),
-        awards(t),
-        skills(t),
+        # 3. ядро страницы: путь от продаж к digital
+        timeline(t) + more_link(lang, "training", t["allTraining"]),
+        # 4. рассказ о себе словами
+        about(t),
+        # 5. как это выглядит в деле
+        photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
+        # 6. чем управляет и чем владеет
         agency(t),
-        section(t["talksTitle"], rows(t["talks"][:4], t, "event", "sub", "meta")
-                + more_link(lang, "speaking", t["allSpeaking"]),
-                n(t["talks"], t["unitEvents"])),
-        section(t["juryTitle"], rows(t["jury"][:3], t, "event", "sub", "meta")
-                + more_link(lang, "jury", t["allJury"]),
-                n(t["jury"], t["unitJury"])),
-        section(t["mediaTitle"], rows(t["media"][:5], t, "title", None, "outlet")
-                + more_link(lang, "media", t["mediaAll"]),
-                n(t["media"] + t["pages"], t["unitMedia"])),
+        skills(t),
         quotes(t),
+        # 7. команда и контакты
         photos(lang, t, PHOTOS_TEAM, "teamTitle", "team"),
         contact(lang, t),
         footer(lang, t),
@@ -498,7 +534,7 @@ def more_link(lang, slug, label):
     return f'\n    <a class="more" href="{URLS[lang]}{slug}/">{e(label)} →</a>'
 
 
-SUBPAGES = ("career", "speaking", "jury", "media")
+SUBPAGES = ("career", "training", "speaking", "jury", "media")
 
 
 def sub_url(lang, slug):
@@ -512,6 +548,9 @@ def build_sub_page(lang, slug):
         title = t["careerPageTitle"]
         body = (career(t, first=True)
                 + section(t["rolesTitle"], rows(t["roles"], t, "title", "org", "period")))
+    elif slug == "training":
+        title = t["trainingPageTitle"]
+        body = training(t, first=True)
     elif slug == "speaking":
         title = t["speakingPageTitle"]
         body = section(t["talksTitle"], rows(t["talks"], t, "event", "sub", "meta"),
@@ -528,7 +567,7 @@ def build_sub_page(lang, slug):
                           f'{len(t["pages"])} {t["unitPages"]}'))
     return (head(lang, t, page=slug, page_title=title)
             + header(lang, t)
-            + '\n  <main id="main">\n'
+            + f'\n  <main id="main">\n    <h1 class="page-title">{e(title)}</h1>\n'
             + body
             + f'\n  <p class="back"><a href="{URLS[lang]}">← {e(t["backHome"])}</a></p>\n'
             + contact(lang, t)
