@@ -11,6 +11,7 @@ PHONE = "+998903239241"
 PHONE_TEXT = "+998 90 323 92 41"
 INSTAGRAM = "https://instagram.com/zvezdotank_"
 LINKEDIN = "https://www.linkedin.com/in/zvezdotank/"
+TELEGRAM = "https://t.me/zvezdotank"
 EMAIL = "zvezdotank@gmail.com"          # личная
 EMAIL_WORK = "i.kim@wunder-digital.uz"  # корпоративная
 AGENCY_URL = "https://wunder-digital.uz/"
@@ -262,6 +263,8 @@ DATA = {
         "contactKicker": "Контакты",
         "contactTitle": "Выступление, экспертиза, интервью",
         "phoneLabel": "Телефон",
+        "callLabel": "Позвонить",
+        "tgLabel": "Telegram",
         "emailWorkLabel": "Рабочая почта",
         "agencyLabel": "Агентство",
         "emailLabel": "Почта",
@@ -630,6 +633,8 @@ DATA = {
         "contactKicker": "Contact",
         "contactTitle": "Speaking, expertise, interviews",
         "phoneLabel": "Phone",
+        "callLabel": "Call",
+        "tgLabel": "Telegram",
         "emailWorkLabel": "Work email",
         "agencyLabel": "Agency",
         "emailLabel": "Email",
@@ -993,6 +998,8 @@ DATA = {
         "contactKicker": "Aloqa",
         "contactTitle": "Ma’ruza, ekspertiza, intervyu",
         "phoneLabel": "Telefon",
+        "callLabel": "Qo‘ng‘iroq",
+        "tgLabel": "Telegram",
         "emailWorkLabel": "Ish pochtasi",
         "agencyLabel": "Agentlik",
         "emailLabel": "Pochta",

@@ -337,6 +337,30 @@ a.more:hover { text-decoration: none; border-bottom-color: var(--sig); }
 .cal-legend .sw.busy { background: var(--sig-dim); border-color: var(--sig-dim); }
 .cal-msg { margin: 0; font-size: 14px; color: var(--faint); }
 
+/* быстрые действия внизу экрана — только на телефоне */
+.cta-bar { display: none; }
+
+@media (max-width: 720px) {
+  .cta-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    background: var(--panel); border-top: 1px solid var(--line);
+  }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 46px; font-size: 15px; font-weight: 500;
+  }
+  .cta:hover { text-decoration: none; }
+  .cta svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+  .cta.call { background: var(--sig); color: #0d1017; }
+  .cta.call:active { background: #5b87ee; }
+  .cta.tg { border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); }
+  .cta.tg:active { background: #1c2331; }
+  /* чтобы панель не закрывала последние строки */
+  .wrap { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+}
+
 /* — подвал — */
 
 .foot { margin-top: 34px; border-top: 1px solid var(--line); }
@@ -387,7 +411,7 @@ a.more:hover { text-decoration: none; border-bottom-color: var(--sig); }
 }
 
 @media (max-width: 720px) {
-  .wrap { padding: 0 16px 56px; }
+  .wrap { padding: 0 16px calc(88px + env(safe-area-inset-bottom)); }
   .top-in { flex-wrap: wrap; gap: 10px 14px; }
   .top-in { padding: 10px 16px; }
   .menu { order: 5; width: 100%; margin: 0; overflow-x: auto; padding-bottom: 2px; }
