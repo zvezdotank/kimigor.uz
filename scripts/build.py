@@ -8,6 +8,7 @@
 Разделы без данных (например «Отзывы», пока нет цитат) не выводятся.
 """
 
+import datetime
 import html
 import json
 import os
@@ -40,7 +41,7 @@ def _shot_sizes():
             h = int.from_bytes(data[28:30], "little") & 0x3FFF
         sizes[name] = (w, h)
     return sizes
-CSS_VERSION = 28
+CSS_VERSION = 29
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
@@ -315,15 +316,18 @@ def scale(segments, years_range, title, labels=None, every=1):
 
 
 def section(title, body, count=None, first=False):
+    """first=True — секция открывает страницу раздела, её название уже стоит в h1."""
     if not body:
         return ""
+    if first:
+        title = ""
     meta = f'      <div class="count mono">{e(count)}</div>\n' if count else ""
     cls = "sec first" if first else "sec"
+    head_html = (f'    <div class="sec-h">\n      <h2>{e(title)}</h2>\n{meta}    </div>\n'
+                 if title else (f'    <div class="sec-h only-count">\n{meta}    </div>\n' if meta else ""))
     return f"""
   <section class="{cls}">
-    <div class="sec-h">
-      <h2>{e(title)}</h2>
-{meta}    </div>
+{head_html}
 {body}
   </section>
 """
@@ -481,7 +485,7 @@ def contacts_page(lang, t):
     social_rows = "\n".join(f"""    <div class="row">
       <div><div class="t">{name}</div></div>
       <div class="m">{e(label)}</div>
-      <a class="src" href="{href}" target="_blank" rel="noopener me">{e(t["proof"])}</a>
+      <a class="src" href="{href}" target="_blank" rel="noopener me">{e(t["openLabel"])}</a>
     </div>""" for name, href, label in socials)
     return (f'\n  <p class="lede page-lede">{e(t["contactsLede"])}</p>\n'
             + section(t["contactKicker"], f"""    <div class="skill">
@@ -690,12 +694,38 @@ def build_sub_page(lang, slug):
             + footer(lang, t, slug, title))
 
 
+def build_404():
+    """Страница 404 в общем оформлении: GitHub Pages отдаёт её на любой битый адрес."""
+    t = DATA["ru"]
+    links = "\n".join(
+        f'      <li><a href="/{slug}/">{e(t[key])}</a></li>'
+        for slug, key in (("career", "navCareer"), ("training", "navTraining"),
+                          ("speaking", "navSpeaking"), ("jury", "navJury"),
+                          ("media", "navMedia"), ("contacts", "navContacts")))
+    return (head("ru", t, page_title=t["notFoundTitle"])
+            + header("ru", t)
+            + f"""
+  <main id="main">
+    <h1 class="page-title">{e(t['notFoundTitle'])}</h1>
+    <p class="lede page-lede">{e(t['notFoundText'])}</p>
+    <ul class="notfound">
+{links}
+    </ul>
+    <p class="back"><a href="/">← {e(t['backHome'])}</a></p>
+  </main>
+"""
+            + contact("ru", t)
+            + footer("ru", t))
+
+
 def build_sitemap():
     items = [(u, "1.0" if u == "/" else "0.8") for _, _, u in LANGS]
     items += [(u + slug + "/", "0.6") for _, _, u in LANGS for slug in SUBPAGES]
+    today = datetime.date.today().isoformat()
     urls = "\n".join(
-        f"  <url>\n    <loc>{SITE}{u}</loc>\n    <changefreq>monthly</changefreq>\n"
-        f"    <priority>{pr}</priority>\n  </url>" for u, pr in items)
+        f"  <url>\n    <loc>{SITE}{u}</loc>\n    <lastmod>{today}</lastmod>\n"
+        f"    <changefreq>monthly</changefreq>\n    <priority>{pr}</priority>\n  </url>"
+        for u, pr in items)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             + urls + "\n</urlset>\n")
@@ -719,6 +749,10 @@ def main():
                 f.write(build_sub_page(lang, slug))
             print(f"  {sub_url(lang, slug).strip('/')}/index.html")
     DEPTH = 0
+
+    with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as f:
+        f.write(build_404())
+    print("  404.html")
 
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(build_sitemap())
