@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#101114"/>
+  <rect x="4" y="4" width="56" height="56" fill="none" stroke="#6f9bff" stroke-width="2"/>
+  <text x="32" y="43" text-anchor="middle" font-family="Golos Text, Archivo, Helvetica, Arial, sans-serif"
+        font-size="30" font-weight="600" fill="#eceef2" letter-spacing="-1">КИ</text>
+</svg>

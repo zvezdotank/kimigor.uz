@@ -38,7 +38,7 @@ CAREER = [
     {"org": "ЛЛК-Интернешнл", "from": 2011.4, "to": 2017.4, "key": True},
     {"org": "China Yuan Sheng", "from": 2010.75, "to": 2011.4},
     {"org": "Super iMax · EVO", "from": 2010.2, "to": 2010.75},
-    {"org": "xxx-Astana", "from": 2009.85, "to": 2010.2},
+    {"org": "Дистрибуция оборудования, Астана", "from": 2009.85, "to": 2010.2},
     {"org": "Ural LM", "from": 2009.2, "to": 2009.7},
     {"org": "Abris Distribution", "from": 2008.6, "to": 2009.2},
     {"org": "StarMedia Ogilvy Uzbekistan", "from": 2007.5, "to": 2008.5, "key": True},
@@ -46,9 +46,9 @@ CAREER = [
 
 
 # Фотографии. Файлы общие, подписи переводятся в каждом языке ниже.
-PHOTOS_WORK = ["rukopozhatie-konferenciya.jpeg",
-               "yandex-conference-banner.jpeg",
-               "yandex-conference-scena.jpeg"]
+PHOTOS_WORK = ["rukopozhatie-konferenciya.webp",
+               "yandex-conference-banner.webp",
+               "yandex-conference-scena.webp"]
 
 # Статусы агентства по платформам. Названия партнёрских программ не переводятся.
 AGENCY = [
@@ -101,7 +101,7 @@ TRAINING = [
     {"y": 2023, "t": "Фокус на подчинённом", "o": "IHCA, управленческие навыки"},
 ]
 
-PHOTOS_TEAM = ["komanda-registan.jpeg", "komanda-ofis-1.jpeg", "komanda-vyezd.jpeg"]
+PHOTOS_TEAM = ["komanda-registan.webp", "komanda-ofis-1.webp", "komanda-vyezd.webp"]
 
 LANGS = [
     ("ru", "RU", "/"),
@@ -222,6 +222,12 @@ DATA = {
         "skillsTitle": "Инструменты и платформы",
         "mediaTitle": "Публикации в медиа",
         "pagesTitle": "Официальные страницы и анонсы",
+        "descrCareer": "Опыт работы Ким Игоря: девять мест с 2007 года — от StarMedia Ogilvy до Wunder Digital Uzbekistan. Должности в Маркетинговой ассоциации Узбекистана.",
+        "descrTraining": "Обучение и сертификаты Ким Игоря: 25 курсов с 2007 года — Google Ads, аналитика, DV360, Agile, переговоры и управление.",
+        "descrSpeaking": "Выступления Ким Игоря на форумах и конференциях в Ташкенте: TAF, Tashkent Marketing Forum, Yandex Ads Conference.",
+        "descrJury": "Ким Игорь в жюри профессиональных конкурсов: Brand Awards International, TAF, ePlus Award, «Бренд года».",
+        "descrMedia": "Публикации о Ким Игоре и его комментарии в медиа: Gazeta.uz, Spot.uz, Kursiv Media, Sostav.ru и другие.",
+        "descrContacts": "Связаться с Ким Игорем, Ташкент: телефон, почта, соцсети и занятость календаря на ближайшие две недели.",
         "navCareer": "Опыт",
         "navTraining": "Обучение",
         "trainingPageTitle": "Обучение, курсы и сертификаты",
@@ -581,6 +587,12 @@ DATA = {
         "skillsTitle": "Tools and platforms",
         "mediaTitle": "In the media",
         "pagesTitle": "Official pages and announcements",
+        "descrCareer": "Igor Kim’s work history: nine roles since 2007, from StarMedia Ogilvy to Wunder Digital Uzbekistan, plus positions at the Marketing Association of Uzbekistan.",
+        "descrTraining": "Igor Kim’s training and certificates: 25 courses since 2007 — Google Ads, analytics, DV360, Agile, negotiation and management.",
+        "descrSpeaking": "Igor Kim speaking at forums and conferences in Tashkent: TAF, Tashkent Marketing Forum, Yandex Ads Conference.",
+        "descrJury": "Igor Kim on the juries of professional awards: Brand Awards International, TAF, ePlus Award, Brand of the Year.",
+        "descrMedia": "Articles about Igor Kim and his expert commentary: Gazeta.uz, Spot.uz, Kursiv Media, Sostav.ru and others.",
+        "descrContacts": "Contact Igor Kim in Tashkent: phone, email, social profiles and calendar availability for the next two weeks.",
         "navCareer": "Experience",
         "navTraining": "Training",
         "trainingPageTitle": "Training, courses and certificates",
@@ -935,6 +947,12 @@ DATA = {
         "skillsTitle": "Vositalar va platformalar",
         "mediaTitle": "Mediada",
         "pagesTitle": "Rasmiy sahifalar va e’lonlar",
+        "descrCareer": "Igor Kimning ish tajribasi: 2007-yildan beri to‘qqiz ish joyi — StarMedia Ogilvy’dan Wunder Digital Uzbekistan’gacha.",
+        "descrTraining": "Igor Kimning o‘qishi va sertifikatlari: 2007-yildan 25 kurs — Google Ads, analitika, DV360, Agile, muzokaralar.",
+        "descrSpeaking": "Igor Kimning Toshkentdagi forum va konferensiyalardagi ma’ruzalari: TAF, Tashkent Marketing Forum, Yandex Ads Conference.",
+        "descrJury": "Igor Kim professional tanlovlar hakamlar hay’atida: Brand Awards International, TAF, ePlus Award, «Yilning brendi».",
+        "descrMedia": "Igor Kim haqidagi nashrlar va uning izohlari: Gazeta.uz, Spot.uz, Kursiv Media, Sostav.ru va boshqalar.",
+        "descrContacts": "Igor Kim bilan bog‘lanish, Toshkent: telefon, pochta, ijtimoiy tarmoqlar va yaqin ikki haftadagi bandlik.",
         "navCareer": "Tajriba",
         "navTraining": "O‘qish",
         "trainingPageTitle": "O‘qish, kurslar va sertifikatlar",

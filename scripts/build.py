@@ -19,9 +19,31 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 25
+
+
+def _shot_sizes():
+    """Реальные размеры фотографий — чтобы браузер резервировал место заранее."""
+    sizes = {}
+    for name in PHOTOS_WORK + PHOTOS_TEAM:
+        path = os.path.join(ROOT, "img", name)
+        with open(path, "rb") as f:
+            data = f.read(40)
+        # WebP VP8L/VP8X/VP8 — читаем размер из заголовка без внешних библиотек
+        if data[12:16] == b"VP8X":
+            w = int.from_bytes(data[24:27], "little") + 1
+            h = int.from_bytes(data[27:30], "little") + 1
+        elif data[12:16] == b"VP8L":
+            b = int.from_bytes(data[21:25], "little")
+            w, h = (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+        else:
+            w = int.from_bytes(data[26:28], "little") & 0x3FFF
+            h = int.from_bytes(data[28:30], "little") & 0x3FFF
+        sizes[name] = (w, h)
+    return sizes
+CSS_VERSION = 28
 
 URLS = {code: url for code, _, url in LANGS}
+SHOTS = _shot_sizes()
 
 # Официальные глифы соцсетей. Логотипы, а не рисованные иконки.
 GLYPHS = {
@@ -65,8 +87,13 @@ def glyph(name, href):
 
 # ── блоки страницы ───────────────────────────────────────────────────────────
 
+DESCR_KEYS = {"career": "descrCareer", "training": "descrTraining", "speaking": "descrSpeaking",
+              "jury": "descrJury", "media": "descrMedia", "contacts": "descrContacts"}
+
+
 def head(lang, t, page="", page_title=""):
     suffix = f"{page}/" if page else ""
+    descr = t.get(DESCR_KEYS.get(page, ""), t["description"])
     canonical = SITE + URLS[lang] + suffix
     alts = "\n".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{u}{suffix}">'
                      for c, _, u in LANGS)
@@ -76,15 +103,18 @@ def head(lang, t, page="", page_title=""):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(page_title + ' — ' + t['name']) if page_title else e(t['title'])}</title>
-<meta name="description" content="{e(t['description'])}">
+<meta name="description" content="{e(descr)}">
 <meta name="theme-color" content="#101114">
 <meta name="color-scheme" content="dark">
 
 <meta property="og:type" content="profile">
-<meta property="og:title" content="{e(t['title'])}">
-<meta property="og:description" content="{e(t['description'])}">
+<meta property="og:title" content="{e(page_title + ' — ' + t['name']) if page_title else e(t['title'])}">
+<meta property="og:description" content="{e(descr)}">
+<meta property="og:site_name" content="{e(t['name'])}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE}/img/speaker-taf26.webp">
+<meta property="og:image" content="{SITE}/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="{t['ogLocale']}">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -94,8 +124,13 @@ def head(lang, t, page="", page_title=""):
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 
+<link rel="icon" href="{asset(lang, 'favicon.svg')}" type="image/svg+xml">
+<link rel="icon" href="{asset(lang, 'favicon-32.png')}" sizes="32x32">
+<link rel="apple-touch-icon" href="{asset(lang, 'apple-touch-icon.png')}">
+
+<link rel="preload" as="image" href="{asset(lang, 'img/speaker-taf26.webp')}?v={CSS_VERSION}" fetchpriority="high">
 <link rel="stylesheet" href="{asset(lang, 'site.css')}?v={CSS_VERSION}">
 </head>
 <body>
@@ -142,7 +177,7 @@ def intro(lang, t):
   <main id="main">
   <section class="intro">
     <figure>
-      <img src="{asset(lang, 'img/speaker-taf26.webp')}" width="1000" height="1000"
+      <img src="{asset(lang, 'img/speaker-taf26.webp')}?v={CSS_VERSION}" width="420" height="500"
            alt="{e(t['photoAlt'])}" fetchpriority="high">
     </figure>
     <div>
@@ -315,7 +350,8 @@ def photos(lang, t, files, title_key, caption_key):
     if not files or not captions:
         return ""
     cells = "\n".join(f"""      <figure class="shot">
-        <img src="{asset(lang, 'img/' + f)}" alt="{e(c)}" loading="lazy" decoding="async">
+        <img src="{asset(lang, 'img/' + f)}?v={CSS_VERSION}" width="{SHOTS[f][0]}" height="{SHOTS[f][1]}"
+             alt="{e(c)}" loading="lazy" decoding="async">
         <figcaption class="mono">{e(c)}</figcaption>
       </figure>""" for f, c in zip(files, captions))
     return section(t[title_key], f'    <div class="shots">\n{cells}\n    </div>')
@@ -521,7 +557,7 @@ def contact(lang, t):
 """
 
 
-def json_ld(lang, t):
+def json_ld(lang, t, page="", page_title=""):
     same_as = [INSTAGRAM, LINKEDIN] + ([FACEBOOK] if FACEBOOK else []) + [
         "https://marketing.uz/about/board/kim-igor.htm",
         "https://uz.kursiv.media/expert/igor-kim/",
@@ -547,15 +583,31 @@ def json_ld(lang, t):
         "birthDate": "1983-09-24",
         "sameAs": same_as,
     }
-    return ('<script type="application/ld+json">'
-            + json.dumps(data, ensure_ascii=False, separators=(",", ":"))
-            + "</script>")
+    graph = [data, {
+        "@context": "https://schema.org", "@type": "WebSite",
+        "url": SITE + URLS[lang], "name": t["name"],
+        "inLanguage": t["htmlLang"],
+        "publisher": {"@type": "Person", "name": t["name"]},
+    }]
+    if page:
+        graph.append({
+            "@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": t["name"],
+                 "item": SITE + URLS[lang]},
+                {"@type": "ListItem", "position": 2, "name": page_title,
+                 "item": SITE + URLS[lang] + page + "/"},
+            ],
+        })
+    return "\n".join('<script type="application/ld+json">'
+                     + json.dumps(g, ensure_ascii=False, separators=(",", ":"))
+                     + "</script>" for g in graph)
 
 
-def footer(lang, t):
+def footer(lang, t, page="", page_title=""):
     return f"""
 </div>
-{json_ld(lang, t)}
+{json_ld(lang, t, page, page_title)}
 <script src="{asset(lang, "avail.js")}?v={CSS_VERSION}" defer></script>
 </body>
 </html>
@@ -635,7 +687,7 @@ def build_sub_page(lang, slug):
             + body
             + f'\n  <p class="back"><a href="{URLS[lang]}">← {e(t["backHome"])}</a></p>\n'
             + contact(lang, t)
-            + footer(lang, t))
+            + footer(lang, t, slug, title))
 
 
 def build_sitemap():
