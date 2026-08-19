@@ -43,7 +43,7 @@ def _shot_sizes():
     return sizes
 
 
-CSS_VERSION = 33
+CSS_VERSION = 34
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
@@ -92,7 +92,7 @@ def glyph(name, href):
 
 # ── блоки страницы ───────────────────────────────────────────────────────────
 
-DESCR_KEYS = {"career": "descrCareer", "training": "descrTraining", "speaking": "descrSpeaking",
+DESCR_KEYS = {"wunder": "wunderLede", "career": "descrCareer", "training": "descrTraining", "speaking": "descrSpeaking",
               "jury": "descrJury", "media": "descrMedia", "contacts": "descrContacts"}
 
 
@@ -174,9 +174,21 @@ def header(lang, t):
 """
 
 
+AGENCY_NAMES = ("Wunder Digital Uzbekistan", "Wunder Digital O‘zbekiston")
+
+
+def link_agency(lang, text):
+    """Подсвечивает название агентства ссылкой внутри готовой строки."""
+    out = e(text)
+    for name in AGENCY_NAMES:
+        if name in text:
+            return out.replace(e(name), wunder_link(lang, name))
+    return out
+
+
 def intro(lang, t):
     posts = "\n".join(
-        f'        <li><i class="mono">{i:02d}</i><span>{e(s)}</span></li>'
+        f'        <li><i class="mono">{i:02d}</i><span>{link_agency(lang, s)}</span></li>'
         for i, s in enumerate(t["statuses"][:3], 1))
     return f"""
   <main id="main">
@@ -459,6 +471,11 @@ def agency(t):
     return section(t["agencyTitle"], "\n".join(groups), t["agencyNote"])
 
 
+def wunder_link(lang, text):
+    """Название агентства в тексте — ссылка на его страницу."""
+    return f'<a href="{URLS[lang]}wunder/">{e(text)}</a>'
+
+
 def skills(t):
     if not t["skills"]:
         return ""
@@ -466,7 +483,7 @@ def skills(t):
       <div class="g">{e(s['group'])}</div>
       <div class="v">{e(s['items'])}</div>
     </div>""" for s in t["skills"])
-    return section(t["skillsTitle"], body)
+    return section(t["skillsTitle"], body, t["skillsNote"])
 
 
 def quotes(t):
@@ -478,6 +495,21 @@ def quotes(t):
       <div class="m"></div>
     </div>""" for q in t["quotes"])
     return section(t["quotesTitle"], body)
+
+
+def wunder_page(t):
+    """Об агентстве: чтобы личные навыки Игоря не путались со статусами компании."""
+    text = "\n".join(f'      <p>{e(x)}</p>' for x in t["wunderAbout"])
+    return (f'\n  <p class="lede page-lede">{e(t["wunderLede"])}</p>\n'
+            + section("", f'    <div class="prose">\n{text}\n    </div>', first=True)
+            + agency(t)
+            + f'\n  <p class="back"><a href="{AGENCY_URL}" target="_blank" rel="noopener">'
+              f'{e(t["wunderSite"])} →</a></p>\n')
+
+
+def wunder_footnote(lang, t):
+    return (f'\n  <p class="back dim">{e(t["wunderBack"])} '
+            f'<a href="{URLS[lang]}">{e(t["name"])}</a></p>\n')
 
 
 def contacts_page(lang, t):
@@ -547,7 +579,7 @@ def contact(lang, t):
     <div class="foot-main">
       <div class="foot-who">
         <b>{e(t['name'])}</b>
-        <span>{e(t['jobTitle'])}</span>
+        <span>{link_agency(lang, t['jobTitle'])}</span>
       </div>
       <div class="foot-links">
         <span><b>{e(t['phoneLabel'])}</b><a class="mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a></span>
@@ -654,7 +686,6 @@ def build_page(lang):
         # 5. как это выглядит в деле
         photos(lang, t, PHOTOS_WORK, "workTitle", "work"),
         # 6. чем управляет и чем владеет
-        agency(t),
         skills(t),
         quotes(t),
         # 7. команда и контакты
@@ -670,6 +701,8 @@ def more_link(lang, slug, label):
 
 
 SUBPAGES = ("career", "training", "speaking", "jury", "media", "contacts")
+# страница без пункта в меню: открывается по ссылке с упоминаний агентства
+EXTRA_PAGES = ("wunder",)
 
 
 def sub_url(lang, slug):
@@ -693,6 +726,9 @@ def build_sub_page(lang, slug):
         title = t["juryPageTitle"]
         body = section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
                        f'{len(t["jury"])} {t["unitJury"]}', first=True)
+    elif slug == "wunder":
+        title = t["wunderPageTitle"]
+        body = wunder_page(t) + wunder_footnote(lang, t)
     elif slug == "contacts":
         title = t["contactsPageTitle"]
         body = contacts_page(lang, t)
@@ -737,7 +773,8 @@ def build_404():
 
 def build_sitemap():
     items = [(u, "1.0" if u == "/" else "0.8") for _, _, u in LANGS]
-    items += [(u + slug + "/", "0.6") for _, _, u in LANGS for slug in SUBPAGES]
+    items += [(u + slug + "/", "0.6") for _, _, u in LANGS
+              for slug in SUBPAGES + EXTRA_PAGES]
     today = datetime.date.today().isoformat()
     urls = "\n".join(
         f"  <url>\n    <loc>{SITE}{u}</loc>\n    <lastmod>{today}</lastmod>\n"
@@ -759,7 +796,7 @@ def main():
         print(f"  {out_path(lang)}")
 
         DEPTH = 1
-        for slug in SUBPAGES:
+        for slug in SUBPAGES + EXTRA_PAGES:
             spath = os.path.join(ROOT, sub_url(lang, slug).strip("/"), "index.html")
             os.makedirs(os.path.dirname(spath), exist_ok=True)
             with open(spath, "w", encoding="utf-8") as f:
