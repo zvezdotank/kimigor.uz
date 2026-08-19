@@ -19,7 +19,7 @@ from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 23
+CSS_VERSION = 25
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -100,7 +100,6 @@ def head(lang, t, page="", page_title=""):
 </head>
 <body>
 <a class="skip" href="#main">{e(t['skipLink'])}</a>
-<div class="wrap">
 """
 
 
@@ -115,7 +114,8 @@ def header(lang, t):
         for slug, key in (("career", "navCareer"), ("training", "navTraining"),
                           ("speaking", "navSpeaking"), ("jury", "navJury"),
                           ("media", "navMedia"), ("contacts", "navContacts")))
-    return f"""  <header class="top">
+    return f"""<header class="top">
+  <div class="top-in">
     <a class="brand" href="{base}">{e(t['name'])}</a>
     <nav class="menu" aria-label="{e(t['navCareer'])}">{nav}</nav>
     <div class="avail" data-avail
@@ -128,7 +128,9 @@ def header(lang, t):
     <nav class="langs mono" aria-label="{e(t['langLabel'])}">
 {langs}
     </nav>
-  </header>
+  </div>
+</header>
+<div class="wrap">
 """
 
 
