@@ -117,7 +117,7 @@ img { display: block; max-width: 100%; }
 .intro figure { margin: 0; }
 .intro img {
   width: 170px; height: 200px; object-fit: cover; object-position: 50% 14%;
-  border: 1px solid var(--line); filter: saturate(0.75) contrast(1.03);
+  border: 1px solid var(--line);
 }
 .intro h1 { margin: 0; font-size: 34px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.05; }
 .post { margin: 7px 0 13px; font-size: 18px; color: var(--dim); }
