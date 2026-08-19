@@ -18,7 +18,7 @@ AGENCY_URL = "https://wunder-digital.uz/"
 # Для разметки Person: как Игоря ищут и в чём он разбирается.
 # Адрес веб-приложения Apps Script с занятостью календаря (см. gcal/apps-script.gs).
 # Пусто — раздел с календарём не выводится.
-CAL_URL = ""
+CAL_URL = "https://script.google.com/macros/s/AKfycbxn9cA_uFZMMUF-PWMzLITrN_HBkpnvlGAuW7tuKWgz1urNm-3v4Mw39gw3OmEgTz-l/exec"
 
 ALT_NAMES = ["Igor Kim", "Ким Игорь Эдуардович", "Kim Igor", "Igor Kim Eduardovich"]
 KNOWS = ["интернет-реклама", "контекстная реклама", "digital-маркетинг",
