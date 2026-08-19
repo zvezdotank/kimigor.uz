@@ -17,7 +17,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
                      INSTAGRAM, LINKEDIN, FACEBOOK, TELEGRAM, TRACK_YEARS, EMAIL_WORK, AGENCY_URL, ALT_NAMES, KNOWS, CAL_URL,
-                     PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
+                     PHOTOS_WORK, PHOTOS_TEAM, STATUS_HREFS, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -186,10 +186,18 @@ def link_agency(lang, text):
     return out
 
 
+def status_html(lang, text, i):
+    """Позиция рядом с портретом ведёт туда, где её можно проверить."""
+    href = STATUS_HREFS[i] if i < len(STATUS_HREFS) else None
+    if href:
+        return f'<a href="{href}" target="_blank" rel="noopener">{e(text)}</a>'
+    return link_agency(lang, text)
+
+
 def intro(lang, t):
     posts = "\n".join(
-        f'        <li><i class="mono">{i:02d}</i><span>{link_agency(lang, s)}</span></li>'
-        for i, s in enumerate(t["statuses"][:3], 1))
+        f'        <li><i class="mono">{i + 1:02d}</i><span>{status_html(lang, s, i)}</span></li>'
+        for i, s in enumerate(t["statuses"][:3]))
     return f"""
   <main id="main">
   <section class="intro">
