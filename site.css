@@ -315,8 +315,8 @@ a.more:hover { text-decoration: none; border-bottom-color: var(--sig); }
 
 /* календарь занятости */
 .cal-wrap { margin-top: 16px; overflow-x: auto; }
-.cal { min-width: 620px; }
-.cal-row { display: grid; grid-template-columns: 44px repeat(14, 1fr); gap: 2px; margin-bottom: 2px; }
+.cal { min-width: 640px; }
+.cal-row { display: grid; grid-template-columns: 54px repeat(14, 1fr); gap: 2px; margin-bottom: 2px; }
 .cal-time { font-size: 11px; color: var(--faint); line-height: 20px; }
 .cal-head .cal-day {
   font-size: 11px; color: var(--dim); text-align: center;

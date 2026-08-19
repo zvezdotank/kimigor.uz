@@ -62,7 +62,7 @@
     html += "</div>";
 
     slots.forEach(h => {
-      html += `<div class="cal-row"><div class="cal-time mono">${String(h).padStart(2, "0")}</div>`;
+      html += `<div class="cal-row"><div class="cal-time mono">${String(h).padStart(2, "0")}:00</div>`;
       days.forEach(d => {
         const isBusy = taken.has(`${d.key}|${h}`);
         const cls = d.weekend ? "off" : isBusy ? "busy" : "free";

@@ -41,7 +41,9 @@ def _shot_sizes():
             h = int.from_bytes(data[28:30], "little") & 0x3FFF
         sizes[name] = (w, h)
     return sizes
-CSS_VERSION = 30
+
+
+CSS_VERSION = 31
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
