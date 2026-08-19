@@ -16,6 +16,10 @@ EMAIL_WORK = "i.kim@wunder-digital.uz"  # корпоративная
 AGENCY_URL = "https://wunder-digital.uz/"
 
 # Для разметки Person: как Игоря ищут и в чём он разбирается.
+# Адрес веб-приложения Apps Script с занятостью календаря (см. gcal/apps-script.gs).
+# Пусто — раздел с календарём не выводится.
+CAL_URL = ""
+
 ALT_NAMES = ["Igor Kim", "Ким Игорь Эдуардович", "Kim Igor", "Igor Kim Eduardovich"]
 KNOWS = ["интернет-реклама", "контекстная реклама", "digital-маркетинг",
          "медийная реклама", "веб-аналитика", "performance-маркетинг",
@@ -227,6 +231,12 @@ DATA = {
         "contactsPageTitle": "Контакты",
         "contactsLede": "Пишите по любому поводу: выступление на конференции, экспертный комментарий для медиа, работа в жюри или сотрудничество с агентством.",
         "socialTitle": "Соцсети",
+        "calTitle": "Занятость",
+        "calNote": "ближайшие две недели, время ташкентское",
+        "calBusy": "занято",
+        "calFree": "свободно",
+        "calNext": "Ближайшее свободное окно:",
+        "calError": "Календарь сейчас недоступен — напишите или позвоните.",
         "hoursTitle": "Когда на связи",
         "careerPageTitle": "Опыт работы и должности",
         "speakingPageTitle": "Выступления на форумах и конференциях",
@@ -580,6 +590,12 @@ DATA = {
         "contactsPageTitle": "Contacts",
         "contactsLede": "Get in touch about anything: speaking at a conference, an expert comment for the media, jury work or working with the agency.",
         "socialTitle": "Social",
+        "calTitle": "Availability",
+        "calNote": "next two weeks, Tashkent time",
+        "calBusy": "busy",
+        "calFree": "free",
+        "calNext": "Next free slot:",
+        "calError": "The calendar is unavailable right now — email or call.",
         "hoursTitle": "Availability",
         "careerPageTitle": "Experience and roles",
         "speakingPageTitle": "Talks at forums and conferences",
@@ -928,6 +944,12 @@ DATA = {
         "contactsPageTitle": "Kontaktlar",
         "contactsLede": "Istalgan masala bo‘yicha yozing: konferensiyada ma’ruza, media uchun ekspert izohi, hakamlik yoki agentlik bilan hamkorlik.",
         "socialTitle": "Ijtimoiy tarmoqlar",
+        "calTitle": "Bandlik",
+        "calNote": "yaqin ikki hafta, Toshkent vaqti",
+        "calBusy": "band",
+        "calFree": "bo‘sh",
+        "calNext": "Eng yaqin bo‘sh vaqt:",
+        "calError": "Kalendar hozir mavjud emas — yozing yoki qo‘ng‘iroq qiling.",
         "hoursTitle": "Qachon aloqadaman",
         "careerPageTitle": "Ish tajribasi va lavozimlar",
         "speakingPageTitle": "Forum va konferensiyalardagi ma’ruzalar",

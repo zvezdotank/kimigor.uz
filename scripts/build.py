@@ -15,11 +15,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from content import (DATA, LANGS, SITE, PHONE, PHONE_TEXT, EMAIL,  # noqa: E402
-                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS, EMAIL_WORK, AGENCY_URL, ALT_NAMES, KNOWS,
+                     INSTAGRAM, LINKEDIN, FACEBOOK, TRACK_YEARS, EMAIL_WORK, AGENCY_URL, ALT_NAMES, KNOWS, CAL_URL,
                      PHOTOS_WORK, PHOTOS_TEAM, CAREER, CAREER_YEARS, AGENCY, TRAINING)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSS_VERSION = 22
+CSS_VERSION = 23
 
 URLS = {code: url for code, _, url in LANGS}
 
@@ -434,7 +434,7 @@ def quotes(t):
     return section(t["quotesTitle"], body)
 
 
-def contacts_page(t):
+def contacts_page(lang, t):
     """Страница контактов: связь, соцсети и часы работы."""
     socials = [("Instagram", INSTAGRAM, "@zvezdotank_"),
                ("LinkedIn", LINKEDIN, "/in/zvezdotank")]
@@ -471,7 +471,22 @@ def contacts_page(t):
              data-units="{e(t["units"])}"><i></i><span></span></div>
       </div>
     </div>""", first=True)
-            + section(t["socialTitle"], social_rows))
+            + section(t["socialTitle"], social_rows)
+            + calendar(lang, t))
+
+
+def calendar(lang, t):
+    """Занятость из Google Календаря. Без адреса скрипта раздел не выводится."""
+    if not CAL_URL:
+        return ""
+    return section(t["calTitle"], f"""    <div class="cal-wrap" data-calendar="{CAL_URL}"
+         data-tz="Asia/Tashkent"
+         data-busy-text="{e(t['calBusy'])}" data-free-text="{e(t['calFree'])}"
+         data-next-text="{e(t['calNext'])}" data-error-text="{e(t['calError'])}">
+      <p class="cal-msg">…</p>
+    </div>
+    <script src="{asset(lang, 'calendar.js')}?v={CSS_VERSION}" defer></script>""",
+                   t["calNote"])
 
 
 def contact(lang, t):
@@ -605,7 +620,7 @@ def build_sub_page(lang, slug):
                        f'{len(t["jury"])} {t["unitJury"]}', first=True)
     elif slug == "contacts":
         title = t["contactsPageTitle"]
-        body = contacts_page(t)
+        body = contacts_page(lang, t)
     else:
         title = t["mediaPageTitle"]
         body = (section(t["mediaTitle"], rows(t["media"], t, "title", None, "outlet"),
