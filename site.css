@@ -9,7 +9,7 @@
   --fg: #eceef2;
   --soft: #c9cdd6;
   --dim: #8b909b;
-  --faint: #5f646e;
+  --faint: #838a97;
   --line: #24272e;
   --sig: #6f9bff;
   --sig-dim: #2b3a5c;
@@ -77,9 +77,9 @@ img { display: block; max-width: 100%; }
 .brand:hover { text-decoration: none; }
 
 .menu { display: flex; gap: 2px; margin: 0 auto; }
-.menu a { white-space: nowrap; }
 .menu a {
-  font-size: 14px; color: var(--dim); padding: 6px 11px; border: 1px solid transparent;
+  font-size: 14px; color: var(--dim); padding: 6px 11px;
+  border: 1px solid transparent; white-space: nowrap;
 }
 .menu a:hover { color: var(--fg); background: var(--panel); border-color: var(--line); text-decoration: none; }
 

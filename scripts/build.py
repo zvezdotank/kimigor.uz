@@ -43,7 +43,7 @@ def _shot_sizes():
     return sizes
 
 
-CSS_VERSION = 34
+CSS_VERSION = 36
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
@@ -76,10 +76,14 @@ def asset(lang, path):
     return ("../" * up) + path
 
 
-def src_link(item, label):
+def src_link(item, label, about="", src_for="источник:"):
+    """Десятки ссылок с одинаковым словом «источник» неразличимы для скринридера,
+    поэтому каждой даём скрытое пояснение, к чему она относится."""
     if not item.get("href"):
         return ""
-    return (f'<a class="src" href="{e(item["href"])}" target="_blank" rel="noopener">'
+    about = about or item.get("title") or item.get("event") or item.get("t") or ""
+    aria = f' aria-label="{e(src_for)} {e(about)}"' if about else ""
+    return (f'<a class="src" href="{e(item["href"])}" target="_blank" rel="noopener"{aria}>'
             f'{e(label)}</a>')
 
 
@@ -96,9 +100,9 @@ DESCR_KEYS = {"wunder": "wunderLede", "career": "descrCareer", "training": "desc
               "jury": "descrJury", "media": "descrMedia", "contacts": "descrContacts"}
 
 
-def head(lang, t, page="", page_title=""):
+def head(lang, t, page="", page_title="", descr=""):
     suffix = f"{page}/" if page else ""
-    descr = t.get(DESCR_KEYS.get(page, ""), t["description"])
+    descr = descr or t.get(DESCR_KEYS.get(page, ""), t["description"])
     canonical = SITE + URLS[lang] + suffix
     alts = "\n".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{u}{suffix}">'
                      for c, _, u in LANGS)
@@ -111,6 +115,9 @@ def head(lang, t, page="", page_title=""):
 <meta name="description" content="{e(descr)}">
 <meta name="theme-color" content="#101114">
 <meta name="color-scheme" content="dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; base-uri 'self'; form-action 'none'">
 
 <meta property="og:type" content="profile">
 <meta property="og:title" content="{e(page_title + ' — ' + t['name']) if page_title else e(t['title'])}">
@@ -127,13 +134,16 @@ def head(lang, t, page="", page_title=""):
 <link rel="alternate" hreflang="x-default" href="{SITE}/">
 <link rel="canonical" href="{canonical}">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="{asset(lang, 'fonts/golos-text-400-cyrillic.woff2')}">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="{asset(lang, 'fonts/golos-text-600-cyrillic.woff2')}">
+<link rel="stylesheet" href="{asset(lang, 'fonts/fonts.css')}?v={CSS_VERSION}">
 
 <link rel="icon" href="{asset(lang, 'favicon.svg')}" type="image/svg+xml">
 <link rel="icon" href="{asset(lang, 'favicon-32.png')}" sizes="32x32">
 <link rel="apple-touch-icon" href="{asset(lang, 'apple-touch-icon.png')}">
+<link rel="manifest" href="{asset(lang, 'site.webmanifest')}">
 
 <link rel="preload" as="image" href="{asset(lang, 'img/speaker-taf26.webp')}?v={CSS_VERSION}" fetchpriority="high">
 <link rel="stylesheet" href="{asset(lang, 'site.css')}?v={CSS_VERSION}">
@@ -157,8 +167,8 @@ def header(lang, t):
     return f"""<header class="top">
   <div class="top-in">
     <a class="brand" href="{base}">{e(t['name'])}</a>
-    <nav class="menu" aria-label="{e(t['navCareer'])}">{nav}</nav>
-    <div class="avail" data-avail
+    <nav class="menu" aria-label="{e(t['navLabel'])}">{nav}</nav>
+    <div class="avail" data-avail role="status" aria-live="polite"
          data-on="{e(t['statusOn'])}" data-off="{e(t['statusOff'])}"
          data-left="{e(t['statusLeft'])}" data-back="{e(t['statusBack'])}"
          data-units="{e(t['units'])}" title="{e(t['workHours'])}">
@@ -306,39 +316,6 @@ def timeline(t):
 """
 
 
-def scale(segments, years_range, title, labels=None, every=1):
-    """Шкала: реальные интервалы, а не декоративные полосы.
-
-    every — шаг подписей по годам (для длинной шкалы карьеры подписываем не каждый год).
-    """
-    n = len(years_range)
-    years = "".join(
-        f'<span>{y if i % every == 0 else ""}</span>' for i, y in enumerate(years_range))
-    lanes = []
-    for i, seg in enumerate(segments):
-        start = years_range.index(seg["from"]) + 1
-        end = years_range.index(seg["to"]) + 2 if seg.get("to") else -1
-        cls = "seg key" if seg.get("key") else "seg"
-        label = labels[i] if labels else seg["label"]
-        lanes.append(f'        <div class="lane" style="grid-template-columns: repeat({n}, 1fr)">'
-                     f'<div class="{cls}" style="grid-column: {start} / {end}">'
-                     f'{e(label)}</div></div>')
-    return f"""
-  <section class="track-scroll">
-    <div class="track track-inner" style="--col: calc(100% / {n})">
-      <div class="track-h">
-        <h2 class="cap">{e(title)}</h2>
-        <div class="note mono">{years_range[0]} — {years_range[-1]}</div>
-      </div>
-      <div class="years" style="grid-template-columns: repeat({n}, 1fr)">{years}</div>
-      <div class="lanes">
-{chr(10).join(lanes)}
-      </div>
-    </div>
-  </section>
-"""
-
-
 def section(title, body, count=None, first=False):
     """first=True — секция открывает страницу раздела, её название уже стоит в h1."""
     if not body:
@@ -367,7 +344,7 @@ def rows(items, t, main_key, sub_key, meta_key):
         out.append(f"""    <div class="row">
       <div><div class="t">{e(it[main_key])}</div>{sub}</div>
       <div class="m">{e(it.get(meta_key, ""))}</div>
-      {src_link(it, t["proof"])}
+      {src_link(it, t["proof"], src_for=t["srcFor"])}
     </div>""")
     return "\n".join(out)
 
@@ -404,18 +381,6 @@ def training(t, first=False):
     </div>""")
     return section(t["trainingTitle"], "\n".join(blocks),
                    f'{len(TRAINING)} {t["trainingNote"]}', first=first)
-
-
-def career_rows(t, limit=None):
-    """Строки мест работы: компания, должность и период."""
-    out = []
-    for job, place in list(zip(t["jobs"], CAREER))[:limit]:
-        out.append(f"""    <div class="row">
-      <div><div class="t">{e(place["org"])}</div>
-        <div class="s">{e(job["role"])}</div></div>
-      <div class="m">{e(job["when"])}</div>
-    </div>""")
-    return "\n".join(out)
 
 
 def career(t, first=False):
@@ -456,7 +421,7 @@ def awards(t):
         <div class="y">{e(a['year'])}</div>
         <div class="t">{e(a['title'])}</div>
         <p>{e(a['desc'])}</p>
-        {src_link(a, t['proof'])}
+        {src_link(a, t["proof"], src_for=t["srcFor"])}
       </div>""" for a in t["awards"])
     return section(t["awardsTitle"], f'    <div class="awards">\n{cards}\n    </div>')
 
@@ -468,7 +433,7 @@ def agency(t):
         items = "\n".join(
             f"""        <li><span>{e(it["t"])}</span>"""
             + (f'<b class="mono">{e(it["y"])}</b>' if it.get("y") else "")
-            + (src_link(it, t["proof"]) if it.get("href") else "")
+            + (src_link(it, t["proof"], src_for=t["srcFor"]) if it.get("href") else "")
             + "</li>" for it in g["items"])
         groups.append(f"""    <div class="plat">
       <div class="plat-name">{e(g["platform"])}</div>
@@ -763,7 +728,7 @@ def build_404():
         for slug, key in (("career", "navCareer"), ("training", "navTraining"),
                           ("speaking", "navSpeaking"), ("jury", "navJury"),
                           ("media", "navMedia"), ("contacts", "navContacts")))
-    return (head("ru", t, page_title=t["notFoundTitle"])
+    return (head("ru", t, page_title=t["notFoundTitle"], descr=t["notFoundDescr"])
             + header("ru", t)
             + f"""
   <main id="main">
@@ -773,7 +738,6 @@ def build_404():
 {links}
     </ul>
     <p class="back"><a href="/">← {e(t['backHome'])}</a></p>
-  </main>
 """
             + contact("ru", t)
             + footer("ru", t))
