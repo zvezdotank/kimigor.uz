@@ -1,0 +1,59 @@
+/* Позиции отрезков и вех хронологии. Файл собирается build.py:
+   инлайн-стили запрещены Content-Security-Policy сайта. */
+.years, .lane, .learn { grid-template-columns: repeat(20, 1fr); }
+.track-inner { --col: calc(100% / 20); }
+.sg-0 { left: 58.50%; width: 40.00%; }
+.sg-1 { left: 52.00%; width: 6.50%; }
+.sg-2 { left: 22.00%; width: 30.00%; }
+.sg-3 { left: 18.75%; width: 3.25%; }
+.sg-4 { left: 16.00%; width: 2.75%; }
+.sg-5 { left: 14.25%; width: 1.75%; }
+.sg-6 { left: 11.00%; width: 2.50%; }
+.sg-7 { left: 8.00%; width: 3.00%; }
+.sg-8 { left: 2.50%; width: 5.00%; }
+.era-a { left: 0; width: 22.00%; }
+.era-b { left: 22.00%; width: 78.00%; }
+.br-0 { --h: 0.40; }
+.br-1 { --h: 0.00; }
+.br-2 { --h: 0.00; }
+.br-3 { --h: 0.00; }
+.br-4 { --h: 0.00; }
+.br-5 { --h: 0.00; }
+.br-6 { --h: 0.20; }
+.br-7 { --h: 0.40; }
+.br-8 { --h: 0.60; }
+.br-9 { --h: 1.00; }
+.br-10 { --h: 0.20; }
+.br-11 { --h: 0.60; }
+.br-12 { --h: 0.00; }
+.br-13 { --h: 0.40; }
+.br-14 { --h: 0.20; }
+.br-15 { --h: 0.40; }
+.br-16 { --h: 0.60; }
+.br-17 { --h: 0.00; }
+.br-18 { --h: 0.00; }
+.br-19 { --h: 0.00; }
+.mk-ru-0 { left: 2.50%; --floor: 0; }
+.mk-ru-1 { left: 22.50%; --floor: 1; }
+.mk-ru-2 { left: 57.50%; --floor: 0; }
+.mk-ru-3 { right: 22.50%; --floor: 2; }
+.mk-ru-4 { right: 12.50%; --floor: 1; }
+.mk-ru-5 { right: 12.50%; --floor: 3; }
+.mk-ru-6 { right: 7.50%; --floor: 4; }
+.marks-ru { --floors: 5; }
+.mk-en-0 { left: 2.50%; --floor: 0; }
+.mk-en-1 { left: 22.50%; --floor: 1; }
+.mk-en-2 { left: 57.50%; --floor: 0; }
+.mk-en-3 { right: 22.50%; --floor: 2; }
+.mk-en-4 { right: 12.50%; --floor: 1; }
+.mk-en-5 { right: 12.50%; --floor: 3; }
+.mk-en-6 { right: 7.50%; --floor: 4; }
+.marks-en { --floors: 5; }
+.mk-uz-0 { left: 2.50%; --floor: 0; }
+.mk-uz-1 { left: 22.50%; --floor: 1; }
+.mk-uz-2 { left: 57.50%; --floor: 0; }
+.mk-uz-3 { right: 22.50%; --floor: 2; }
+.mk-uz-4 { right: 12.50%; --floor: 3; }
+.mk-uz-5 { right: 12.50%; --floor: 4; }
+.mk-uz-6 { right: 7.50%; --floor: 5; }
+.marks-uz { --floors: 6; }

@@ -32,15 +32,17 @@
       href="fonts/golos-text-400-cyrillic.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin
       href="fonts/golos-text-600-cyrillic.woff2">
-<link rel="stylesheet" href="fonts/fonts.css?v=36">
+<link rel="stylesheet" href="fonts/fonts.css?v=38">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
+<script src="theme.js?v=38"></script>
 
-<link rel="preload" as="image" href="img/speaker-taf26.webp?v=36" fetchpriority="high">
-<link rel="stylesheet" href="site.css?v=36">
+<link rel="preload" as="image" href="img/speaker-taf26.webp?v=38" fetchpriority="high">
+<link rel="stylesheet" href="site.css?v=38">
+<link rel="stylesheet" href="timeline.css?v=38">
 </head>
 <body>
 <a class="skip" href="#main">К содержанию</a>
@@ -55,6 +57,12 @@
       <i></i><span></span>
     </div>
     <a class="tel mono" href="tel:+998903239241">+998 90 323 92 41</a>
+    <button class="theme" type="button" data-theme-toggle aria-pressed="false"
+            data-to-light="Включить светлую тему" data-to-dark="Включить тёмную тему"
+            aria-label="Включить светлую тему" title="Включить светлую тему">
+      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 2a9 9 0 1 0 9.7 9.7 7.2 7.2 0 0 1-9.7-9.7z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-13.2a1 1 0 0 1-1-1V1.6a1 1 0 1 1 2 0v1.2a1 1 0 0 1-1 1zm0 18.6a1 1 0 0 1-1-1v-1.2a1 1 0 1 1 2 0v1.2a1 1 0 0 1-1 1zM4.2 5.6a1 1 0 0 1-.7-.3l-.9-.8a1 1 0 0 1 1.4-1.4l.9.8a1 1 0 0 1-.7 1.7zm16.5 16.5a1 1 0 0 1-.7-.3l-.9-.8a1 1 0 1 1 1.4-1.4l.9.8a1 1 0 0 1-.7 1.7zM3.4 13H2.2a1 1 0 1 1 0-2h1.2a1 1 0 1 1 0 2zm18.4 0h-1.2a1 1 0 1 1 0-2h1.2a1 1 0 1 1 0 2zM3.3 22.1a1 1 0 0 1-.7-1.7l.9-.8a1 1 0 1 1 1.4 1.4l-.9.8a1 1 0 0 1-.7.3zM19.8 5.6a1 1 0 0 1-.7-1.7l.9-.8a1 1 0 1 1 1.4 1.4l-.9.8a1 1 0 0 1-.7.3z"/></svg>
+    </button>
     <nav class="langs mono" aria-label="Язык страницы">
         <a href="/" hreflang="ru" aria-current="page">RU</a>
         <a href="/en/" hreflang="en">EN</a>
@@ -67,7 +75,7 @@
   <main id="main">
   <section class="intro">
     <figure>
-      <img src="img/speaker-taf26.webp?v=36" width="420" height="500"
+      <img src="img/speaker-taf26.webp?v=38" width="420" height="500"
            alt="Ким Игорь, Ташкент — CEO Wunder Digital Uzbekistan, эксперт по интернет-рекламе" fetchpriority="high">
     </figure>
     <div>
@@ -110,59 +118,58 @@
   </section>
 
   <section class="track-scroll">
-    <div class="track track-inner" style="--col: calc(100% / 20)">
+    <div class="track track-inner">
       <div class="track-h">
         <h2 class="cap">Хронология</h2>
         <div class="note mono">19 лет, из них 13 в digital</div>
       </div>
-      <div class="years" style="grid-template-columns: repeat(20, 1fr)"><span>2007</span><span></span><span>2009</span><span></span><span>2011</span><span></span><span>2013</span><span></span><span>2015</span><span></span><span>2017</span><span></span><span>2019</span><span></span><span>2021</span><span></span><span>2023</span><span></span><span>2025</span><span></span></div>
-      <div class="eras"><div class="era" style="left: 0; width: 22.00%"><span>продажи и дистрибуция</span></div><div class="era on" style="left: 22.00%; width: 78.00%"><span>digital</span></div></div>
+      <div class="years"><span>2007</span><span></span><span>2009</span><span></span><span>2011</span><span></span><span>2013</span><span></span><span>2015</span><span></span><span>2017</span><span></span><span>2019</span><span></span><span>2021</span><span></span><span>2023</span><span></span><span>2025</span><span></span></div>
+      <div class="eras"><div class="era era-a"><span>продажи и дистрибуция</span></div><div class="era on era-b"><span>digital</span></div></div>
       <div class="lanes">
-        <div class="lane abs"><div class="seg key" style="left: 58.50%; width: 40.00%"><span>Wunder Digital Uzbekistan</span></div></div>
-        <div class="lane abs"><div class="seg" style="left: 52.00%; width: 6.50%"><span>Whirl</span></div></div>
-        <div class="lane abs"><div class="seg key" style="left: 22.00%; width: 30.00%"><span>ЛЛК-Интернешнл</span></div></div>
-        <div class="lane abs"><div class="seg" style="left: 18.75%; width: 3.25%"><span>China Yuan Sheng</span></div></div>
-        <div class="lane abs"><div class="seg" style="left: 16.00%; width: 2.75%"><span>Super iMax · EVO</span></div></div>
-        <div class="lane abs"><div class="seg" style="left: 14.25%; width: 1.75%"><span>Дистрибуция оборудования, Астана</span></div></div>
-        <div class="lane abs"><div class="seg" style="left: 11.00%; width: 2.50%"><span>Ural LM</span></div></div>
-        <div class="lane abs"><div class="seg" style="left: 8.00%; width: 3.00%"><span>Abris Distribution</span></div></div>
-        <div class="lane abs"><div class="seg key" style="left: 2.50%; width: 5.00%"><span>StarMedia Ogilvy Uzbekistan</span></div></div>
+        <div class="lane abs"><div class="seg key sg-0"><span>Wunder Digital Uzbekistan</span></div></div>
+        <div class="lane abs"><div class="seg sg-1"><span>Whirl</span></div></div>
+        <div class="lane abs"><div class="seg key sg-2"><span>ЛЛК-Интернешнл</span></div></div>
+        <div class="lane abs"><div class="seg sg-3"><span>China Yuan Sheng</span></div></div>
+        <div class="lane abs"><div class="seg sg-4"><span>Super iMax · EVO</span></div></div>
+        <div class="lane abs"><div class="seg sg-5"><span>Дистрибуция оборудования, Астана</span></div></div>
+        <div class="lane abs"><div class="seg sg-6"><span>Ural LM</span></div></div>
+        <div class="lane abs"><div class="seg sg-7"><span>Abris Distribution</span></div></div>
+        <div class="lane abs"><div class="seg key sg-8"><span>StarMedia Ogilvy Uzbekistan</span></div></div>
       </div>
       <div class="learn-h">
         <span class="cap">Обучение и сертификаты</span>
         <span class="n mono">25 курсов</span>
       </div>
-      <div class="learn" style="grid-template-columns: repeat(20, 1fr)"
-           aria-label="Обучение и сертификаты">
-        <div class="bar" style="--h: 0.40" title="2007: 2 обучений за год"><b>2</b></div>
-        <div class="bar" style="--h: 0.00" title="2008: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.00" title="2009: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.00" title="2010: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.00" title="2011: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.00" title="2012: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.20" title="2013: 1 обучений за год"></div>
-        <div class="bar" style="--h: 0.40" title="2014: 2 обучений за год"><b>2</b></div>
-        <div class="bar" style="--h: 0.60" title="2015: 3 обучений за год"><b>3</b></div>
-        <div class="bar" style="--h: 1.00" title="2016: 5 обучений за год"><b>5</b></div>
-        <div class="bar" style="--h: 0.20" title="2017: 1 обучений за год"></div>
-        <div class="bar" style="--h: 0.60" title="2018: 3 обучений за год"><b>3</b></div>
-        <div class="bar" style="--h: 0.00" title="2019: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.40" title="2020: 2 обучений за год"><b>2</b></div>
-        <div class="bar" style="--h: 0.20" title="2021: 1 обучений за год"></div>
-        <div class="bar" style="--h: 0.40" title="2022: 2 обучений за год"><b>2</b></div>
-        <div class="bar" style="--h: 0.60" title="2023: 3 обучений за год"><b>3</b></div>
-        <div class="bar" style="--h: 0.00" title="2024: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.00" title="2025: 0 обучений за год"></div>
-        <div class="bar" style="--h: 0.00" title="2026: 0 обучений за год"></div>
+      <div class="learn" aria-label="Обучение и сертификаты">
+        <div class="bar br-0" title="2007: 2 обучений за год"><b>2</b></div>
+        <div class="bar br-1" title="2008: 0 обучений за год"></div>
+        <div class="bar br-2" title="2009: 0 обучений за год"></div>
+        <div class="bar br-3" title="2010: 0 обучений за год"></div>
+        <div class="bar br-4" title="2011: 0 обучений за год"></div>
+        <div class="bar br-5" title="2012: 0 обучений за год"></div>
+        <div class="bar br-6" title="2013: 1 обучений за год"></div>
+        <div class="bar br-7" title="2014: 2 обучений за год"><b>2</b></div>
+        <div class="bar br-8" title="2015: 3 обучений за год"><b>3</b></div>
+        <div class="bar br-9" title="2016: 5 обучений за год"><b>5</b></div>
+        <div class="bar br-10" title="2017: 1 обучений за год"></div>
+        <div class="bar br-11" title="2018: 3 обучений за год"><b>3</b></div>
+        <div class="bar br-12" title="2019: 0 обучений за год"></div>
+        <div class="bar br-13" title="2020: 2 обучений за год"><b>2</b></div>
+        <div class="bar br-14" title="2021: 1 обучений за год"></div>
+        <div class="bar br-15" title="2022: 2 обучений за год"><b>2</b></div>
+        <div class="bar br-16" title="2023: 3 обучений за год"><b>3</b></div>
+        <div class="bar br-17" title="2024: 0 обучений за год"></div>
+        <div class="bar br-18" title="2025: 0 обучений за год"></div>
+        <div class="bar br-19" title="2026: 0 обучений за год"></div>
       </div>
-      <div class="marks" style="--floors: 5">
-        <div class="mark" style="left: 2.50%; --floor: 0"><b class="mono">2007</b><span>Первый опыт в рекламном бизнесе</span></div>
-        <div class="mark" style="left: 22.50%; --floor: 1"><b class="mono">2011</b><span>Первый сайт на WordPress, сертификация Google по рекламе и аналитике</span></div>
-        <div class="mark" style="left: 57.50%; --floor: 0"><b class="mono">2018</b><span>Открыл офис Wunder Digital в Ташкенте</span></div>
-        <div class="mark rev" style="right: 22.50%; --floor: 2"><b class="mono">2022</b><span>Эксперт Маркетинговой ассоциации Узбекистана</span></div>
-        <div class="mark rev" style="right: 12.50%; --floor: 1"><b class="mono">2024</b><span>Член правления МАУ</span></div>
-        <div class="mark rev" style="right: 12.50%; --floor: 3"><b class="mono">2024</b><span>Председатель digital-комитета МАУ</span></div>
-        <div class="mark rev" style="right: 7.50%; --floor: 4"><b class="mono">2025</b><span>Топ-35 маркетологов Узбекистана</span></div>
+      <div class="marks marks-ru">
+        <div class="mark mk-ru-0"><b class="mono">2007</b><span>Первый опыт в рекламном бизнесе</span></div>
+        <div class="mark mk-ru-1"><b class="mono">2011</b><span>Первый сайт на WordPress, сертификация Google по рекламе и аналитике</span></div>
+        <div class="mark mk-ru-2"><b class="mono">2018</b><span>Открыл офис Wunder Digital в Ташкенте</span></div>
+        <div class="mark rev mk-ru-3"><b class="mono">2022</b><span>Эксперт Маркетинговой ассоциации Узбекистана</span></div>
+        <div class="mark rev mk-ru-4"><b class="mono">2024</b><span>Член правления МАУ</span></div>
+        <div class="mark rev mk-ru-5"><b class="mono">2024</b><span>Председатель digital-комитета МАУ</span></div>
+        <div class="mark rev mk-ru-6"><b class="mono">2025</b><span>Топ-35 маркетологов Узбекистана</span></div>
       </div>
     </div>
   </section>
@@ -187,17 +194,17 @@
 
     <div class="shots">
       <figure class="shot">
-        <img src="img/rukopozhatie-konferenciya.webp?v=36" width="800" height="533"
+        <img src="img/rukopozhatie-konferenciya.webp?v=38" width="800" height="533"
              alt="Кулуары отраслевой конференции, Ташкент" loading="lazy" decoding="async">
         <figcaption class="mono">Кулуары отраслевой конференции, Ташкент</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/yandex-conference-banner.webp?v=36" width="800" height="533"
+        <img src="img/yandex-conference-banner.webp?v=38" width="800" height="533"
              alt="Yandex Ads Conference Uzbekistan" loading="lazy" decoding="async">
         <figcaption class="mono">Yandex Ads Conference Uzbekistan</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/yandex-conference-scena.webp?v=36" width="800" height="533"
+        <img src="img/yandex-conference-scena.webp?v=38" width="800" height="533"
              alt="Yandex Ads Conference Uzbekistan, участники на сцене" loading="lazy" decoding="async">
         <figcaption class="mono">Yandex Ads Conference Uzbekistan, участники на сцене</figcaption>
       </figure>
@@ -235,17 +242,17 @@
 
     <div class="shots">
       <figure class="shot">
-        <img src="img/komanda-registan.webp?v=36" width="800" height="451"
+        <img src="img/komanda-registan.webp?v=38" width="800" height="451"
              alt="Команда Wunder Digital, Самарканд" loading="lazy" decoding="async">
         <figcaption class="mono">Команда Wunder Digital, Самарканд</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/komanda-ofis-1.webp?v=36" width="800" height="600"
+        <img src="img/komanda-ofis-1.webp?v=38" width="800" height="600"
              alt="Офис в Ташкенте" loading="lazy" decoding="async">
         <figcaption class="mono">Офис в Ташкенте</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/komanda-vyezd.webp?v=36" width="800" height="533"
+        <img src="img/komanda-vyezd.webp?v=38" width="800" height="533"
              alt="Выездная встреча команды" loading="lazy" decoding="async">
         <figcaption class="mono">Выездная встреча команды</figcaption>
       </figure>
@@ -283,6 +290,6 @@
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Ким Игорь","alternateName":["Igor Kim","Ким Игорь Эдуардович","Kim Igor","Igor Kim Eduardovich"],"url":"https://kimigor.uz/","image":"https://kimigor.uz/img/speaker-taf26.webp","jobTitle":"CEO Wunder Digital Uzbekistan","telephone":"+998903239241","email":["zvezdotank@gmail.com","i.kim@wunder-digital.uz"],"worksFor":{"@type":"Organization","name":"Wunder Digital Uzbekistan","url":"https://wunder-digital.uz/"},"memberOf":{"@type":"Organization","name":"Marketing Association of Uzbekistan","url":"https://marketing.uz/"},"address":{"@type":"PostalAddress","addressLocality":"Tashkent","addressCountry":"UZ"},"knowsAbout":["интернет-реклама","контекстная реклама","digital-маркетинг","медийная реклама","веб-аналитика","performance-маркетинг","online advertising","digital marketing","web analytics","Google Ads · Yandex Ads · Meta Ads · DV360 · Telegram Ads · Native Network · BYYD · локальное размещение","Google Analytics · Yandex Metrica · AppMetrica","Adjust · AppsFlyer","WordPress · Tilda"],"workLocation":{"@type":"Place","name":"Tashkent, Uzbekistan"},"nationality":{"@type":"Country","name":"Uzbekistan"},"birthDate":"1983-09-24","sameAs":["https://instagram.com/zvezdotank_","https://www.linkedin.com/in/zvezdotank/","https://t.me/zvezdotank","https://marketing.uz/about/board/kim-igor.htm","https://uz.kursiv.media/expert/igor-kim/"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","url":"https://kimigor.uz/","name":"Ким Игорь","inLanguage":"ru","publisher":{"@type":"Person","name":"Ким Игорь"}}</script>
-<script src="avail.js?v=36" defer></script>
+<script src="avail.js?v=38" defer></script>
 </body>
 </html>

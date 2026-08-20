@@ -43,7 +43,7 @@ def _shot_sizes():
     return sizes
 
 
-CSS_VERSION = 36
+CSS_VERSION = 38
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
@@ -144,9 +144,11 @@ def head(lang, t, page="", page_title="", descr=""):
 <link rel="icon" href="{asset(lang, 'favicon-32.png')}" sizes="32x32">
 <link rel="apple-touch-icon" href="{asset(lang, 'apple-touch-icon.png')}">
 <link rel="manifest" href="{asset(lang, 'site.webmanifest')}">
+<script src="{asset(lang, 'theme.js')}?v={CSS_VERSION}"></script>
 
 <link rel="preload" as="image" href="{asset(lang, 'img/speaker-taf26.webp')}?v={CSS_VERSION}" fetchpriority="high">
 <link rel="stylesheet" href="{asset(lang, 'site.css')}?v={CSS_VERSION}">
+<link rel="stylesheet" href="{asset(lang, 'timeline.css')}?v={CSS_VERSION}">
 </head>
 <body>
 <a class="skip" href="#main">{e(t['skipLink'])}</a>
@@ -175,6 +177,12 @@ def header(lang, t):
       <i></i><span></span>
     </div>
     <a class="tel mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a>
+    <button class="theme" type="button" data-theme-toggle aria-pressed="false"
+            data-to-light="{e(t['themeToLight'])}" data-to-dark="{e(t['themeToDark'])}"
+            aria-label="{e(t['themeToLight'])}" title="{e(t['themeToLight'])}">
+      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.3 2a9 9 0 1 0 9.7 9.7 7.2 7.2 0 0 1-9.7-9.7z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-13.2a1 1 0 0 1-1-1V1.6a1 1 0 1 1 2 0v1.2a1 1 0 0 1-1 1zm0 18.6a1 1 0 0 1-1-1v-1.2a1 1 0 1 1 2 0v1.2a1 1 0 0 1-1 1zM4.2 5.6a1 1 0 0 1-.7-.3l-.9-.8a1 1 0 0 1 1.4-1.4l.9.8a1 1 0 0 1-.7 1.7zm16.5 16.5a1 1 0 0 1-.7-.3l-.9-.8a1 1 0 1 1 1.4-1.4l.9.8a1 1 0 0 1-.7 1.7zM3.4 13H2.2a1 1 0 1 1 0-2h1.2a1 1 0 1 1 0 2zm18.4 0h-1.2a1 1 0 1 1 0-2h1.2a1 1 0 1 1 0 2zM3.3 22.1a1 1 0 0 1-.7-1.7l.9-.8a1 1 0 1 1 1.4 1.4l-.9.8a1 1 0 0 1-.7.3zM19.8 5.6a1 1 0 0 1-.7-1.7l.9-.8a1 1 0 1 1 1.4 1.4l-.9.8a1 1 0 0 1-.7.3z"/></svg>
+    </button>
     <nav class="langs mono" aria-label="{e(t['langLabel'])}">
 {langs}
     </nav>
@@ -227,75 +235,83 @@ def intro(lang, t):
 """
 
 
-def timeline(t):
-    """Одна хронология: лента мест работы, вехи под ней и разделение
-    на два периода — до digital и после. Вехи раскладываются по этажам,
-    чтобы подписи не наезжали друг на друга."""
+TIMELINE_RULES = []   # позиции для timeline.css: инлайн-стили запрещены нашей же CSP
+
+
+def timeline(lang, t):
+    """Одна хронология: лента мест работы, вехи под ней и деление на два периода.
+
+    Позиции отрезков вычисляются на сборке, но уезжают в timeline.css:
+    Content-Security-Policy со `style-src 'self'` не пропускает атрибут style.
+    """
     first, last = CAREER_YEARS[0], CAREER_YEARS[-1] + 1
     span = last - first
     n = len(CAREER_YEARS)
     pos = lambda year: (year - first) / span * 100  # noqa: E731
 
+    add = TIMELINE_RULES.append
+    add(f".years, .lane, .learn {{ grid-template-columns: repeat({n}, 1fr); }}")
+    add(f".track-inner {{ --col: calc(100% / {n}); }}")
+
     years = "".join(f'<span>{y if i % 2 == 0 else ""}</span>'
                     for i, y in enumerate(CAREER_YEARS))
 
     lanes = []
-    for seg in CAREER:
+    for i, seg in enumerate(CAREER):
         cls = "seg key" if seg.get("key") else "seg"
-        lanes.append(f'        <div class="lane abs"><div class="{cls}" '
-                     f'style="left: {pos(seg["from"]):.2f}%; '
-                     f'width: {(seg["to"] - seg["from"]) / span * 100:.2f}%">'
+        add(f".sg-{i} {{ left: {pos(seg['from']):.2f}%; "
+            f"width: {(seg['to'] - seg['from']) / span * 100:.2f}%; }}")
+        lanes.append(f'        <div class="lane abs"><div class="{cls} sg-{i}">'
                      f'<span>{e(seg["org"])}</span></div></div>')
 
-    # эры: до 2011 — продажи, дальше digital
+    add(f".era-a {{ left: 0; width: {pos(2011.4):.2f}%; }}")
+    add(f".era-b {{ left: {pos(2011.4):.2f}%; width: {100 - pos(2011.4):.2f}%; }}")
     eras = (f'      <div class="eras">'
-            f'<div class="era" style="left: 0; width: {pos(2011.4):.2f}%">'
-            f'<span>{e(t["eraSales"])}</span></div>'
-            f'<div class="era on" style="left: {pos(2011.4):.2f}%; '
-            f'width: {100 - pos(2011.4):.2f}%"><span>{e(t["eraDigital"])}</span></div></div>')
+            f'<div class="era era-a"><span>{e(t["eraSales"])}</span></div>'
+            f'<div class="era on era-b"><span>{e(t["eraDigital"])}</span></div></div>')
 
-    # вехи: раскладка по этажам, чтобы подписи не сталкивались.
-    # Контейнер ~1120 px на 20 лет, значит 1% ≈ 11 px; символ подписи ≈ 7 px.
-    PX = 1120 / 100.0
-    floors = []      # правая занятая граница каждого этажа, в %
-    marks = []
-    personal = [m for m in t["milestones"] if not m.get("co")]
-    for ms in sorted(personal, key=lambda m: m["year"]):
-        left = pos(ms["year"] + 0.5)
-        width = (len(ms["text"]) * 7 + 52) / PX
-        flip = left + width > 99          # у правого края подпись уходит влево
-        lo = left - width if flip else left
-        hi = left if flip else left + width
-        row = next((i for i, right in enumerate(floors) if lo > right + 0.8), len(floors))
-        if row == len(floors):
-            floors.append(-99.0)
-        floors[row] = hi
-        anchor = (f'right: {100 - left:.2f}%' if flip else f'left: {left:.2f}%')
-        cls = "mark rev" if flip else "mark"
-        marks.append(f'        <div class="{cls}" style="{anchor}; --floor: {row}">'
-                     f'<b class="mono">{ms["year"]}</b>'
-                     f'<span>{e(ms["text"])}</span></div>')
-
-    # обучение: по столбику на год, высота — сколько курсов пройдено
     per_year = {}
     for tr in TRAINING:
         per_year.setdefault(tr["y"], []).append(tr)
     peak = max(len(v) for v in per_year.values())
-    bars = "\n".join(
-        f'        <div class="bar" style="--h: {len(per_year.get(y, [])) / peak:.2f}" '
-        f'title="{y}: {len(per_year.get(y, []))} {e(t["trainingHint"])}">'
-        + (f'<b>{len(per_year[y])}</b>' if len(per_year.get(y, [])) >= 2 else "")
-        + '</div>'
-        for y in CAREER_YEARS)
+    bars = []
+    for i, y in enumerate(CAREER_YEARS):
+        cnt = len(per_year.get(y, []))
+        add(f".br-{i} {{ --h: {cnt / peak:.2f}; }}")
+        bars.append(f'        <div class="bar br-{i}" '
+                    f'title="{y}: {cnt} {e(t["trainingHint"])}">'
+                    + (f"<b>{cnt}</b>" if cnt >= 2 else "") + "</div>")
+
+    # вехи: раскладка по этажам, чтобы подписи не сталкивались
+    PX = 1120 / 100.0
+    floors, marks = [], []
+    personal = [m for m in t["milestones"] if not m.get("co")]
+    for i, ms in enumerate(sorted(personal, key=lambda m: m["year"])):
+        left = pos(ms["year"] + 0.5)
+        width = (len(ms["text"]) * 7 + 52) / PX
+        flip = left + width > 99
+        lo = left - width if flip else left
+        hi = left if flip else left + width
+        row = next((r for r, right in enumerate(floors) if lo > right + 0.8), len(floors))
+        if row == len(floors):
+            floors.append(-99.0)
+        floors[row] = hi
+        name = f"mk-{lang}-{i}"
+        add(f".{name} {{ {'right' if flip else 'left'}: "
+            f"{(100 - left) if flip else left:.2f}%; --floor: {row}; }}")
+        marks.append(f'        <div class="mark{" rev" if flip else ""} {name}">'
+                     f'<b class="mono">{ms["year"]}</b>'
+                     f'<span>{e(ms["text"])}</span></div>')
+    add(f".marks-{lang} {{ --floors: {len(floors)}; }}")
 
     return f"""
   <section class="track-scroll">
-    <div class="track track-inner" style="--col: calc(100% / {n})">
+    <div class="track track-inner">
       <div class="track-h">
         <h2 class="cap">{e(t['timelineTitle'])}</h2>
         <div class="note mono">{e(t['careerNote'])}</div>
       </div>
-      <div class="years" style="grid-template-columns: repeat({n}, 1fr)">{years}</div>
+      <div class="years">{years}</div>
 {eras}
       <div class="lanes">
 {chr(10).join(lanes)}
@@ -304,11 +320,10 @@ def timeline(t):
         <span class="cap">{e(t['trainingTitle'])}</span>
         <span class="n mono">{len(TRAINING)} {e(t['trainingNote'])}</span>
       </div>
-      <div class="learn" style="grid-template-columns: repeat({n}, 1fr)"
-           aria-label="{e(t['trainingTitle'])}">
-{bars}
+      <div class="learn" aria-label="{e(t['trainingTitle'])}">
+{chr(10).join(bars)}
       </div>
-      <div class="marks" style="--floors: {len(floors)}">
+      <div class="marks marks-{lang}">
 {chr(10).join(marks)}
       </div>
     </div>
@@ -653,7 +668,7 @@ def build_page(lang):
         # 2. паспортные факты — сразу, чтобы знакомство было быстрым
         person(t),
         # 3. ядро страницы: путь от продаж к digital
-        timeline(t) + more_link(lang, "training", t["allTraining"]),
+        timeline(lang, t) + more_link(lang, "training", t["allTraining"]),
         # 4. рассказ о себе словами
         about(t),
         # 5. как это выглядит в деле
@@ -775,6 +790,12 @@ def main():
                 f.write(build_sub_page(lang, slug))
             print(f"  {sub_url(lang, slug).strip('/')}/index.html")
     DEPTH = 0
+
+    with open(os.path.join(ROOT, "timeline.css"), "w", encoding="utf-8") as f:
+        f.write("/* Позиции отрезков и вех хронологии. Файл собирается build.py:\n"
+                "   инлайн-стили запрещены Content-Security-Policy сайта. */\n"
+                + "\n".join(dict.fromkeys(TIMELINE_RULES)) + "\n")
+    print("  timeline.css")
 
     with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as f:
         f.write(build_404())
