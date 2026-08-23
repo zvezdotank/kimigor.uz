@@ -43,7 +43,7 @@ def _shot_sizes():
     return sizes
 
 
-CSS_VERSION = 43
+CSS_VERSION = 44
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
@@ -441,6 +441,55 @@ def awards(t):
     return section(t["awardsTitle"], f'    <div class="awards">\n{cards}\n    </div>')
 
 
+def jury_track(t):
+    """Судейство по годам: строка на конкурс, отметка в каждом году участия.
+
+    Ячейки выводятся для всех лет подряд, поэтому позиции не нужны —
+    сетка обходится без инлайн-стилей, запрещённых нашей CSP.
+    """
+    if not t["jury"]:
+        return ""
+    years, groups = set(), {}
+    for j in t["jury"]:
+        y = int(j["meta"])
+        years.add(y)
+        groups.setdefault(j["event"], {})[y] = j
+    span = list(range(min(years), max(years) + 1))
+    TIMELINE_RULES.append(
+        f".jt {{ grid-template-columns: minmax(140px, 1.4fr) repeat({len(span)}, 1fr); }}")
+
+    head = "".join(f'<span class="jt-y mono">{y}</span>' for y in span)
+    rows = []
+    for event, byyear in sorted(groups.items(), key=lambda kv: -max(kv[1])):
+        cells = []
+        for y in span:
+            hit = byyear.get(y)
+            if hit:
+                cells.append(f'<i class="on" title="{y} — {e(hit["sub"])}">'
+                             f'<span class="vh">{y}, {e(hit["sub"])}</span></i>')
+            else:
+                cells.append('<i></i>')
+        rows.append(f'      <div class="jt-row"><b>{e(event)}</b>{"".join(cells)}</div>')
+
+    return f"""
+  <section class="track-scroll">
+    <div class="track jt-wrap">
+      <div class="track-h">
+        <h2 class="cap">{e(t['juryTrackTitle'])}</h2>
+        <div class="note mono">{span[0]} — {span[-1]}</div>
+      </div>
+      <div class="jt">
+        <span></span>{head}
+      </div>
+      <div class="jt jt-body">
+{chr(10).join(rows)}
+      </div>
+      <div class="jt-note">{e(t['juryTrackNote'])}</div>
+    </div>
+  </section>
+"""
+
+
 def agency(t):
     """Статусы агентства, сгруппированные по платформам."""
     groups = []
@@ -716,8 +765,9 @@ def build_sub_page(lang, slug):
                        f'{len(t["talks"])} {t["unitEvents"]}', first=True)
     elif slug == "jury":
         title = t["juryPageTitle"]
-        body = section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
-                       f'{len(t["jury"])} {t["unitJury"]}', first=True)
+        body = (jury_track(t)
+                + section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
+                          f'{len(t["jury"])} {t["unitJury"]}'))
     elif slug == "wunder":
         title = t["wunderPageTitle"]
         body = wunder_page(t) + wunder_footnote(lang, t)

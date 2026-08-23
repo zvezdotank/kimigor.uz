@@ -41,6 +41,7 @@
 .mk-ru-5 { right: 12.50%; --floor: 3; }
 .mk-ru-6 { right: 7.50%; --floor: 4; }
 .marks-ru { --floors: 5; }
+.jt { grid-template-columns: minmax(140px, 1.4fr) repeat(5, 1fr); }
 .mk-en-0 { left: 2.50%; --floor: 0; }
 .mk-en-1 { left: 22.50%; --floor: 1; }
 .mk-en-2 { left: 57.50%; --floor: 0; }
