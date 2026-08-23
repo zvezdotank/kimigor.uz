@@ -43,7 +43,7 @@ def _shot_sizes():
     return sizes
 
 
-CSS_VERSION = 38
+CSS_VERSION = 43
 
 URLS = {code: url for code, _, url in LANGS}
 SHOTS = _shot_sizes()
@@ -170,7 +170,7 @@ def header(lang, t):
   <div class="top-in">
     <a class="brand" href="{base}">{e(t['name'])}</a>
     <nav class="menu" aria-label="{e(t['navLabel'])}">{nav}</nav>
-    <div class="avail" data-avail role="status" aria-live="polite"
+    <div class="avail" data-avail data-full role="status" aria-live="polite"
          data-on="{e(t['statusOn'])}" data-off="{e(t['statusOff'])}"
          data-left="{e(t['statusLeft'])}" data-back="{e(t['statusBack'])}"
          data-units="{e(t['units'])}" title="{e(t['workHours'])}">
@@ -570,7 +570,11 @@ def contact(lang, t):
         <span>{link_agency(lang, t['jobTitle'])}</span>
       </div>
       <div class="foot-links">
-        <span><b>{e(t['phoneLabel'])}</b><a class="mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a></span>
+        <span><b>{e(t['phoneLabel'])}</b><a class="mono" href="tel:{PHONE}">{e(PHONE_TEXT)}</a>
+          <span class="avail small" data-avail data-full
+                data-on="{e(t['statusOn'])}" data-off="{e(t['statusOff'])}"
+                data-left="{e(t['statusLeft'])}" data-back="{e(t['statusBack'])}"
+                data-units="{e(t['units'])}"><i></i><span></span></span></span>
         <span><b>{e(t['emailLabel'])}</b><a href="mailto:{EMAIL}">{EMAIL}</a></span>
         <span><b>{e(t['emailWorkLabel'])}</b><a href="mailto:{EMAIL_WORK}">{EMAIL_WORK}</a></span>
         <span><b>{e(t['agencyLabel'])}</b><a href="{AGENCY_URL}" target="_blank" rel="noopener">wunder-digital.uz</a></span>

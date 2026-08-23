@@ -42,10 +42,13 @@
     nodes.forEach(el => {
       el.dataset.state = open ? "on" : "off";
       const short = open ? el.dataset.on : el.dataset.off;
-      const tail = open ? `${el.dataset.left} ${human(el, mins)}` : `${el.dataset.back} ${human(el, mins)}`;
-      // в шапке коротко, на странице контактов — с обратным отсчётом
-      el.querySelector("span").textContent = el.hasAttribute("data-full") ? `${short} · ${tail}` : short;
-      if (!el.hasAttribute("data-full")) el.title = `${short} · ${tail}`;
+      // «не на связи» без продолжения читается как «недоступен вообще»,
+      // поэтому в полной форме сразу говорим, когда связь появится
+      const full = open
+        ? `${el.dataset.on} ${el.dataset.left} ${human(el, mins)}`
+        : `${el.dataset.back} ${human(el, mins)}`;
+      el.querySelector("span").textContent = el.hasAttribute("data-full") ? full : short;
+      el.title = full;
     });
   }
 
