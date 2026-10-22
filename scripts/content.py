@@ -27,10 +27,10 @@ KNOWS = ["интернет-реклама", "контекстная реклам
          "online advertising", "digital marketing", "web analytics"]
 FACEBOOK = ""  # профиль пока не добавлен — блок в контактах не выводится
 
-TRACK_YEARS = list(range(2019, 2027))
+TRACK_YEARS = list(range(2019, 2031))   # шкалы тянем до 2030 (Игорь, 22.10.2026)
 
 # Карьера: годы общие, названия компаний не переводятся, роли и заметки — в каждом языке.
-CAREER_YEARS = list(range(2007, 2027))
+CAREER_YEARS = list(range(2007, 2031))   # хронология до 2030: справа остаётся место под будущие годы
 # Отрезки в долях года (2007.5 = июль 2007). Перекрытия по резюме обрезаны:
 # на ленте видно основное место работы в каждый момент времени.
 CAREER = [
@@ -226,8 +226,8 @@ DATA = {
         "rolesTitle": "Роли и должности",
         "awardsTitle": "Достижения и награды",
         "talksTitle": "Выступления",
-        "juryTrackTitle": "Судейство по годам",
-        "juryTrackNote": "конкурсы и годы участия",
+        "juryTrackTitle": "Фестивали по годам",
+        "juryTrackNote": "судейство и кураторство секций",
         "juryTitle": "Жюри и судейство",
         "skillsTitle": "Инструменты и платформы",
         "skillsNote": "личный стек — то, с чем работает сам",
@@ -374,6 +374,16 @@ DATA = {
              "meta": "Ташкент, 9 декабря 2022", "href": "https://www.gazeta.uz/ru/2022/12/01/yandeks-ad/"},
         ],
         "jury": [
+            {"event": "Ташкентский фестиваль рекламы TAF!, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2022"},
+            {"event": "Ташкентский фестиваль рекламы TAF!, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2023"},
+            {"event": "Ташкентский фестиваль рекламы TAF!, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2024"},
+            {"event": "Ташкентский фестиваль рекламы TAF!, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2025"},
+            {"event": "Ташкентский фестиваль рекламы TAF!, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2026"},
+            {"event": "Tashkent Marketing Forum, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2022"},
+            {"event": "Tashkent Marketing Forum, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2023"},
+            {"event": "Tashkent Marketing Forum, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2024"},
+            {"event": "Tashkent Marketing Forum, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2025"},
+            {"event": "Tashkent Marketing Forum, Digital-секция", "sub": "Куратор секции", "trackOnly": True, "meta": "2026"},
             {"event": "Brand Awards International 2026", "sub": "Член жюри", "meta": "2026",
              "href": "https://bai26.marketing.uz/en/judges/igor-kim.htm"},
             {"event": "Ташкентский фестиваль рекламы TAF!, конкурс", "sub": "Член жюри", "meta": "2024",
@@ -613,8 +623,8 @@ DATA = {
         "rolesTitle": "Roles",
         "awardsTitle": "Recognition",
         "talksTitle": "Speaking",
-        "juryTrackTitle": "Jury work by year",
-        "juryTrackNote": "awards and years of participation",
+        "juryTrackTitle": "Festivals by year",
+        "juryTrackNote": "jury work and section curation",
         "juryTitle": "Jury work",
         "skillsTitle": "Tools and platforms",
         "skillsNote": "his own stack — what he works with personally",
@@ -759,6 +769,16 @@ DATA = {
              "meta": "Tashkent, 9 December 2022", "href": "https://www.gazeta.uz/ru/2022/12/01/yandeks-ad/"},
         ],
         "jury": [
+            {"event": "Tashkent Advertising Festival TAF!, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2022"},
+            {"event": "Tashkent Advertising Festival TAF!, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2023"},
+            {"event": "Tashkent Advertising Festival TAF!, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2024"},
+            {"event": "Tashkent Advertising Festival TAF!, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2025"},
+            {"event": "Tashkent Advertising Festival TAF!, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2026"},
+            {"event": "Tashkent Marketing Forum, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2022"},
+            {"event": "Tashkent Marketing Forum, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2023"},
+            {"event": "Tashkent Marketing Forum, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2024"},
+            {"event": "Tashkent Marketing Forum, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2025"},
+            {"event": "Tashkent Marketing Forum, Digital section", "sub": "Section curator", "trackOnly": True, "meta": "2026"},
             {"event": "Brand Awards International 2026", "sub": "Jury member", "meta": "2026",
              "href": "https://bai26.marketing.uz/en/judges/igor-kim.htm"},
             {"event": "Tashkent Advertising Festival TAF! competition", "sub": "Jury member",
@@ -995,8 +1015,8 @@ DATA = {
         "rolesTitle": "Lavozimlar",
         "awardsTitle": "Yutuqlar",
         "talksTitle": "Ma’ruzalar",
-        "juryTrackTitle": "Yillar bo‘yicha hakamlik",
-        "juryTrackNote": "tanlovlar va ishtirok yillari",
+        "juryTrackTitle": "Yillar bo‘yicha festivallar",
+        "juryTrackNote": "hakamlik va bo‘lim kuratorligi",
         "juryTitle": "Hakamlar hay’ati",
         "skillsTitle": "Vositalar va platformalar",
         "skillsNote": "shaxsiy stek — o‘zi ishlaydigan vositalar",
@@ -1141,6 +1161,16 @@ DATA = {
              "meta": "Toshkent, 2022-yil 9-dekabr", "href": "https://www.gazeta.uz/ru/2022/12/01/yandeks-ad/"},
         ],
         "jury": [
+            {"event": "Toshkent reklama festivali TAF!, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2022"},
+            {"event": "Toshkent reklama festivali TAF!, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2023"},
+            {"event": "Toshkent reklama festivali TAF!, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2024"},
+            {"event": "Toshkent reklama festivali TAF!, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2025"},
+            {"event": "Toshkent reklama festivali TAF!, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2026"},
+            {"event": "Tashkent Marketing Forum, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2022"},
+            {"event": "Tashkent Marketing Forum, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2023"},
+            {"event": "Tashkent Marketing Forum, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2024"},
+            {"event": "Tashkent Marketing Forum, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2025"},
+            {"event": "Tashkent Marketing Forum, Digital bo‘limi", "sub": "Bo‘lim kuratori", "trackOnly": True, "meta": "2026"},
             {"event": "Brand Awards International 2026", "sub": "Hakamlar hay’ati a’zosi", "meta": "2026",
              "href": "https://bai26.marketing.uz/en/judges/igor-kim.htm"},
             {"event": "Toshkent reklama festivali TAF! tanlovi", "sub": "Hakamlar hay’ati a’zosi",

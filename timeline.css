@@ -1,18 +1,18 @@
 /* Позиции отрезков и вех хронологии. Файл собирается build.py:
    инлайн-стили запрещены Content-Security-Policy сайта. */
-.years, .lane, .learn { grid-template-columns: repeat(20, 1fr); }
-.track-inner { --col: calc(100% / 20); }
-.sg-0 { left: 58.50%; width: 40.00%; }
-.sg-1 { left: 52.00%; width: 6.50%; }
-.sg-2 { left: 22.00%; width: 30.00%; }
-.sg-3 { left: 18.75%; width: 3.25%; }
-.sg-4 { left: 16.00%; width: 2.75%; }
-.sg-5 { left: 14.25%; width: 1.75%; }
-.sg-6 { left: 11.00%; width: 2.50%; }
-.sg-7 { left: 8.00%; width: 3.00%; }
-.sg-8 { left: 2.50%; width: 5.00%; }
-.era-a { left: 0; width: 22.00%; }
-.era-b { left: 22.00%; width: 78.00%; }
+.years, .lane, .learn { grid-template-columns: repeat(24, 1fr); }
+.track-inner { --col: calc(100% / 24); }
+.sg-0 { left: 48.75%; width: 33.33%; }
+.sg-1 { left: 43.33%; width: 5.42%; }
+.sg-2 { left: 18.33%; width: 25.00%; }
+.sg-3 { left: 15.62%; width: 2.71%; }
+.sg-4 { left: 13.33%; width: 2.29%; }
+.sg-5 { left: 11.87%; width: 1.46%; }
+.sg-6 { left: 9.17%; width: 2.08%; }
+.sg-7 { left: 6.67%; width: 2.50%; }
+.sg-8 { left: 2.08%; width: 4.17%; }
+.era-a { left: 0; width: 18.33%; }
+.era-b { left: 18.33%; width: 81.67%; }
 .br-0 { --h: 0.40; }
 .br-1 { --h: 0.00; }
 .br-2 { --h: 0.00; }
@@ -33,28 +33,32 @@
 .br-17 { --h: 0.00; }
 .br-18 { --h: 0.00; }
 .br-19 { --h: 0.00; }
-.mk-ru-0 { left: 2.50%; --floor: 0; }
-.mk-ru-1 { left: 22.50%; --floor: 1; }
-.mk-ru-2 { left: 57.50%; --floor: 0; }
-.mk-ru-3 { right: 22.50%; --floor: 2; }
-.mk-ru-4 { right: 12.50%; --floor: 1; }
-.mk-ru-5 { right: 12.50%; --floor: 3; }
-.mk-ru-6 { right: 7.50%; --floor: 4; }
+.br-20 { --h: 0.00; }
+.br-21 { --h: 0.00; }
+.br-22 { --h: 0.00; }
+.br-23 { --h: 0.00; }
+.mk-ru-0 { left: 2.08%; --floor: 0; }
+.mk-ru-1 { left: 18.75%; --floor: 1; }
+.mk-ru-2 { left: 47.92%; --floor: 0; }
+.mk-ru-3 { left: 64.58%; --floor: 2; }
+.mk-ru-4 { left: 72.92%; --floor: 1; }
+.mk-ru-5 { left: 72.92%; --floor: 3; }
+.mk-ru-6 { right: 22.92%; --floor: 4; }
 .marks-ru { --floors: 5; }
-.jt { grid-template-columns: minmax(140px, 1.4fr) repeat(5, 1fr); }
-.mk-en-0 { left: 2.50%; --floor: 0; }
-.mk-en-1 { left: 22.50%; --floor: 1; }
-.mk-en-2 { left: 57.50%; --floor: 0; }
-.mk-en-3 { right: 22.50%; --floor: 2; }
-.mk-en-4 { right: 12.50%; --floor: 1; }
-.mk-en-5 { right: 12.50%; --floor: 3; }
-.mk-en-6 { right: 7.50%; --floor: 4; }
+.jt { grid-template-columns: minmax(140px, 1.4fr) repeat(9, 1fr); }
+.mk-en-0 { left: 2.08%; --floor: 0; }
+.mk-en-1 { left: 18.75%; --floor: 1; }
+.mk-en-2 { left: 47.92%; --floor: 0; }
+.mk-en-3 { right: 35.42%; --floor: 2; }
+.mk-en-4 { left: 72.92%; --floor: 1; }
+.mk-en-5 { right: 27.08%; --floor: 3; }
+.mk-en-6 { right: 22.92%; --floor: 4; }
 .marks-en { --floors: 5; }
-.mk-uz-0 { left: 2.50%; --floor: 0; }
-.mk-uz-1 { left: 22.50%; --floor: 1; }
-.mk-uz-2 { left: 57.50%; --floor: 0; }
-.mk-uz-3 { right: 22.50%; --floor: 2; }
-.mk-uz-4 { right: 12.50%; --floor: 3; }
-.mk-uz-5 { right: 12.50%; --floor: 4; }
-.mk-uz-6 { right: 7.50%; --floor: 5; }
-.marks-uz { --floors: 6; }
+.mk-uz-0 { left: 2.08%; --floor: 0; }
+.mk-uz-1 { left: 18.75%; --floor: 1; }
+.mk-uz-2 { left: 47.92%; --floor: 0; }
+.mk-uz-3 { left: 64.58%; --floor: 2; }
+.mk-uz-4 { left: 72.92%; --floor: 1; }
+.mk-uz-5 { left: 72.92%; --floor: 3; }
+.mk-uz-6 { right: 22.92%; --floor: 4; }
+.marks-uz { --floors: 5; }

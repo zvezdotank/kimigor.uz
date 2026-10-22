@@ -454,7 +454,8 @@ def jury_track(t):
         y = int(j["meta"])
         years.add(y)
         groups.setdefault(j["event"], {})[y] = j
-    span = list(range(min(years), max(years) + 1))
+    # шкала тянется до 2030: годы без событий остаются пустыми (Игорь, 22.10.2026)
+    span = list(range(min(years), max(max(years), TRACK_YEARS[-1]) + 1))
     TIMELINE_RULES.append(
         f".jt {{ grid-template-columns: minmax(140px, 1.4fr) repeat({len(span)}, 1fr); }}")
 
@@ -766,8 +767,11 @@ def build_sub_page(lang, slug):
     elif slug == "jury":
         title = t["juryPageTitle"]
         body = (jury_track(t)
-                + section(t["juryTitle"], rows(t["jury"], t, "event", "sub", "meta"),
-                          f'{len(t["jury"])} {t["unitJury"]}'))
+                + (lambda jl: section(t["juryTitle"], rows(jl, t, "event", "sub", "meta"),
+                                      f'{len(jl)} {t["unitJury"]}'))(
+                    # кураторство секций живёт только в сетке по годам: в списке конкурсов
+                    # оно давало бы десять одинаковых строк (Игорь, 22.10.2026)
+                    [j for j in t["jury"] if not j.get("trackOnly")]))
     elif slug == "wunder":
         title = t["wunderPageTitle"]
         body = wunder_page(t) + wunder_footnote(lang, t)
